@@ -5,19 +5,22 @@ import java.util.Optional;
 
 public class RubicCube {
 
-    private Cube[] cubes = new Cube[21];
-    private int[][][] buffer = new int[3][3][3];
+    private final Cube[] cubes = new Cube[27];
+    private final int[][][] buffer = new int[3][3][3];
+
 
     public RubicCube() {
 
-        for (int i = 0; i < cubes.length; i++)
-            cubes[i] = new Cube(i);
-
-        for (int x = 0; x < 3; x++)
-            for (int y = 0; y < 3; y++)
-                for (int z = 0; z < 3; z++)
-                    buffer[x][y][z] = x + (z * 3) + (y * 6);
-
+        int i = 0;
+        for (int y = 0; y < 3; y++)
+            for (int z = 0; z < 3; z++)
+                for (int x = 0; x < 3; x++) {
+                    buffer[x][y][z] = x + (z * 3) + (y * 9);
+                    float xf = (1 - x) * 2.1f;
+                    float yf = (1 - y) * 2.1f;
+                    float zf = (1 - z) * 2.1f;
+                    cubes[i++] = new Cube(i-1, xf, yf, zf);
+                }
     }
 
     public void rotateV(int column, Direction direction) {
@@ -65,8 +68,8 @@ public class RubicCube {
     public Cube[] getRow(int index) {
         Cube[] row = new Cube[9];
         int i = 0;
-        for (int x = 0; x < 3; x++)
-            for (int z = 0; z < 3; z++)
+        for (int z = 0; z < 3; z++)
+            for (int x = 0; x < 3; x++)
                 row[i++] = cubes[buffer[x][index][z]];
 
         return row;
@@ -82,4 +85,7 @@ public class RubicCube {
         return column;
     }
 
+    public Cube[] getCubes() {
+        return cubes;
+    }
 }

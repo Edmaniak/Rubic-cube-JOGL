@@ -65,8 +65,5 @@ public class App {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new rubicCube.App().start());
-        RubicCube cube = new RubicCube();
-        Cube[] row = cube.getRow(0);
-        cube.rotateH(0, Direction.LEFT);
     }
 }
