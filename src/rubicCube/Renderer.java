@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.math.Quaternion;
 import com.jogamp.opengl.util.gl2.GLUT;
 import utils.OglUtils;
 
@@ -13,7 +14,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import java.util.Random;
+
+import static com.jogamp.opengl.GL.GL_LINES;
 
 /**
  * trida pro zobrazeni sceny v OpenGL:
@@ -30,12 +32,18 @@ public class Renderer implements GLEventListener, MouseListener,
     GLU glu;
     int dx, dy, ox, oy;
     RubicCube rubicCube = new RubicCube();
-    Random rand = new Random();
-    int rowToRotate = -1;
+    boolean rotate;
     float m[] = new float[16];
-    float rotation0 = 0;
-    float rotation1 = 0;
-    float rotation2 = 0;
+
+    Quaternion q1 = new Quaternion();
+
+    Animation row0Anim = new Animation(90);
+    Animation row1Anim = new Animation(90);
+    Animation row2Anim = new Animation(90);
+    Animation col0Anim = new Animation(90);
+
+    int i = 0;
+
 
     /**
      * metoda inicializace, volana pri vytvoreni okna
@@ -60,6 +68,8 @@ public class Renderer implements GLEventListener, MouseListener,
 
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
+
+        gl.glLoadIdentity();
         gl.glGetFloatv(GL2.GL_MODELVIEW_MATRIX, m, 0);
 
     }
@@ -70,6 +80,7 @@ public class Renderer implements GLEventListener, MouseListener,
     @Override
     public void display(GLAutoDrawable glDrawable) {
         GL2 gl = glDrawable.getGL().getGL2();
+        handleAnimation();
 
         // mazeme image buffer i z-buffer
         gl.glClearColor(0f, 0f, 0f, 1f);
@@ -77,21 +88,55 @@ public class Renderer implements GLEventListener, MouseListener,
 
         gl.glMatrixMode(GL2.GL_MODELVIEW);
 
+        // rotace podle zmeny pozice mysi, osy rotace zustavaji svisle a vodorovne
+        gl.glLoadIdentity();
+        gl.glRotatef(dx, 0, 1, 0);
+        gl.glRotatef(dy, 1, 0, 0);
+        gl.glMultMatrixf(m, 0);
+        gl.glGetFloatv(GL2.GL_MODELVIEW_MATRIX, m, 0);
+        dx = 0;
+        dy = 0;
+
+        // draw our axes
+        gl.glBegin(GL_LINES);
+// draw line for x axis
+        gl.glColor3f(1.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(10.0f, 0.0f, 0.0f);
+// draw line for y axis
+        gl.glColor3f(0.0f, 1.0f, 0.0f);
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 10.0f, 0.0f);
+// draw line for Z axis
+        gl.glColor3f(0.0f, 0.0f, 1.0f);
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 0.0f, 10.0f);
+        gl.glEnd();
+
 
         for (Cube cube : rubicCube.getCubes()) {
+
             gl.glColor3f(cube.getR(), cube.getG(), cube.getB());
             gl.glPushMatrix();
 
-            for (Cube cubeInRow : rubicCube.getRow(0))
-                if (cube.getIndex() == cubeInRow.getIndex())
-                    gl.glRotatef(rotation0, 0, 1, 0);
+            for (Cube cubeInRow : rubicCube.getRow(2))
+                if (cube.getIndex() == cubeInRow.getIndex()) {
+                    gl.glRotatef(rubicCube.getRowRot(2), 0, 1, 0);
+                }
+
             for (Cube cubeInRow : rubicCube.getRow(1))
                 if (cube.getIndex() == cubeInRow.getIndex())
-                    gl.glRotatef(rotation1, 0, 1, 0);
-            for (Cube cubeInRow : rubicCube.getRow(2))
-                if (cube.getIndex() == cubeInRow.getIndex())
-                    gl.glRotatef(rotation2, 0, 1, 0);
+                    gl.glRotatef(rubicCube.getRowRot(1), 0, 1, 0);
 
+            for (Cube cubeInRow : rubicCube.getRow(0))
+                if (cube.getIndex() == cubeInRow.getIndex()) {
+                    gl.glRotatef(rubicCube.getRowRot(0), 0, 1, 0);
+                }
+
+            for (Cube cubeInCol : rubicCube.getCol(0))
+                if (cube.getIndex() == cubeInCol.getIndex()) {
+                    gl.glRotatef(rubicCube.getColRot(0), cube.getRotCol().getX(), cube.getRotCol().getY(), cube.getRotCol().getZ());
+                }
 
             gl.glTranslatef(cube.getX(), cube.getY(), cube.getZ());
             glut.glutSolidCube(2);
@@ -100,15 +145,19 @@ public class Renderer implements GLEventListener, MouseListener,
         }
 
 
-        gl.glRotatef(0.2f, 0, 0, 1);
-
-
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         glu.gluPerspective(45, 1280 / (float) 728, 0.1f, 100.0f);
-        glu.gluLookAt(0, 25, 0, 0, 0, 0, 1, 0, 0);
+        glu.gluLookAt(-20, 20, 20, 0, 0, 0, 0, 1, 0);
 
 
+    }
+
+    private void handleAnimation() {
+        rubicCube.setRowRot(0, row0Anim.animate());
+        rubicCube.setRowRot(1, row1Anim.animate());
+        rubicCube.setRowRot(2, row2Anim.animate());
+        rubicCube.setColRot(0, col0Anim.animate());
     }
 
 
@@ -141,7 +190,7 @@ public class Renderer implements GLEventListener, MouseListener,
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
+        if (e.getButton() == MouseEvent.BUTTON3) {
         }
         ox = e.getX();
         oy = e.getY();
@@ -149,7 +198,7 @@ public class Renderer implements GLEventListener, MouseListener,
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
+        if (e.getButton() == MouseEvent.BUTTON3) {
         }
     }
 
@@ -169,15 +218,43 @@ public class Renderer implements GLEventListener, MouseListener,
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_A:
-                rotation0 += 2;
+            case KeyEvent.VK_Q:
+                rubicCube.rotateRow(2, Direction.LEFT);
+                row2Anim.playBackwadrs();
+                rotate = true;
                 break;
-            case KeyEvent.VK_S:
-                rotation1 += 2;
+            case KeyEvent.VK_E:
+                rubicCube.rotateRow(2, Direction.RIGHT);
+                row2Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_A:
+                rubicCube.rotateRow(1, Direction.LEFT);
+                row1Anim.play();
+                rotate = true;
                 break;
             case KeyEvent.VK_D:
-                rotation2 += 2;
+                rubicCube.rotateRow(1, Direction.RIGHT);
+                row1Anim.playBackwadrs();
+                rotate = true;
                 break;
+            case KeyEvent.VK_Z:
+                rubicCube.rotateRow(0, Direction.LEFT);
+                row0Anim.playBackwadrs();
+                rotate = true;
+                break;
+            case KeyEvent.VK_C:
+                rubicCube.rotateRow(0, Direction.RIGHT);
+                row0Anim.play();
+                rotate = true;
+                break;
+
+            case KeyEvent.VK_J:
+                rubicCube.rotateCol(0, Direction.BACK);
+                col0Anim.play();
+                rotate = true;
+                break;
+
         }
     }
 
