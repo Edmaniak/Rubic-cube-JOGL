@@ -68,6 +68,6 @@ public class Rotation {
 
     @Override
     public String toString() {
-        return "X: " + rotX + " Y: " + rotY + " Z: " + rotZ;
+        return "X: " + " ("+ getRotVecForCol().getX()+ ") " + rotX + " Y: " + " ("+ getRotVecForCol().getY()+ ") " + + rotY + " Z: " + " ("+ getRotVecForCol().getZ()+ ") " + + rotZ;
     }
 }

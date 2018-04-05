@@ -10,16 +10,17 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class App {
     private static final int FPS = 60; // animator's target frames per second
+    public static boolean debug = true;
 
     public void start() {
         try {
-            Frame testFrame = new Frame();
-            testFrame.setSize(1280, 768);
-            testFrame.setTitle("Rubic's cube <PGRF2 UHK>");
+            JFrame frame = new JFrame();
+            frame.setSize(1280, 768);
+            frame.setTitle("Rubic's cube <PGRF2 UHK>");
 
             // setup OpenGL Version 2
             GLProfile profile = GLProfile.get(GLProfile.GL2);
@@ -39,12 +40,14 @@ public class App {
             canvas.addKeyListener(ren);
             canvas.setSize(1280, 768);
 
+            JPanel gui = new JPanel();
 
-            testFrame.add(canvas);
+            frame.add(gui, BorderLayout.NORTH);
+            frame.add(canvas, BorderLayout.CENTER);
 
             final FPSAnimator animator = new FPSAnimator(canvas, FPS, true);
 
-            testFrame.addWindowListener(new WindowAdapter() {
+            frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     new Thread(() -> {
@@ -53,8 +56,8 @@ public class App {
                     }).start();
                 }
             });
-            testFrame.pack();
-            testFrame.setVisible(true);
+            frame.pack();
+            frame.setVisible(true);
             animator.start(); // start the animation loop
 
 

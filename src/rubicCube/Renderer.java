@@ -35,15 +35,11 @@ public class Renderer implements GLEventListener, MouseListener,
     boolean rotate;
     float m[] = new float[16];
 
-    Quaternion q1 = new Quaternion();
 
     Animation row0Anim = new Animation(90);
     Animation row1Anim = new Animation(90);
     Animation row2Anim = new Animation(90);
     Animation col0Anim = new Animation(90);
-
-    int i = 0;
-
 
     /**
      * metoda inicializace, volana pri vytvoreni okna
@@ -97,28 +93,16 @@ public class Renderer implements GLEventListener, MouseListener,
         dx = 0;
         dy = 0;
 
-        // draw our axes
-        gl.glBegin(GL_LINES);
-// draw line for x axis
-        gl.glColor3f(1.0f, 0.0f, 0.0f);
-        gl.glVertex3f(0.0f, 0.0f, 0.0f);
-        gl.glVertex3f(10.0f, 0.0f, 0.0f);
-// draw line for y axis
-        gl.glColor3f(0.0f, 1.0f, 0.0f);
-        gl.glVertex3f(0.0f, 0.0f, 0.0f);
-        gl.glVertex3f(0.0f, 10.0f, 0.0f);
-// draw line for Z axis
-        gl.glColor3f(0.0f, 0.0f, 1.0f);
-        gl.glVertex3f(0.0f, 0.0f, 0.0f);
-        gl.glVertex3f(0.0f, 0.0f, 10.0f);
-        gl.glEnd();
+
+        if (App.debug)
+            drawAxis(gl, 10f);
 
 
         for (Cube cube : rubicCube.getCubes()) {
 
-            gl.glColor3f(cube.getR(), cube.getG(), cube.getB());
-            gl.glPushMatrix();
 
+            gl.glPushMatrix();
+/*
             for (Cube cubeInRow : rubicCube.getRow(2))
                 if (cube.getIndex() == cubeInRow.getIndex()) {
                     gl.glRotatef(rubicCube.getRowRot(2), 0, 1, 0);
@@ -137,9 +121,16 @@ public class Renderer implements GLEventListener, MouseListener,
                 if (cube.getIndex() == cubeInCol.getIndex()) {
                     gl.glRotatef(rubicCube.getColRot(0), cube.getRotCol().getX(), cube.getRotCol().getY(), cube.getRotCol().getZ());
                 }
-
+*/
             gl.glTranslatef(cube.getX(), cube.getY(), cube.getZ());
-            glut.glutSolidCube(2);
+
+
+            if (cube.getIndex() != -1) {
+                if (App.debug)
+                    drawAxis(gl, 5);
+                gl.glColor3f(cube.getR(), cube.getG(), cube.getB());
+                glut.glutSolidCube(2);
+            }
 
             gl.glPopMatrix();
         }
@@ -214,45 +205,121 @@ public class Renderer implements GLEventListener, MouseListener,
     public void mouseMoved(MouseEvent e) {
     }
 
+    private void drawAxis(GL2 gl, float size) {
+        // draw our axes
+        gl.glBegin(GL_LINES);
+        // draw line for x axis
+        gl.glColor3f(1.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(size, 0.0f, 0.0f);
+        // draw line for y axis
+        gl.glColor3f(0.0f, 1.0f, 0.0f);
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, size, 0.0f);
+        // draw line for Z axis
+        gl.glColor3f(0.0f, 0.0f, 1.0f);
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 0.0f, size);
+        gl.glEnd();
+    }
+
     // key listener
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_Q:
-                rubicCube.rotateRow(2, Direction.LEFT);
+                rubicCube.rotateY(2, Direction.LEFT);
                 row2Anim.playBackwadrs();
                 rotate = true;
                 break;
             case KeyEvent.VK_E:
-                rubicCube.rotateRow(2, Direction.RIGHT);
+                rubicCube.rotateY(2, Direction.RIGHT);
                 row2Anim.play();
                 rotate = true;
                 break;
             case KeyEvent.VK_A:
-                rubicCube.rotateRow(1, Direction.LEFT);
+                rubicCube.rotateY(1, Direction.LEFT);
                 row1Anim.play();
                 rotate = true;
                 break;
             case KeyEvent.VK_D:
-                rubicCube.rotateRow(1, Direction.RIGHT);
+                rubicCube.rotateY(1, Direction.RIGHT);
                 row1Anim.playBackwadrs();
                 rotate = true;
                 break;
             case KeyEvent.VK_Z:
-                rubicCube.rotateRow(0, Direction.LEFT);
+                rubicCube.rotateY(0, Direction.LEFT);
                 row0Anim.playBackwadrs();
                 rotate = true;
                 break;
             case KeyEvent.VK_C:
-                rubicCube.rotateRow(0, Direction.RIGHT);
+                rubicCube.rotateY(0, Direction.RIGHT);
                 row0Anim.play();
                 rotate = true;
                 break;
-
             case KeyEvent.VK_J:
-                rubicCube.rotateCol(0, Direction.BACK);
+                rubicCube.rotateX(0, Direction.BACK);
                 col0Anim.play();
                 rotate = true;
+                break;
+            case KeyEvent.VK_U:
+                rubicCube.rotateX(0, Direction.THERE);
+                col0Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_K:
+                rubicCube.rotateX(1, Direction.BACK);
+                col0Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_I:
+                rubicCube.rotateX(1, Direction.THERE);
+                col0Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_L:
+                rubicCube.rotateX(2, Direction.BACK);
+                col0Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_O:
+                rubicCube.rotateX(2, Direction.THERE);
+                col0Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_R:
+                rubicCube.rotateZ(2, Direction.LEFT);
+                col0Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_T:
+                rubicCube.rotateZ(2, Direction.RIGHT);
+                col0Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_F:
+                rubicCube.rotateZ(1, Direction.LEFT);
+                col0Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_G:
+                rubicCube.rotateZ(1, Direction.RIGHT);
+                col0Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_V:
+                rubicCube.rotateZ(0, Direction.LEFT);
+                col0Anim.play();
+                rotate = true;
+                break;
+            case KeyEvent.VK_B:
+                rubicCube.rotateZ(0, Direction.RIGHT);
+                col0Anim.play();
+                rotate = true;
+                break;
+
+            case KeyEvent.VK_F1:
+                App.debug = !App.debug;
                 break;
 
         }

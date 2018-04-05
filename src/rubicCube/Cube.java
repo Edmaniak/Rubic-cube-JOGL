@@ -5,53 +5,53 @@ import java.util.Random;
 public class Cube {
 
     private final int index;
-    private final float x;
-    private final float y;
-    private final float z;
+    private Vec3Df position;
     private final float r;
     private final float g;
     private final float b;
     private Random rand = new Random();
     private Rotation rotation = new Rotation();
 
-    public Cube(int index, float x, float y, float z) {
+    public Cube(int index, Vec3Df position) {
         this.index = index;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.position = new Vec3Df(position);
         if (index == 0) {
             this.r = 1;
             this.g = 0;
             this.b = 0;
-        } else if(index == 1) {
+        } else if (index == 1) {
             this.r = 0;
             this.g = 0;
             this.b = 1;
-        } else if(index == 2) {
+        } else if (index == 2) {
             this.r = 0;
             this.g = 1;
             this.b = 1;
-        }
-        else if(index == 2) {
+        } else if (index == 2) {
             this.r = 0;
             this.g = 1;
             this.b = 1;
-        }
-        else if(index == 12) {
+        } else if (index == 12) {
             this.r = 0;
             this.g = 0;
             this.b = 0;
-        }
-        else if(index == 18) {
+        } else if (index == 18) {
             this.r = 1;
             this.g = 1;
             this.b = 0;
-        }
-        else {
+        } else {
             this.r = rand.nextFloat();
             this.g = rand.nextFloat();
             this.b = rand.nextFloat();
         }
+    }
+
+    public Cube(Cube cube) {
+        this.index = cube.index;
+        this.position = new Vec3Df(cube.position);
+        this.r = cube.r;
+        this.g = cube.g;
+        this.b = cube.b;
     }
 
     public int getIndex() {
@@ -59,15 +59,15 @@ public class Cube {
     }
 
     public float getX() {
-        return x;
+        return position.getX();
     }
 
     public float getY() {
-        return y;
+        return position.getY();
     }
 
     public float getZ() {
-        return z;
+        return position.getZ();
     }
 
     public float getR() {
@@ -94,7 +94,20 @@ public class Cube {
         return rotation.getRotVecForCol();
     }
 
+    public Vec3Df getPosition() {
+        return position;
+    }
 
+    public void setPosition(Vec3Df position) {
+        this.position = new Vec3Df(position);
+    }
 
+    public void setPosition(Cube cube) {
+        this.position = new Vec3Df(cube.getPosition());
+    }
 
+    @Override
+    public String toString() {
+        return "Cube" + getIndex();
+    }
 }

@@ -14,7 +14,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.SwingUtilities;
 
 public class JOGLApp {
-	private static final int FPS = 60; // animator's target frames per second
+
+	private static final int FPS = 60;
+	// animator's target frames per second
 
 	public void start(){
 		try {
