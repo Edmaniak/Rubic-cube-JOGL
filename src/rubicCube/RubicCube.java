@@ -25,7 +25,7 @@ public class RubicCube {
                 }
     }
 
-    public void rotateX(int column, Direction direction) {
+    public Void rotateX(int column, Direction direction) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
@@ -61,10 +61,10 @@ public class RubicCube {
             System.out.println("Cube " + cubes[d].getIndex() + " => " + cubes[d].getRotation());
         }
         System.out.println(Arrays.deepToString(buffer));
-
+        return null;
     }
 
-    public void rotateY(int row, Direction direction) {
+    public Void rotateY(int row, Direction direction) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
@@ -103,10 +103,11 @@ public class RubicCube {
         }
         System.out.println(Arrays.deepToString(buffer));
 
+        return null;
     }
 
 
-    public void rotateZ(int index, Direction direction) {
+    public Void rotateZ(int index, Direction direction) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
@@ -135,7 +136,7 @@ public class RubicCube {
                         break;
                 }
 
-
+        return null;
     }
 
     private int[][][] generateTempBuffer() {

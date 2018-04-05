@@ -15,10 +15,11 @@ import javax.swing.*;
 public class App {
     private static final int FPS = 60; // animator's target frames per second
     public static boolean debug = true;
+    public static JFrame frame;
 
     public void start() {
         try {
-            JFrame frame = new JFrame();
+            frame = new JFrame();
             frame.setSize(1280, 768);
             frame.setTitle("Rubic's cube <PGRF2 UHK>");
 

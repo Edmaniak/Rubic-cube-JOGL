@@ -4,7 +4,6 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.math.Quaternion;
 import com.jogamp.opengl.util.gl2.GLUT;
 import utils.OglUtils;
 
@@ -14,6 +13,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.util.concurrent.Callable;
 
 import static com.jogamp.opengl.GL.GL_LINES;
 
@@ -102,7 +102,7 @@ public class Renderer implements GLEventListener, MouseListener,
 
 
             gl.glPushMatrix();
-/*
+
             for (Cube cubeInRow : rubicCube.getRow(2))
                 if (cube.getIndex() == cubeInRow.getIndex()) {
                     gl.glRotatef(rubicCube.getRowRot(2), 0, 1, 0);
@@ -121,7 +121,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 if (cube.getIndex() == cubeInCol.getIndex()) {
                     gl.glRotatef(rubicCube.getColRot(0), cube.getRotCol().getX(), cube.getRotCol().getY(), cube.getRotCol().getZ());
                 }
-*/
+
             gl.glTranslatef(cube.getX(), cube.getY(), cube.getZ());
 
 
@@ -228,93 +228,75 @@ public class Renderer implements GLEventListener, MouseListener,
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_Q:
-                rubicCube.rotateY(2, Direction.LEFT);
-                row2Anim.playBackwadrs();
+                row2Anim.negative(() -> rubicCube.rotateY(2, Direction.LEFT));
                 rotate = true;
                 break;
             case KeyEvent.VK_E:
-                rubicCube.rotateY(2, Direction.RIGHT);
-                row2Anim.play();
+                row2Anim.positive(() -> rubicCube.rotateY(2, Direction.RIGHT));
                 rotate = true;
                 break;
             case KeyEvent.VK_A:
-                rubicCube.rotateY(1, Direction.LEFT);
-                row1Anim.play();
+                row1Anim.positive(() -> rubicCube.rotateY(1, Direction.LEFT));
                 rotate = true;
                 break;
             case KeyEvent.VK_D:
-                rubicCube.rotateY(1, Direction.RIGHT);
-                row1Anim.playBackwadrs();
+                row1Anim.negative(() -> rubicCube.rotateY(1, Direction.RIGHT));
                 rotate = true;
                 break;
             case KeyEvent.VK_Z:
-                rubicCube.rotateY(0, Direction.LEFT);
-                row0Anim.playBackwadrs();
+                row0Anim.negative(() -> rubicCube.rotateY(0, Direction.LEFT));
                 rotate = true;
                 break;
             case KeyEvent.VK_C:
-                rubicCube.rotateY(0, Direction.RIGHT);
-                row0Anim.play();
+                row0Anim.positive(() -> rubicCube.rotateY(0, Direction.RIGHT));
                 rotate = true;
                 break;
             case KeyEvent.VK_J:
-                rubicCube.rotateX(0, Direction.BACK);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateX(0, Direction.BACK));
                 rotate = true;
                 break;
             case KeyEvent.VK_U:
-                rubicCube.rotateX(0, Direction.THERE);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateX(0, Direction.THERE));
                 rotate = true;
                 break;
             case KeyEvent.VK_K:
-                rubicCube.rotateX(1, Direction.BACK);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateX(1, Direction.BACK));
                 rotate = true;
                 break;
             case KeyEvent.VK_I:
-                rubicCube.rotateX(1, Direction.THERE);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateX(1, Direction.THERE));
                 rotate = true;
                 break;
             case KeyEvent.VK_L:
-                rubicCube.rotateX(2, Direction.BACK);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateX(2, Direction.BACK));
                 rotate = true;
                 break;
             case KeyEvent.VK_O:
-                rubicCube.rotateX(2, Direction.THERE);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateX(2, Direction.THERE));
                 rotate = true;
                 break;
             case KeyEvent.VK_R:
-                rubicCube.rotateZ(2, Direction.LEFT);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateZ(2, Direction.LEFT));
                 rotate = true;
                 break;
             case KeyEvent.VK_T:
-                rubicCube.rotateZ(2, Direction.RIGHT);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateZ(2, Direction.RIGHT));
                 rotate = true;
                 break;
             case KeyEvent.VK_F:
-                rubicCube.rotateZ(1, Direction.LEFT);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateZ(1, Direction.LEFT));
                 rotate = true;
                 break;
             case KeyEvent.VK_G:
-                rubicCube.rotateZ(1, Direction.RIGHT);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateZ(1, Direction.RIGHT));
                 rotate = true;
                 break;
             case KeyEvent.VK_V:
-                rubicCube.rotateZ(0, Direction.LEFT);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateZ(0, Direction.RIGHT));
                 rotate = true;
                 break;
             case KeyEvent.VK_B:
-                rubicCube.rotateZ(0, Direction.RIGHT);
-                col0Anim.play();
+                col0Anim.positive(() -> rubicCube.rotateZ(0, Direction.LEFT));
                 rotate = true;
                 break;
 
