@@ -1,5 +1,6 @@
 package rubicCube;
 
+
 import javax.swing.*;
 import java.util.concurrent.Callable;
 
@@ -10,23 +11,25 @@ public class Animation {
     private boolean play;
     private int direction = 1;
     private Callable<Void> callWhenStopped;
+    private Boolean rotating;
 
-    public Animation(int target) {
+    public Animation(int target, Boolean rotating) {
         this.target = target;
+        this.rotating = rotating;
     }
 
     public void positive(Callable<Void> func) {
+        launch(func);
         direction = 1;
-        play = true;
         state++;
-        callWhenStopped = func;
+
     }
 
     public void negative(Callable<Void> func) {
-        direction = -1;
-        play = true;
+        launch(func);
         state--;
-        callWhenStopped = func;
+        direction = -1;
+
     }
 
     public void stop() {
@@ -48,6 +51,12 @@ public class Animation {
         else
             stop();
         return state;
+    }
+
+    private void launch(Callable<Void> func) {
+        play = true;
+        callWhenStopped = func;
+        rotating = true;
     }
 
 

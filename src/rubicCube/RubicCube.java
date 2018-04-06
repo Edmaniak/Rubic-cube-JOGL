@@ -7,23 +7,15 @@ public class RubicCube {
     private final Cube[] cubes = new Cube[27];
     private final int[][][] buffer = new int[3][3][3];
 
-    private final Integer[] rowRots = new Integer[3];
-    private final Integer[] colRots = new Integer[3];
+    private final State[] xRots = new State[3];
+    private final State[] yRots = new State[3];
+    private final State[] zRots = new State[3];
 
-
-    public RubicCube() {
-
-        int i = 0;
-        for (int y = 0; y < 3; y++)
-            for (int z = 0; z < 3; z++)
-                for (int x = 0; x < 3; x++) {
-                    buffer[x][y][z] = x + (z * 3) + (y * 9);
-                    float xf = (x - 1) * 2.1f;
-                    float yf = (y - 1) * 2.1f;
-                    float zf = (1 - z) * 2.1f;
-                    cubes[i++] = new Cube(i - 1, new Vec3Df(xf, yf, zf));
-                }
+    public RubicCube(float space) {
+        generateRubicCube(space);
+        generateStateValues(xRots);
     }
+
 
     public Void rotateX(int column, Direction direction) {
 
@@ -31,7 +23,7 @@ public class RubicCube {
         int[][][] tempBuffer = generateTempBuffer();
         Cube[] tempCubes = generateTempCubes();
 
-        Cube[] colCubes = getCol(column);
+        Cube[] colCubes = getXPlate(column);
         for (int c = 0; c < colCubes.length; c++)
             colCubes[c].getRotation().rotateWithColumn(direction);
 
@@ -70,7 +62,7 @@ public class RubicCube {
         int[][][] tempBuffer = generateTempBuffer();
         Cube[] tempCubes = generateTempCubes();
 
-        Cube[] rowCubes = getRow(row);
+        Cube[] rowCubes = getYPlate(row);
         for (int c = 0; c < rowCubes.length; c++)
             rowCubes[c].getRotation().rotateWithRow(direction);
 
@@ -156,43 +148,80 @@ public class RubicCube {
         return tempCubes;
     }
 
-    public Cube[] getRow(int index) {
-        Cube[] row = new Cube[9];
+    public Cube[] getYPlate(int index) {
+        Cube[] plate = new Cube[9];
         int i = 0;
         for (int z = 0; z < 3; z++)
             for (int x = 0; x < 3; x++)
-                row[i++] = cubes[buffer[x][index][z]];
+                plate[i++] = cubes[buffer[x][index][z]];
 
-        return row;
+        return plate;
     }
 
-    public Cube[] getCol(int index) {
-        Cube[] column = new Cube[9];
+    public Cube[] getXPlate(int index) {
+        Cube[] plate = new Cube[9];
         int i = 0;
         for (int y = 0; y < 3; y++)
             for (int z = 0; z < 3; z++)
-                column[i++] = cubes[buffer[index][y][z]];
+                plate[i++] = cubes[buffer[index][y][z]];
 
-        return column;
+        return plate;
+    }
+
+    public Cube[] getZPlate(int index) {
+        Cube[] plate = new Cube[9];
+        int i = 0;
+        for (int y = 0; y < 3; y++)
+            for (int x = 0; x < 3; x++)
+                plate[i++] = cubes[buffer[x][y][index]];
+
+        return plate;
+    }
+
+    private void generateRubicCube(float space) {
+        int i = 0;
+        for (int y = 0; y < 3; y++)
+            for (int z = 0; z < 3; z++)
+                for (int x = 0; x < 3; x++) {
+                    buffer[x][y][z] = x + (z * 3) + (y * 9);
+                    float xf = (x - 1) * (2f + space);
+                    float yf = (y - 1) * (2f + space);
+                    float zf = (1 - z) * (2f + space);
+                    cubes[i++] = new Cube(i - 1, new Vec3Df(xf, yf, zf));
+                }
+    }
+
+    private void generateStateValues(State[] array) {
+        for(int i = 0; i < array.length;i++) {
+            array[i] = new State();
+        }
     }
 
     public Cube[] getCubes() {
         return cubes;
     }
 
-    public int getColRot(int colIndex) {
-        return colRots[colIndex];
+    public int getXRot(int yIndex) {
+        return xRots[yIndex];
     }
 
-    public int getRowRot(int rowIndex) {
-        return rowRots[rowIndex];
+    public int getYRot(int xIndex) {
+        return yRots[xIndex];
     }
 
-    public void setRowRot(int rowIndex, int value) {
-        rowRots[rowIndex] = value;
+    public int getZRot(int zIndex) {
+        return zRots[zIndex];
     }
 
-    public void setColRot(int colIndex, int value) {
-        colRots[colIndex] = value;
+    public void setYRot(int yIndex, int value) {
+        yRots[yIndex] = value;
+    }
+
+    public void setXRot(int xIndex, int value) {
+        xRots[xIndex] = value;
+    }
+
+    public void setZRot(int zIndex, int value) {
+        zRots[zIndex] = value;
     }
 }
