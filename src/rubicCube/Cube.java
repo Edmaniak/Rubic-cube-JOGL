@@ -1,57 +1,25 @@
 package rubicCube;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLAutoDrawable;
+
 import java.util.Random;
+
+import static com.jogamp.opengl.GL2ES3.GL_QUADS;
 
 public class Cube {
 
     private final int index;
     private Vec3Df position;
-    private final float r;
-    private final float g;
-    private final float b;
-    private Random rand = new Random();
-    private Rotation rotation = new Rotation();
+    private final Vec3Df originalPosition;
+    private final Rotation rotation = new Rotation();
+    private float size;
 
-    public Cube(int index, Vec3Df position) {
+    public Cube(int index, Vec3Df position, float size) {
         this.index = index;
+        this.size = size;
         this.position = new Vec3Df(position);
-        if (index == 0) {
-            this.r = 1;
-            this.g = 0;
-            this.b = 0;
-        } else if (index == 1) {
-            this.r = 0;
-            this.g = 0;
-            this.b = 1;
-        } else if (index == 2) {
-            this.r = 0;
-            this.g = 1;
-            this.b = 1;
-        } else if (index == 2) {
-            this.r = 0;
-            this.g = 1;
-            this.b = 1;
-        } else if (index == 12) {
-            this.r = 0;
-            this.g = 0;
-            this.b = 0;
-        } else if (index == 18) {
-            this.r = 1;
-            this.g = 1;
-            this.b = 0;
-        } else {
-            this.r = rand.nextFloat();
-            this.g = rand.nextFloat();
-            this.b = rand.nextFloat();
-        }
-    }
-
-    public Cube(Cube cube) {
-        this.index = cube.index;
-        this.position = new Vec3Df(cube.position);
-        this.r = cube.r;
-        this.g = cube.g;
-        this.b = cube.b;
+        this.originalPosition = new Vec3Df(position);
     }
 
     public int getIndex() {
@@ -70,16 +38,63 @@ public class Cube {
         return position.getZ();
     }
 
-    public float getR() {
-        return r;
+    public void render(GL2 gl) {
+        gl.glBegin(GL_QUADS);
+        // front red
+        gl.glColor3f(1, 0, 0);
+        gl.glVertex3f(-size / 2, -size / 2, size / 2);
+        gl.glVertex3f(-size / 2, -size / 2, -size / 2);
+        gl.glVertex3f(-size / 2, size / 2, -size / 2);
+        gl.glVertex3f(-size / 2, size / 2, size / 2);
+        // back blu
+        gl.glColor3f(0, 1, 0);
+        gl.glVertex3f(size / 2, -size / 2, -size / 2);
+        gl.glVertex3f(size / 2, -size / 2, size / 2);
+        gl.glVertex3f(size / 2, size / 2, size / 2);
+        gl.glVertex3f(size / 2, size / 2, -size / 2);
+        // right
+        gl.glColor3f(0, 0, 1);
+        gl.glVertex3f(-size / 2, -size / 2, -size / 2);
+        gl.glVertex3f(size / 2, -size / 2, -size / 2);
+        gl.glVertex3f(size / 2, size / 2, -size / 2);
+        gl.glVertex3f(-size / 2, size / 2, -size / 2);
+        // left
+        gl.glColor3f(1, 1, 0);
+        gl.glVertex3f(size / 2, -size / 2, size / 2);
+        gl.glVertex3f(-size / 2, -size / 2, size / 2);
+        gl.glVertex3f(-size / 2, size / 2, size / 2);
+        gl.glVertex3f(size / 2, size / 2, size / 2);
+        // top
+        gl.glColor3f(0, 1, 1);
+        gl.glVertex3f(-size / 2, size / 2, size / 2);
+        gl.glVertex3f(-size / 2, size / 2, -size / 2);
+        gl.glVertex3f(size / 2, size / 2, -size / 2);
+        gl.glVertex3f(size / 2, size / 2, size / 2);
+        // bottom
+        gl.glColor3f(1, 0, 1);
+        gl.glVertex3f(-size / 2, -size / 2, size / 2);
+        gl.glVertex3f(-size / 2, -size / 2, -size / 2);
+        gl.glVertex3f(size / 2, -size / 2, -size / 2);
+        gl.glVertex3f(size / 2, -size / 2, size / 2);
+
+        gl.glEnd();
     }
 
-    public float getG() {
-        return g;
-    }
+    private void generateColor() {
+        //front
 
-    public float getB() {
-        return b;
+        //back
+
+        // left side
+        if (originalPosition.getX() == -size) {
+
+        }
+        // right side
+
+        // top
+
+        // bottom
+
     }
 
     public Rotation getRotation() {

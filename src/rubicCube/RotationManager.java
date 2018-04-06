@@ -2,31 +2,31 @@ package rubicCube;
 
 public class RotationManager {
 
-    private Boolean isRotatingX = new Boolean(false);
-    private Boolean isRotatingY = new Boolean(false);
-    private Boolean isRotatingZ = new Boolean(false);
+    private Status isRotatingX = Status.IDLE;
+    private Status isRotatingY = Status.IDLE;
+    private Status isRotatingZ = Status.IDLE;
 
-    public Boolean getIsRotatingX() {
+    public Status getIsRotatingX() {
         return isRotatingX;
     }
 
-    public Boolean getIsRotatingY() {
+    public Status getIsRotatingY() {
         return isRotatingY;
     }
 
-    public Boolean getIsRotatingZ() {
+    public Status getIsRotatingZ() {
         return isRotatingZ;
     }
 
     public boolean canRotateX() {
-        return (isRotatingY && isRotatingZ) == false;
+        return (isRotatingY == Status.IDLE && isRotatingZ == Status.IDLE);
     }
 
     public boolean canRotateY() {
-        return (isRotatingX && isRotatingZ) == false;
+        return (isRotatingX == Status.IDLE && isRotatingZ == Status.IDLE);
     }
 
     public boolean canRotateZ() {
-        return (isRotatingX && isRotatingY) == false;
+        return (isRotatingX == Status.IDLE && isRotatingY == Status.IDLE);
     }
 }

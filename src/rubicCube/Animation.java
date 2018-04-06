@@ -7,28 +7,32 @@ import java.util.concurrent.Callable;
 public class Animation {
 
     private int target;
-    private int state;
     private boolean play;
     private int direction = 1;
     private Callable<Void> callWhenStopped;
-    private Boolean rotating;
+    private State state;
+    private Status groupRotating;
 
-    public Animation(int target, Boolean rotating) {
+    public Animation(int target, State state, Status groupRotating) {
         this.target = target;
-        this.rotating = rotating;
+        this.state = state;
+        this.groupRotating = groupRotating;
     }
 
     public void positive(Callable<Void> func) {
-        launch(func);
-        direction = 1;
-        state++;
-
+        if (state.getStatus() == Status.IDLE && groupRotating == Status.IDLE) {
+            launch(func);
+            direction = 1;
+            state.increase();
+        }
     }
 
     public void negative(Callable<Void> func) {
-        launch(func);
-        state--;
-        direction = -1;
+        if (state.getStatus() == Status.IDLE && groupRotating == Status.IDLE) {
+            launch(func);
+            state.decrease();
+            direction = -1;
+        }
 
     }
 
@@ -40,23 +44,25 @@ public class Animation {
             JOptionPane.showConfirmDialog(App.frame, "Nebyla přiřazena funkce po rotaci", "FATAL ERROR", JOptionPane.ERROR_MESSAGE);
         }
         play = false;
-        state = 0;
+        state.zero();
+        state.setStatus(Status.IDLE);
+        groupRotating = Status.IDLE;
     }
 
-    public int animate() {
+    public void animate() {
         if (callWhenStopped == null)
-            return state;
-        if (play && state % target != 0)
-            state += (1 * direction);
+            return;
+        if (play && state.getValue() % target != 0)
+            state.increase(direction);
         else
             stop();
-        return state;
     }
 
     private void launch(Callable<Void> func) {
         play = true;
         callWhenStopped = func;
-        rotating = true;
+        state.setStatus(Status.RUNNING);
+        groupRotating = Status.RUNNING;
     }
 
 

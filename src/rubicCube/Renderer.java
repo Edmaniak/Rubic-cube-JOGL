@@ -30,7 +30,7 @@ public class Renderer implements GLEventListener, MouseListener,
     GLUT glut;
     GLU glu;
     int dx, dy, ox, oy;
-    RubicCube rubicCube = new RubicCube(0.5f);
+    RubicCube rubicCube = new RubicCube(0.5f, 2);
     float m[] = new float[16];
 
     private Animation y0Anim;
@@ -51,17 +51,17 @@ public class Renderer implements GLEventListener, MouseListener,
 
         rotManager = new RotationManager();
 
-        y0Anim = new Animation(90, rotManager.getIsRotatingY());
-        y1Anim = new Animation(90, rotManager.getIsRotatingY());
-        y2Anim = new Animation(90, rotManager.getIsRotatingY());
+        y0Anim = new Animation(90, rubicCube.getYRot(0), rotManager.getIsRotatingY());
+        y1Anim = new Animation(90, rubicCube.getYRot(1), rotManager.getIsRotatingY());
+        y2Anim = new Animation(90, rubicCube.getYRot(2), rotManager.getIsRotatingY());
 
-        x0Anim = new Animation(90, rotManager.getIsRotatingX());
-        x1Anim = new Animation(90, rotManager.getIsRotatingX());
-        x2Anim = new Animation(90, rotManager.getIsRotatingX());
+        x0Anim = new Animation(90, rubicCube.getXRot(0), rotManager.getIsRotatingX());
+        x1Anim = new Animation(90, rubicCube.getXRot(1), rotManager.getIsRotatingX());
+        x2Anim = new Animation(90, rubicCube.getXRot(2), rotManager.getIsRotatingX());
 
-        z0Anim = new Animation(90, rotManager.getIsRotatingZ());
-        z1Anim = new Animation(90, rotManager.getIsRotatingZ());
-        z2Anim = new Animation(90, rotManager.getIsRotatingZ());
+        z0Anim = new Animation(90, rubicCube.getZRot(0), rotManager.getIsRotatingZ());
+        z1Anim = new Animation(90, rubicCube.getZRot(1), rotManager.getIsRotatingZ());
+        z2Anim = new Animation(90, rubicCube.getZRot(2), rotManager.getIsRotatingZ());
 
     }
 
@@ -128,46 +128,46 @@ public class Renderer implements GLEventListener, MouseListener,
 
             for (Cube cubeInRow : rubicCube.getYPlate(2))
                 if (cube.getIndex() == cubeInRow.getIndex()) {
-                    gl.glRotatef(rubicCube.getYRot(2), 0, 1, 0);
+                    gl.glRotatef(rubicCube.getYRot(2).getValue(), 0, 1, 0);
                 }
 
             for (Cube cubeInRow : rubicCube.getYPlate(1))
                 if (cube.getIndex() == cubeInRow.getIndex())
-                    gl.glRotatef(rubicCube.getYRot(1), 0, 1, 0);
+                    gl.glRotatef(rubicCube.getYRot(1).getValue(), 0, 1, 0);
 
             for (Cube cubeInRow : rubicCube.getYPlate(0))
                 if (cube.getIndex() == cubeInRow.getIndex()) {
-                    gl.glRotatef(rubicCube.getYRot(0), 0, 1, 0);
+                    gl.glRotatef(rubicCube.getYRot(0).getValue(), 0, 1, 0);
                 }
 
             for (Cube cubeInCol : rubicCube.getXPlate(2))
                 if (cube.getIndex() == cubeInCol.getIndex()) {
-                    gl.glRotatef(rubicCube.getXRot(2), 1, 0, 0);
+                    gl.glRotatef(rubicCube.getXRot(2).getValue(), 1, 0, 0);
                 }
 
             for (Cube cubeInCol : rubicCube.getXPlate(1))
                 if (cube.getIndex() == cubeInCol.getIndex()) {
-                    gl.glRotatef(rubicCube.getXRot(1), 1, 0, 0);
+                    gl.glRotatef(rubicCube.getXRot(1).getValue(), 1, 0, 0);
                 }
 
             for (Cube cubeInCol : rubicCube.getXPlate(0))
                 if (cube.getIndex() == cubeInCol.getIndex()) {
-                    gl.glRotatef(rubicCube.getXRot(0), 1, 0, 0);
+                    gl.glRotatef(rubicCube.getXRot(0).getValue(), 1, 0, 0);
                 }
 
             for (Cube cubeInC : rubicCube.getZPlate(2))
                 if (cube.getIndex() == cubeInC.getIndex()) {
-                    gl.glRotatef(rubicCube.getZRot(2), 0, 0, 1);
+                    gl.glRotatef(rubicCube.getZRot(2).getValue(), 0, 0, 1);
                 }
 
             for (Cube cubeInC : rubicCube.getZPlate(1))
                 if (cube.getIndex() == cubeInC.getIndex()) {
-                    gl.glRotatef(rubicCube.getZRot(1), 0, 0, 1);
+                    gl.glRotatef(rubicCube.getZRot(1).getValue(), 0, 0, 1);
                 }
 
             for (Cube cubeInC : rubicCube.getZPlate(0))
                 if (cube.getIndex() == cubeInC.getIndex()) {
-                    gl.glRotatef(rubicCube.getZRot(0), 0, 0, 1);
+                    gl.glRotatef(rubicCube.getZRot(0).getValue(), 0, 0, 1);
                 }
 
             gl.glTranslatef(cube.getX(), cube.getY(), cube.getZ());
@@ -176,8 +176,7 @@ public class Renderer implements GLEventListener, MouseListener,
             if (cube.getIndex() != -1) {
                 if (App.debug)
                     drawAxis(gl, 5);
-                gl.glColor3f(cube.getR(), cube.getG(), cube.getB());
-                glut.glutSolidCube(2);
+                cube.render(gl);
             }
 
             gl.glPopMatrix();
@@ -193,17 +192,17 @@ public class Renderer implements GLEventListener, MouseListener,
     }
 
     private void handleAnimation() {
-        rubicCube.setYRot(0, y0Anim.animate());
-        rubicCube.setYRot(1, y1Anim.animate());
-        rubicCube.setYRot(2, y2Anim.animate());
+        y0Anim.animate();
+        y1Anim.animate();
+        y2Anim.animate();
 
-        rubicCube.setXRot(0, x0Anim.animate());
-        rubicCube.setXRot(1, x1Anim.animate());
-        rubicCube.setXRot(2, x2Anim.animate());
+        x0Anim.animate();
+        x1Anim.animate();
+        x2Anim.animate();
 
-        rubicCube.setZRot(0, z0Anim.animate());
-        rubicCube.setZRot(1, z1Anim.animate());
-        rubicCube.setZRot(2, z2Anim.animate());
+        z0Anim.animate();
+        z1Anim.animate();
+        z2Anim.animate();
 
     }
 

@@ -3,21 +3,38 @@ package rubicCube;
 public class State {
 
     private int value;
-    private boolean changing;
+    private Status status = Status.IDLE;
+
 
     public int getValue() {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public Status getStatus() {
+        return status;
     }
 
-    public boolean isChanging() {
-        return changing;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public void setChanging(boolean changing) {
-        this.changing = changing;
+    public void increase() {
+        value++;
+    }
+
+    public void decrease() {
+        value--;
+    }
+
+    public void increase(int amount) {
+        value += amount;
+    }
+
+    public void decrease(int amount) {
+        value -= amount;
+    }
+
+    public void zero() {
+        value = 0;
     }
 }

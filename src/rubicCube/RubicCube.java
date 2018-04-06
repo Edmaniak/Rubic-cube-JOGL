@@ -11,9 +11,16 @@ public class RubicCube {
     private final State[] yRots = new State[3];
     private final State[] zRots = new State[3];
 
-    public RubicCube(float space) {
-        generateRubicCube(space);
+    private float space;
+    private float cubeSize;
+
+    public RubicCube(float space, float cubeSize) {
+        generateRubicCube(space, cubeSize);
         generateStateValues(xRots);
+        generateStateValues(yRots);
+        generateStateValues(zRots);
+        this.space = space;
+        this.cubeSize = cubeSize;
     }
 
 
@@ -178,21 +185,21 @@ public class RubicCube {
         return plate;
     }
 
-    private void generateRubicCube(float space) {
+    private void generateRubicCube(float space, float cubeSize) {
         int i = 0;
         for (int y = 0; y < 3; y++)
             for (int z = 0; z < 3; z++)
                 for (int x = 0; x < 3; x++) {
                     buffer[x][y][z] = x + (z * 3) + (y * 9);
-                    float xf = (x - 1) * (2f + space);
-                    float yf = (y - 1) * (2f + space);
-                    float zf = (1 - z) * (2f + space);
-                    cubes[i++] = new Cube(i - 1, new Vec3Df(xf, yf, zf));
+                    float xf = (x - 1) * (cubeSize + space);
+                    float yf = (y - 1) * (cubeSize + space);
+                    float zf = (1 - z) * (cubeSize + space);
+                    cubes[i++] = new Cube(i - 1, new Vec3Df(xf, yf, zf), cubeSize);
                 }
     }
 
     private void generateStateValues(State[] array) {
-        for(int i = 0; i < array.length;i++) {
+        for (int i = 0; i < array.length; i++) {
             array[i] = new State();
         }
     }
@@ -201,27 +208,17 @@ public class RubicCube {
         return cubes;
     }
 
-    public int getXRot(int yIndex) {
+    public State getXRot(int yIndex) {
         return xRots[yIndex];
     }
 
-    public int getYRot(int xIndex) {
+    public State getYRot(int xIndex) {
         return yRots[xIndex];
     }
 
-    public int getZRot(int zIndex) {
+    public State getZRot(int zIndex) {
         return zRots[zIndex];
     }
 
-    public void setYRot(int yIndex, int value) {
-        yRots[yIndex] = value;
-    }
 
-    public void setXRot(int xIndex, int value) {
-        xRots[xIndex] = value;
-    }
-
-    public void setZRot(int zIndex, int value) {
-        zRots[zIndex] = value;
-    }
 }
