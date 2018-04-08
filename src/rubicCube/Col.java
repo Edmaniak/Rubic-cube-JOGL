@@ -34,6 +34,21 @@ public class Col {
 
     @Override
     public String toString() {
+        if (r == 1 && g == 0 && b == 0)
+            return "RED";
+        if (r == 0 && g == 1 && b == 0)
+            return "GREEN";
+        if (r == 0 && g == 0 && b == 1)
+            return "BLUE";
+        if (r == 1 && g == 1 && b == 1)
+            return "WHITE";
+        if (r == 1 && g == 1 && b == 0)
+            return "YELLOW";
+        if (r == 0 && g == 1 && b == 1)
+            return "CYAN";
+        if (r == 1 && g == 0 && b == 1)
+            return "MAGENTA";
+
         return "R: " + r + "G: " + g + "B: " + b;
     }
 }

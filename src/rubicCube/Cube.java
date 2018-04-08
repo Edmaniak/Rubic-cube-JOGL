@@ -136,7 +136,7 @@ public class Cube {
     }
 
     public void rotateX(Direction direction) {
-        colorTopology.rotateY(direction);
+        colorTopology.rotateX(direction);
     }
 
     public void rotateY(Direction direction) {

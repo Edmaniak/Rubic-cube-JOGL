@@ -81,7 +81,7 @@ public class ColorTopology {
             sides[array[i + 1]].setColor(tempSides[array[i]].getColor());
             array[i + 1] = array[i];
         }
-        sides[array[0]] = tempSides[temp];
+        sides[array[0]].setColor(tempSides[temp].getColor());
         array[0] = temp;
     }
 
@@ -92,7 +92,7 @@ public class ColorTopology {
             sides[array[i]].setColor(tempSides[array[i + 1]].getColor());
             array[i] = array[i + 1];
         }
-        sides[array[array.length - 1]] = tempSides[temp];
+        sides[array[array.length - 1]].setColor(tempSides[temp].getColor());
         array[array.length - 1] = temp;
     }
 
@@ -118,10 +118,10 @@ public class ColorTopology {
     public void rotateX(Direction direction) {
         switch (direction) {
             case THERE:
-                shiftNegativeLeft(bufferX);
+                shiftPositiveRight(bufferX);
                 break;
             case BACK:
-                shiftPositiveRight(bufferX);
+                shiftNegativeLeft(bufferX);
                 break;
         }
     }
