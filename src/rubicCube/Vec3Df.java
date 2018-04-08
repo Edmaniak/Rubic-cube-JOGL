@@ -2,7 +2,6 @@ package rubicCube;
 
 public class Vec3Df {
 
-
     private final float x;
     private final float y;
     private final float z;

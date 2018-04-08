@@ -10,7 +10,13 @@ public class Rotation {
 
     }
 
-    public void rotateWithRow(Direction direction) {
+    public Rotation(Rotation rotation) {
+        this.rotY = rotation.rotY;
+        this.rotZ = rotation.rotZ;
+        this.rotX = rotation.rotX;
+    }
+
+    public void rotateY(Direction direction) {
         switch (direction) {
             case RIGHT:
                 rotY += 90;
@@ -25,7 +31,7 @@ public class Rotation {
         }
     }
 
-    public void rotateWithColumn(Direction direction) {
+    public void rotateX(Direction direction) {
         switch (direction) {
             case BACK:
                 rotX += 90;
@@ -64,6 +70,14 @@ public class Rotation {
 
     public int getRotY() {
         return rotY;
+    }
+
+    public int getRotX() {
+        return rotX;
+    }
+
+    public int getRotZ() {
+        return rotZ;
     }
 
     @Override

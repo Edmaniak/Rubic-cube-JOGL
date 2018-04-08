@@ -32,7 +32,7 @@ public class RubicCube {
 
         Cube[] colCubes = getXPlate(column);
         for (int c = 0; c < colCubes.length; c++)
-            colCubes[c].getRotation().rotateWithColumn(direction);
+            colCubes[c].getRotation().rotateX(direction);
 
         for (int y = 0; y < 3; y++)
             for (int z = 0; z < 3; z++)
@@ -63,25 +63,25 @@ public class RubicCube {
         return null;
     }
 
-    public Void rotateY(int row, Direction direction) {
+    public Void rotateY(int y, Direction direction) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
         Cube[] tempCubes = generateTempCubes();
 
-        Cube[] rowCubes = getYPlate(row);
-        for (int c = 0; c < rowCubes.length; c++)
-            rowCubes[c].getRotation().rotateWithRow(direction);
+        Cube[] yCubes = getYPlate(y);
+        for (int c = 0; c < yCubes.length; c++)
+            yCubes[c].getRotation().rotateY(direction);
 
 
         for (int x = 0; x < 3; x++)
             for (int z = 0; z < 3; z++)
                 switch (direction) {
                     case LEFT:
-                        cubes[buffer[x][row][z]].setPosition(tempCubes[tempBuffer[z][row][2 - x]]);
+                        cubes[buffer[x][y][z]].setPosition(tempCubes[tempBuffer[z][y][2 - x]]);
                         break;
                     case RIGHT:
-                        cubes[buffer[x][row][z]].setPosition(tempCubes[tempBuffer[2 - z][row][x]]);
+                        cubes[buffer[x][y][z]].setPosition(tempCubes[tempBuffer[2 - z][y][x]]);
                         break;
                 }
 
@@ -90,15 +90,15 @@ public class RubicCube {
             for (int z = 0; z < 3; z++)
                 switch (direction) {
                     case LEFT:
-                        buffer[z][row][2 - x] = tempBuffer[x][row][z];
+                        buffer[z][y][2 - x] = tempBuffer[x][y][z];
                         break;
                     case RIGHT:
-                        buffer[2 - z][row][x] = tempBuffer[x][row][z];
+                        buffer[2 - z][y][x] = tempBuffer[x][y][z];
                         break;
                 }
 
-        for (int d = 0; d < rowCubes.length; d++) {
-            System.out.println("Cube " + rowCubes[d].getIndex() + " => " + rowCubes[d]);
+        for (int d = 0; d < yCubes.length; d++) {
+            System.out.println("Cube " + yCubes[d].getIndex() + " => " + yCubes[d]);
         }
         System.out.println(Arrays.deepToString(buffer));
 
@@ -194,7 +194,7 @@ public class RubicCube {
                     float xf = (x - 1) * (cubeSize + space);
                     float yf = (y - 1) * (cubeSize + space);
                     float zf = (1 - z) * (cubeSize + space);
-                    cubes[i++] = new Cube(i - 1, new Vec3Df(xf, yf, zf), cubeSize);
+                    cubes[i++] = new Cube(i - 1, new Vec3Df(xf, yf, zf), cubeSize, space);
                 }
     }
 

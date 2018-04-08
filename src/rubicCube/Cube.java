@@ -1,9 +1,6 @@
 package rubicCube;
 
 import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.GLAutoDrawable;
-
-import java.util.Random;
 
 import static com.jogamp.opengl.GL2ES3.GL_QUADS;
 
@@ -12,14 +9,29 @@ public class Cube {
     private final int index;
     private Vec3Df position;
     private final Vec3Df originalPosition;
-    private final Rotation rotation = new Rotation();
+    private final Rotation rotation;
     private float size;
+    private float space;
+    private ColorTopology colorTopology;
 
-    public Cube(int index, Vec3Df position, float size) {
+    public Cube(int index, Vec3Df position, float size, float space) {
         this.index = index;
         this.size = size;
+        this.space = space;
         this.position = new Vec3Df(position);
         this.originalPosition = new Vec3Df(position);
+        this.colorTopology = new ColorTopology(generateColors());
+        this.rotation = new Rotation();
+    }
+
+    public Cube(Cube cube) {
+        this.index = cube.getIndex();
+        this.size = cube.getSize();
+        this.space = cube.getSpace();
+        this.position = new Vec3Df(cube.getPosition());
+        this.originalPosition = new Vec3Df(cube.getPosition());
+        this.rotation = new Rotation(cube.getRotation());
+        this.colorTopology = new ColorTopology(cube.getColorTopology());
     }
 
     public int getIndex() {
@@ -39,39 +51,47 @@ public class Cube {
     }
 
     public void render(GL2 gl) {
+
         gl.glBegin(GL_QUADS);
-        // front red
-        gl.glColor3f(1, 0, 0);
+
+        // LEFT
+        Col leftColor = colorTopology.getLeftColor();
+        gl.glColor3f(leftColor.getR(), leftColor.getG(), leftColor.getB());
         gl.glVertex3f(-size / 2, -size / 2, size / 2);
         gl.glVertex3f(-size / 2, -size / 2, -size / 2);
         gl.glVertex3f(-size / 2, size / 2, -size / 2);
         gl.glVertex3f(-size / 2, size / 2, size / 2);
-        // back blu
-        gl.glColor3f(0, 1, 0);
+        // RIGHT
+        Col rightColor = colorTopology.getRightColor();
+        gl.glColor3f(rightColor.getR(), rightColor.getG(), rightColor.getB());
         gl.glVertex3f(size / 2, -size / 2, -size / 2);
         gl.glVertex3f(size / 2, -size / 2, size / 2);
         gl.glVertex3f(size / 2, size / 2, size / 2);
         gl.glVertex3f(size / 2, size / 2, -size / 2);
-        // right
-        gl.glColor3f(0, 0, 1);
+        // BACK
+        Col backColor = colorTopology.getBackColor();
+        gl.glColor3f(backColor.getR(), backColor.getG(), backColor.getB());
         gl.glVertex3f(-size / 2, -size / 2, -size / 2);
         gl.glVertex3f(size / 2, -size / 2, -size / 2);
         gl.glVertex3f(size / 2, size / 2, -size / 2);
         gl.glVertex3f(-size / 2, size / 2, -size / 2);
-        // left
-        gl.glColor3f(1, 1, 0);
+        // FRONT
+        Col frontColor = colorTopology.getFrontColor();
+        gl.glColor3f(frontColor.getR(), frontColor.getG(), frontColor.getB());
         gl.glVertex3f(size / 2, -size / 2, size / 2);
         gl.glVertex3f(-size / 2, -size / 2, size / 2);
         gl.glVertex3f(-size / 2, size / 2, size / 2);
         gl.glVertex3f(size / 2, size / 2, size / 2);
-        // top
-        gl.glColor3f(0, 1, 1);
+        // TOP
+        Col topColor = colorTopology.getTopColor();
+        gl.glColor3f(topColor.getR(), topColor.getG(), topColor.getB());
         gl.glVertex3f(-size / 2, size / 2, size / 2);
         gl.glVertex3f(-size / 2, size / 2, -size / 2);
         gl.glVertex3f(size / 2, size / 2, -size / 2);
         gl.glVertex3f(size / 2, size / 2, size / 2);
-        // bottom
-        gl.glColor3f(1, 0, 1);
+        // BOTTOM
+        Col bottomColor = colorTopology.getBottomColor();
+        gl.glColor3f(bottomColor.getR(), bottomColor.getG(), bottomColor.getB());
         gl.glVertex3f(-size / 2, -size / 2, size / 2);
         gl.glVertex3f(-size / 2, -size / 2, -size / 2);
         gl.glVertex3f(size / 2, -size / 2, -size / 2);
@@ -80,20 +100,34 @@ public class Cube {
         gl.glEnd();
     }
 
-    private void generateColor() {
-        //front
+    private ColorTopology generateColors() {
+        ColorTopology colorTopology = new ColorTopology();
+        // GREEN FRONT
+        if (originalPosition.getZ() == getSizeWithSpace())
+            colorTopology.setFrontColor(new Col(0, 1, 0));
 
-        //back
+        // BLUE BACK
+        if (originalPosition.getZ() == -getSizeWithSpace())
+            colorTopology.setBackColor(new Col(0, 0, 1));
 
-        // left side
-        if (originalPosition.getX() == -size) {
+        // YELLOW LEFT
+        if (originalPosition.getX() == -getSizeWithSpace())
+            colorTopology.setLeftColor(new Col(1, 1, 0));
 
-        }
-        // right side
+        // ORANGE RIGHT
+        if (originalPosition.getX() == getSizeWithSpace())
+            colorTopology.setRightColor(new Col(1, 0.5f, 0));
 
-        // top
+        // RED TOP
+        if (originalPosition.getY() == getSizeWithSpace())
+            colorTopology.setTopColor(new Col(1, 0, 0));
 
-        // bottom
+        // WHITE BOTTOM
+        if (originalPosition.getY() == -getSizeWithSpace())
+            colorTopology.setBottomColor(new Col(1, 1, 1));
+
+
+        return colorTopology;
 
     }
 
@@ -101,12 +135,16 @@ public class Cube {
         return rotation;
     }
 
-    public Vec3D getRotVecForRow() {
-        return rotation.getRotVecForRow();
+    public void rotateX(Direction direction) {
+        colorTopology.rotateY(direction);
     }
 
-    public Vec3D getRotCol() {
-        return rotation.getRotVecForCol();
+    public void rotateY(Direction direction) {
+        colorTopology.rotateY(direction);
+    }
+
+    public void rotateZ(Direction direction) {
+        colorTopology.rotateZ(direction);
     }
 
     public Vec3Df getPosition() {
@@ -124,5 +162,21 @@ public class Cube {
     @Override
     public String toString() {
         return "Cube" + getIndex();
+    }
+
+    public float getSize() {
+        return size;
+    }
+
+    public float getSizeWithSpace() {
+        return size + space;
+    }
+
+    public float getSpace() {
+        return space;
+    }
+
+    public ColorTopology getColorTopology() {
+        return colorTopology;
     }
 }

@@ -7,14 +7,13 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 import utils.OglUtils;
 
+import java.awt.event.*;
 
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
-
-import static com.jogamp.opengl.GL.GL_LINES;
+import static com.jogamp.opengl.GL.*;
+import static com.jogamp.opengl.GL2ES1.GL_POINT_SMOOTH;
+import static com.jogamp.opengl.GL2ES1.GL_POINT_SMOOTH_HINT;
+import static com.jogamp.opengl.GL2GL3.GL_POLYGON_SMOOTH;
+import static com.jogamp.opengl.GL2GL3.GL_POLYGON_SMOOTH_HINT;
 
 /**
  * trida pro zobrazeni sceny v OpenGL:
@@ -30,7 +29,7 @@ public class Renderer implements GLEventListener, MouseListener,
     GLUT glut;
     GLU glu;
     int dx, dy, ox, oy;
-    RubicCube rubicCube = new RubicCube(0.5f, 2);
+    RubicCube rubicCube = new RubicCube(0.5f, 3);
     float m[] = new float[16];
 
     private Animation y0Anim;
@@ -85,6 +84,10 @@ public class Renderer implements GLEventListener, MouseListener,
         gl.glDisable(GL2.GL_CULL_FACE);
         gl.glDisable(GL2.GL_TEXTURE_2D);
         gl.glDisable(GL2.GL_LIGHTING);
+        gl.glEnable(GL2.GL_LINE_SMOOTH);
+        gl.glEnable(GL2.GL_POLYGON_SMOOTH);
+        gl.glHint(GL2.GL_POLYGON_SMOOTH_HINT, GL2.GL_NICEST);
+
 
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
@@ -169,6 +172,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 if (cube.getIndex() == cubeInC.getIndex()) {
                     gl.glRotatef(rubicCube.getZRot(0).getValue(), 0, 0, 1);
                 }
+
 
             gl.glTranslatef(cube.getX(), cube.getY(), cube.getZ());
 
@@ -354,11 +358,6 @@ public class Renderer implements GLEventListener, MouseListener,
                 if (rotManager.canRotateZ())
                     z0Anim.negative(() -> rubicCube.rotateZ(0, Direction.RIGHT));
                 break;
-
-            case KeyEvent.VK_F1:
-                App.debug = !App.debug;
-                break;
-
         }
     }
 
