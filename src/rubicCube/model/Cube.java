@@ -1,6 +1,7 @@
-package rubicCube;
+package rubicCube.model;
 
 import com.jogamp.opengl.GL2;
+import rubicCube.*;
 
 import static com.jogamp.opengl.GL2ES3.GL_QUADS;
 

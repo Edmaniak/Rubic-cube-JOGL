@@ -1,4 +1,7 @@
-package rubicCube;
+package rubicCube.model;
+
+import rubicCube.Col;
+import rubicCube.Topology;
 
 public class Side {
     private Col color;

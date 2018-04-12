@@ -1,6 +1,10 @@
-package rubicCube;
+package rubicCube.model;
 
-import java.util.Arrays;
+import rubicCube.Direction;
+import rubicCube.State;
+import rubicCube.Vec3Df;
+
+import java.util.Random;
 
 public class RubicCube {
 
@@ -11,28 +15,26 @@ public class RubicCube {
     private final State[] yRots = new State[3];
     private final State[] zRots = new State[3];
 
+    public static final int SHUFFLE_PARAMETER = 20;
+
     private float space;
     private float cubeSize;
 
     public RubicCube(float space, float cubeSize) {
-
-        generateStateValues(xRots);
-        generateStateValues(yRots);
-        generateStateValues(zRots);
-        generateRubicCube(space, cubeSize);
-
-        this.space = space;
-        this.cubeSize = cubeSize;
+        generateNew(space, cubeSize);
     }
 
+    public RubicCube() {
+        this(0, 0);
+    }
 
-    public Void rotateX(int column, Direction direction) {
+    public Void rotateX(int x, Direction direction) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
         Cube[] tempCubes = generateTempCubes();
 
-        Cube[] colCubes = getXPlate(column);
+        Cube[] colCubes = getXPlate(x);
         for (int c = 0; c < colCubes.length; c++)
             colCubes[c].rotateX(direction);
 
@@ -40,10 +42,10 @@ public class RubicCube {
             for (int z = 0; z < 3; z++)
                 switch (direction) {
                     case THERE:
-                        cubes[buffer[column][y][z]].setPosition(tempCubes[tempBuffer[column][2 - z][y]].getPosition());
+                        cubes[buffer[x][y][z]].setPosition(tempCubes[tempBuffer[x][2 - z][y]].getPosition());
                         break;
                     case BACK:
-                        cubes[buffer[column][y][z]].setPosition(tempCubes[tempBuffer[column][z][2 - y]].getPosition());
+                        cubes[buffer[x][y][z]].setPosition(tempCubes[tempBuffer[x][z][2 - y]].getPosition());
                         break;
                 }
 
@@ -51,10 +53,10 @@ public class RubicCube {
             for (int z = 0; z < 3; z++)
                 switch (direction) {
                     case THERE:
-                        buffer[column][2 - z][y] = tempBuffer[column][y][z];
+                        buffer[x][2 - z][y] = tempBuffer[x][y][z];
                         break;
                     case BACK:
-                        buffer[column][z][2 - y] = tempBuffer[column][y][z];
+                        buffer[x][z][2 - y] = tempBuffer[x][y][z];
                         break;
                 }
 
@@ -182,7 +184,12 @@ public class RubicCube {
         return plate;
     }
 
-    private void generateRubicCube(float space, float cubeSize) {
+    public void generateNew(float space, float cubeSize) {
+        this.space = space;
+        this.cubeSize = cubeSize;
+        generateStateValues(xRots);
+        generateStateValues(yRots);
+        generateStateValues(zRots);
         int i = 0;
         for (int y = 0; y < 3; y++)
             for (int z = 0; z < 3; z++)
@@ -198,6 +205,25 @@ public class RubicCube {
     private void generateStateValues(State[] array) {
         for (int i = 0; i < array.length; i++) {
             array[i] = new State();
+        }
+    }
+
+    public void shuffle() {
+        Random r = new Random();
+
+        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++) {
+            int y = r.nextInt(2);
+            rotateY(y, Direction.LEFT);
+        }
+
+        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++) {
+            int x = r.nextInt(2);
+            rotateX(x, Direction.LEFT);
+        }
+
+        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++) {
+            int z = r.nextInt(2);
+            rotateZ(z, Direction.LEFT);
         }
     }
 

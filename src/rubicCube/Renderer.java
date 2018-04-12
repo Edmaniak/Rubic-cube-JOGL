@@ -5,15 +5,13 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
+import rubicCube.model.Cube;
+import rubicCube.model.RubicCube;
 import utils.OglUtils;
 
 import java.awt.event.*;
 
 import static com.jogamp.opengl.GL.*;
-import static com.jogamp.opengl.GL2ES1.GL_POINT_SMOOTH;
-import static com.jogamp.opengl.GL2ES1.GL_POINT_SMOOTH_HINT;
-import static com.jogamp.opengl.GL2GL3.GL_POLYGON_SMOOTH;
-import static com.jogamp.opengl.GL2GL3.GL_POLYGON_SMOOTH_HINT;
 
 /**
  * trida pro zobrazeni sceny v OpenGL:
@@ -29,7 +27,10 @@ public class Renderer implements GLEventListener, MouseListener,
     GLUT glut;
     GLU glu;
     int dx, dy, ox, oy;
-    RubicCube rubicCube = new RubicCube(0.5f, 3);
+    long oldmils;
+    long oldFPSmils;
+    double	fps;
+    RubicCube rubicCube = App.getRubicCube();
     float m[] = new float[16];
 
     private Animation y0Anim;
@@ -45,6 +46,8 @@ public class Renderer implements GLEventListener, MouseListener,
     private Animation z2Anim;
 
     private RotationManager rotManager;
+
+    public static float ROTATION_SPEED = 60;
 
     public Renderer() {
 
@@ -103,6 +106,17 @@ public class Renderer implements GLEventListener, MouseListener,
     @Override
     public void display(GLAutoDrawable glDrawable) {
         GL2 gl = glDrawable.getGL().getGL2();
+
+        long mils = System.currentTimeMillis();
+        if ((mils - oldFPSmils)>300){
+            fps = 1000 / (double)(mils - oldmils + 1);
+            oldFPSmils=mils;
+        }
+        //System.out.println(fps);
+        float speed = 60; // pocet stupnu rotace za vterinu
+        float step = speed * (mils - oldmils) / 1000.0f;
+
+
         handleAnimation();
 
         // mazeme image buffer i z-buffer

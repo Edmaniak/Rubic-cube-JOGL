@@ -5,7 +5,6 @@ public class State {
     private int value;
     private Status status = Status.IDLE;
 
-
     public int getValue() {
         return value;
     }

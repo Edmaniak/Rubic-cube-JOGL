@@ -41,7 +41,7 @@ public class Animation {
             callWhenStopped.call();
             callWhenStopped = null;
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(App.frame, "Nebyla přiřazena funkce po rotaci", "FATAL ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(App.mainWindow, "Nebyla přiřazena funkce po rotaci", "FATAL ERROR", JOptionPane.ERROR_MESSAGE);
         }
         play = false;
         state.zero();

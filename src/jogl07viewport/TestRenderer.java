@@ -138,7 +138,7 @@ public class TestRenderer implements GLEventListener, MouseListener,
 		
 		long mils = System.currentTimeMillis();
 		float speed = 60; // pocet stupnu rotace za vterinu
-		// krok za jedno prekresleni (frame)
+		// krok za jedno prekresleni (mainWindow)
 		float step = speed * (mils - oldmils) / 1000.0f; 
 		oldmils = mils;
 

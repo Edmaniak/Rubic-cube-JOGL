@@ -1,5 +1,7 @@
 package rubicCube;
 
+import rubicCube.model.Side;
+
 public class ColorTopology {
 
     public static final float DEFAULT_DARKNESS = 0.1f;
