@@ -16,7 +16,7 @@ public class App {
     public static WinnerWindow winnerFrame;
 
     private static RubicCube rubicCube;
-    private Renderer renderer;
+    private static Renderer renderer;
 
     public App() {
         rubicCube = new RubicCube();
@@ -29,11 +29,13 @@ public class App {
         SwingUtilities.invokeLater(() -> new rubicCube.App());
     }
 
-    public Renderer getRenderer() {
+    public static Renderer getRenderer() {
         return renderer;
     }
 
     public static RubicCube getRubicCube() {
         return rubicCube;
     }
+
+
 }

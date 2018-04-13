@@ -47,7 +47,7 @@ public class Renderer implements GLEventListener, MouseListener,
 
     private RotationManager rotManager;
 
-    public static float ROTATION_SPEED = 60;
+    public static int ROTATION_SPEED = 60;
 
     public Renderer() {
 

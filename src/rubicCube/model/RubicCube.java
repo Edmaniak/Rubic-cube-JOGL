@@ -21,6 +21,9 @@ public class RubicCube {
     private float cubeSize;
 
     public RubicCube(float space, float cubeSize) {
+        generateStateValues(xRots);
+        generateStateValues(yRots);
+        generateStateValues(zRots);
         generateNew(space, cubeSize);
     }
 
@@ -187,9 +190,6 @@ public class RubicCube {
     public void generateNew(float space, float cubeSize) {
         this.space = space;
         this.cubeSize = cubeSize;
-        generateStateValues(xRots);
-        generateStateValues(yRots);
-        generateStateValues(zRots);
         int i = 0;
         for (int y = 0; y < 3; y++)
             for (int z = 0; z < 3; z++)
@@ -200,6 +200,10 @@ public class RubicCube {
                     float zf = (1 - z) * (cubeSize + space);
                     cubes[i++] = new Cube(i - 1, new Vec3Df(xf, yf, zf), cubeSize, space);
                 }
+    }
+
+    public void generateNew() {
+        generateNew(space, cubeSize);
     }
 
     private void generateStateValues(State[] array) {

@@ -61,6 +61,7 @@ public class InitWindow extends JDialog {
 
         title = new JLabel(message);
         title.setFont(h1);
+        title.setBorder(new EmptyBorder(0,0,30,0));
 
         container.add(title, BorderLayout.NORTH);
         container.add(bottom, BorderLayout.SOUTH);

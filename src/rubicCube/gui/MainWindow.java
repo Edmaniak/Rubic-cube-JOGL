@@ -71,17 +71,22 @@ public class MainWindow extends JFrame {
         gui.add(right, BorderLayout.EAST);
         gui.add(left, BorderLayout.WEST);
 
-        JButton shuffle = new JButton("Shuffle");
-
+        JButton shuffle = new JButton("Quick Shuffle");
+        JButton menu = new JButton("Menu");
         JButton reset = new JButton("Reset");
+        reset.addActionListener(e -> App.getRubicCube().generateNew());
+        menu.addActionListener(e -> App.initWindow.setVisible(true));
         JButton debug = new JButton("Debug");
         debug.addActionListener(e -> App.debug = !App.debug);
-        JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 10, 5);
+        JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, App.getRenderer().ROTATION_SPEED);
         JLabel speed = new JLabel("Rotating speed:");
 
+
+        left.add(menu);
         left.add(shuffle);
         left.add(reset);
         left.add(debug);
+
 
         right.add(speed);
         right.add(speedSlider);
