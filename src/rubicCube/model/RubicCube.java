@@ -2,6 +2,7 @@ package rubicCube.model;
 
 import rubicCube.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
 
@@ -18,6 +19,7 @@ public class RubicCube {
     private float space;
     private float cubeSize;
     private int rotationCount;
+    private static Random r = new Random();
 
     public RubicCube(float space, float cubeSize) {
         generateStructure(space, cubeSize);
@@ -157,6 +159,18 @@ public class RubicCube {
         return tempCubes;
     }
 
+    public Cube[] getPlate(Orientation orientation, int index) {
+        switch (orientation) {
+            case X:
+                return getXPlate(index);
+            case Y:
+                return getYPlate(index);
+            case Z:
+                return getZPlate(index);
+        }
+        return null;
+    }
+
     public Cube[] getYPlate(int index) {
         Cube[] plate = new Cube[9];
         int i = 0;
@@ -215,9 +229,8 @@ public class RubicCube {
             segments.add(new Segment(getZPlate(z), Orientation.Z, z));
     }
 
-    public void shuffle() {
 
-        Random r = new Random();
+    public void shuffle() {
 
         for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++)
             rotateY(r.nextInt(2), Direction.LEFT);
@@ -242,9 +255,15 @@ public class RubicCube {
         if (segments.getSegment(orientation, index).isPresent())
             return Optional.of(segments.getSegment(orientation, index).get().getState());
         return Optional.empty();
+    public Segment getSegment(Orientation orientation, int index) {
+        return new Segment(getPlate(orientation,index),orientation,index);
     }
 
     public int getRotationCount() {
         return rotationCount;
+    }
+
+    public ArrayList<Segment> getSegments() {
+        return segments.getSegments();
     }
 }

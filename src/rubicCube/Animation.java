@@ -9,19 +9,20 @@ public class Animation {
     private int target;
     private int playDirection;
     private Callable<Void> callWhenStopped;
-    private State state;
+    private Segment segment;
+    private boolean isPlaying;
 
-    public Animation(int target, State state, PlayDirection playDirection, Callable<Void> callWhenStopped) {
-        this.state = state;
+    public Animation(int target, Segment segment, PlayDirection playDirection, Callable<Void> callWhenStopped) {
+        this.segment = segment;
         this.callWhenStopped = callWhenStopped;
         switch (playDirection) {
             case FORWARDS:
                 this.playDirection = 1;
-                this.state.increase();
+                this.segment.getState().increase();
                 break;
             case BACKWARDS:
                 this.playDirection = -1;
-                this.state.decrease();
+                this.segment.getState().decrease();
                 break;
         }
         this.target = this.playDirection * target;
@@ -32,14 +33,16 @@ public class Animation {
             callWhenStopped.call();
             callWhenStopped = null;
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(App.mainWindow, "Nebyla přiřazena funkce po rotaci", "FATAL ERROR",JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(App.mainWindow, "Nebyla přiřazena funkce po rotaci", "FATAL ERROR", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE);
         }
-        state.zero();
+        segment.getState().zero();
+        segment.getState().setStatus(Status.IDLE);
     }
 
     public boolean play(float speed) {
-        if (state.getValue() - target >= 0) {
-            state.increase(playDirection * speed);
+        if (canContinue()) {
+            segment.getState().increase(playDirection * speed);
+            segment.getState().setStatus(Status.INMOTION);
             return true;
         } else {
             stop();
@@ -47,4 +50,12 @@ public class Animation {
         }
     }
 
+    private boolean canContinue() {
+        return (segment.getState().getValue() <= target && playDirection == 1)
+                || (segment.getState().getValue() >= target && playDirection == -1);
+    }
+
+    public Segment getSegment() {
+        return segment;
+    }
 }

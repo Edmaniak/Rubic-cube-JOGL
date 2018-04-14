@@ -1,15 +1,19 @@
 package rubicCube;
 
-public class Vec3D {
+public class Vec3Di {
 
     private final int x;
     private final int y;
     private final int z;
 
-    public Vec3D(int x, int y, int z) {
+    public Vec3Di(int x, int y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public Vec3Di() {
+        this(0, 0, 0);
     }
 
     public int getX() {
@@ -26,6 +30,6 @@ public class Vec3D {
 
     @Override
     public String toString() {
-        return " " +x + " " + y  + " " + z;
+        return " " + x + " " + y + " " + z;
     }
 }

@@ -132,6 +132,12 @@ public class Cube {
 
     }
 
+    public boolean isTheSameCube(Cube cube) {
+        if (cube.getIndex() == index)
+            return true;
+        return false;
+    }
+
     public Rotation getRotation() {
         return rotation;
     }

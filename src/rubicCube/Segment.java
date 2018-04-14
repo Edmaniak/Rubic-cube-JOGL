@@ -7,6 +7,7 @@ public class Segment {
     private Cube[] cubes;
     private Orientation orientation;
     private State state;
+    private Vec3Di rotationVector;
     private int index;
 
     public Segment(Cube[] cubes, Orientation orientation, int index) {
@@ -14,6 +15,17 @@ public class Segment {
         this.state = new State();
         this.orientation = orientation;
         this.index = index;
+        switch (orientation) {
+            case X:
+                this.rotationVector = new Vec3Di(1, 0, 0);
+                break;
+            case Y:
+                this.rotationVector = new Vec3Di(0, 1, 0);
+                break;
+            case Z:
+                this.rotationVector = new Vec3Di(0, 0, 1);
+                break;
+        }
     }
 
     public Orientation getOrientation() {
@@ -30,5 +42,9 @@ public class Segment {
 
     public Cube[] getCubes() {
         return cubes;
+    }
+
+    public Vec3Di getRotationVector() {
+        return rotationVector;
     }
 }

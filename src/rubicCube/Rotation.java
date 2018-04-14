@@ -46,15 +46,15 @@ public class Rotation {
         }
     }
 
-    public Vec3D getRotVecForRow() {
+    public Vec3Di getRotVecForRow() {
         int x = 0;
         int y = 0;
         int z = 0;
 
-        return new Vec3D(x, y, z);
+        return new Vec3Di(x, y, z);
     }
 
-    public Vec3D getRotVecForCol() {
+    public Vec3Di getRotVecForCol() {
         int x = 0;
         int y = 0;
         int z = 0;
@@ -65,7 +65,7 @@ public class Rotation {
             x = 0;
             z = 1;
         }
-        return new Vec3D(x, y, z);
+        return new Vec3Di(x, y, z);
     }
 
     public int getRotY() {

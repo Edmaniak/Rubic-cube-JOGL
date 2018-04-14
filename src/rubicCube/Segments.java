@@ -1,11 +1,12 @@
 package rubicCube;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class Segments {
 
     private ArrayList<Segment> segments;
+    private int count;
 
     public Segments() {
         segments = new ArrayList<>();
@@ -21,4 +22,10 @@ public class Segments {
     public void add(Segment segment) {
         segments.add(segment);
     }
+
+    public ArrayList<Segment> getSegments() {
+        return segments;
+    }
+
+
 }
