@@ -26,10 +26,11 @@ public class Renderer implements GLEventListener, MouseListener,
 
     GLUT glut;
     GLU glu;
+    GL2 gl;
     int dx, dy, ox, oy;
     long oldmils;
     long oldFPSmils;
-    double	fps;
+    double fps;
     RubicCube rubicCube = App.getRubicCube();
     float m[] = new float[16];
 
@@ -46,24 +47,14 @@ public class Renderer implements GLEventListener, MouseListener,
     private Animation z2Anim;
 
     private RotationManager rotManager;
+    private Animator animator;
 
-    public static int ROTATION_SPEED = 60;
+    public static float ROTATION_SPEED = 60;
 
     public Renderer() {
 
         rotManager = new RotationManager();
-
-        y0Anim = new Animation(90, rubicCube.getYRot(0), rotManager.getIsRotatingY());
-        y1Anim = new Animation(90, rubicCube.getYRot(1), rotManager.getIsRotatingY());
-        y2Anim = new Animation(90, rubicCube.getYRot(2), rotManager.getIsRotatingY());
-
-        x0Anim = new Animation(90, rubicCube.getXRot(0), rotManager.getIsRotatingX());
-        x1Anim = new Animation(90, rubicCube.getXRot(1), rotManager.getIsRotatingX());
-        x2Anim = new Animation(90, rubicCube.getXRot(2), rotManager.getIsRotatingX());
-
-        z0Anim = new Animation(90, rubicCube.getZRot(0), rotManager.getIsRotatingZ());
-        z1Anim = new Animation(90, rubicCube.getZRot(1), rotManager.getIsRotatingZ());
-        z2Anim = new Animation(90, rubicCube.getZRot(2), rotManager.getIsRotatingZ());
+        animator = new Animator();
 
     }
 
@@ -72,11 +63,8 @@ public class Renderer implements GLEventListener, MouseListener,
      */
     @Override
     public void init(GLAutoDrawable glDrawable) {
-        GL2 gl = glDrawable.getGL().getGL2();
-        glut = new GLUT();
+        gl = glDrawable.getGL().getGL2();
         glu = new GLU();
-
-        OglUtils.printOGLparameters(gl);
 
         gl.glClearDepth(1.0f);
         gl.glEnable(GL2.GL_DEPTH_TEST);
@@ -105,19 +93,18 @@ public class Renderer implements GLEventListener, MouseListener,
      */
     @Override
     public void display(GLAutoDrawable glDrawable) {
-        GL2 gl = glDrawable.getGL().getGL2();
+        gl = glDrawable.getGL().getGL2();
 
         long mils = System.currentTimeMillis();
-        if ((mils - oldFPSmils)>300){
-            fps = 1000 / (double)(mils - oldmils + 1);
-            oldFPSmils=mils;
+        if ((mils - oldFPSmils) > 300) {
+            fps = 1000 / (double) (mils - oldmils + 1);
+            oldFPSmils = mils;
         }
-        //System.out.println(fps);
-        float speed = 60; // pocet stupnu rotace za vterinu
-        float step = speed * (mils - oldmils) / 1000.0f;
 
+        float step = ROTATION_SPEED * (mils - oldmils) / 1000.0f;
+        oldmils = mils;
 
-        handleAnimation();
+        animator.play(step);
 
         // mazeme image buffer i z-buffer
         gl.glClearColor(0f, 0f, 0f, 1f);
@@ -190,44 +177,26 @@ public class Renderer implements GLEventListener, MouseListener,
 
             gl.glTranslatef(cube.getX(), cube.getY(), cube.getZ());
 
+            if (App.debug)
+                drawAxis(gl, 5);
 
-            if (cube.getIndex() != -1) {
-                if (App.debug)
-                    drawAxis(gl, 5);
-                cube.render(gl);
-            }
+            cube.render(gl);
 
             gl.glPopMatrix();
         }
-
 
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         glu.gluPerspective(45, 1280 / (float) 728, 0.1f, 100.0f);
         glu.gluLookAt(-20, 20, 20, 0, 0, 0, 0, 1, 0);
 
+    }
+
+    private void rotateSegment(Orientation orientation, int index) {
+        Segment segment = rubicCube.getSegment(orientation, index).get();
 
     }
 
-    private void handleAnimation() {
-        y0Anim.animate();
-        y1Anim.animate();
-        y2Anim.animate();
-
-        x0Anim.animate();
-        x1Anim.animate();
-        x2Anim.animate();
-
-        z0Anim.animate();
-        z1Anim.animate();
-        z2Anim.animate();
-
-    }
-
-
-    /**
-     * metoda volana pri zmene velikosti okna a pri prvnim vykresleni
-     */
     @Override
     public void reshape(GLAutoDrawable glDrawable, int x, int y, int width,
                         int height) {
@@ -235,11 +204,7 @@ public class Renderer implements GLEventListener, MouseListener,
         gl.glViewport(0, 0, width, height);
     }
 
-    /*
-     * metody pro obsluhu udalosti od mysi a klavesnice
-     */
 
-    // mouse listener
     @Override
     public void mouseClicked(MouseEvent e) {
     }
@@ -301,9 +266,15 @@ public class Renderer implements GLEventListener, MouseListener,
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_Q:
-                if (rotManager.canRotateY())
-                    y2Anim.negative(() -> rubicCube.rotateY(2, Direction.LEFT));
-                break;
+                if (rotManager.canRotateY()) {
+                    animator.addToPlayList(new Animation(
+                            90,
+                            rubicCube.getRotationState(Orientation.Y, 2).get(),
+                            PlayDirection.BACKWARDS,
+                            () -> rubicCube.rotateY(2, Direction.LEFT)
+                    ));
+                }
+                break;/*
             case KeyEvent.VK_E:
                 if (rotManager.canRotateY())
                     y2Anim.positive(() -> rubicCube.rotateY(2, Direction.RIGHT));
@@ -371,9 +342,10 @@ public class Renderer implements GLEventListener, MouseListener,
             case KeyEvent.VK_B:
                 if (rotManager.canRotateZ())
                     z0Anim.negative(() -> rubicCube.rotateZ(0, Direction.RIGHT));
-                break;
+                break;*/
         }
     }
+
 
     @Override
     public void keyReleased(KeyEvent e) {
@@ -382,9 +354,11 @@ public class Renderer implements GLEventListener, MouseListener,
 
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
     public void dispose(GLAutoDrawable arg0) {
+
     }
 }

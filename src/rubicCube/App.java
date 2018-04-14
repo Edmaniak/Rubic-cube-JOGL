@@ -22,7 +22,7 @@ public class App {
         rubicCube = new RubicCube();
         renderer = new Renderer();
         mainWindow = new MainWindow(renderer);
-        initWindow = new InitWindow(mainWindow,rubicCube);
+        initWindow = new InitWindow(mainWindow);
     }
 
     public static void main(String[] args) {

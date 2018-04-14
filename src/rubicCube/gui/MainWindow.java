@@ -14,6 +14,9 @@ import java.awt.event.WindowEvent;
 
 public class MainWindow extends JFrame {
 
+    private int turnCount;
+    private JLabel turn;
+
     public MainWindow(Renderer ren) {
         try {
             setSize(1280, 768);
@@ -65,20 +68,25 @@ public class MainWindow extends JFrame {
 
     private void initGui() {
         JPanel gui = new JPanel(new BorderLayout());
+        JPanel infoPanel = new JPanel(new GridLayout(1,3));
         JPanel right = new JPanel();
         JPanel left = new JPanel();
 
+        turn = new JLabel("Počet tahů: 0");
+
         gui.add(right, BorderLayout.EAST);
         gui.add(left, BorderLayout.WEST);
+        gui.add(infoPanel,BorderLayout.CENTER);
 
         JButton shuffle = new JButton("Quick Shuffle");
         JButton menu = new JButton("Menu");
         JButton reset = new JButton("Reset");
-        reset.addActionListener(e -> App.getRubicCube().generateNew());
+        shuffle.addActionListener(e -> App.getRubicCube().shuffle());
+        reset.addActionListener(e -> App.getRubicCube().generateStructure());
         menu.addActionListener(e -> App.initWindow.setVisible(true));
         JButton debug = new JButton("Debug");
         debug.addActionListener(e -> App.debug = !App.debug);
-        JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, App.getRenderer().ROTATION_SPEED);
+        JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 60);
         JLabel speed = new JLabel("Rotating speed:");
 
 
@@ -93,5 +101,10 @@ public class MainWindow extends JFrame {
 
         add(gui, BorderLayout.NORTH);
 
+    }
+
+    public void increaseTurnCount() {
+        turnCount++;
+        turn.setText("Počet tahů: " + turnCount);
     }
 }

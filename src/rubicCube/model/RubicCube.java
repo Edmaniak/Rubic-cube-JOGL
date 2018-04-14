@@ -1,9 +1,8 @@
 package rubicCube.model;
 
-import rubicCube.Direction;
-import rubicCube.State;
-import rubicCube.Vec3Df;
+import rubicCube.*;
 
+import java.util.Optional;
 import java.util.Random;
 
 public class RubicCube {
@@ -11,20 +10,18 @@ public class RubicCube {
     private final Cube[] cubes = new Cube[27];
     private final int[][][] buffer = new int[3][3][3];
 
-    private final State[] xRots = new State[3];
-    private final State[] yRots = new State[3];
-    private final State[] zRots = new State[3];
+
+    private final Segments segments = new Segments();
 
     public static final int SHUFFLE_PARAMETER = 20;
 
     private float space;
     private float cubeSize;
+    private int rotationCount;
 
     public RubicCube(float space, float cubeSize) {
-        generateStateValues(xRots);
-        generateStateValues(yRots);
-        generateStateValues(zRots);
-        generateNew(space, cubeSize);
+        generateStructure(space, cubeSize);
+        generateSegments();
     }
 
     public RubicCube() {
@@ -63,6 +60,7 @@ public class RubicCube {
                         break;
                 }
 
+        rotationCount++;
         return null;
     }
 
@@ -100,6 +98,7 @@ public class RubicCube {
                         break;
                 }
 
+        rotationCount++;
         return null;
     }
 
@@ -137,6 +136,7 @@ public class RubicCube {
                         break;
                 }
 
+        rotationCount++;
         return null;
     }
 
@@ -187,7 +187,7 @@ public class RubicCube {
         return plate;
     }
 
-    public void generateNew(float space, float cubeSize) {
+    public void generateStructure(float space, float cubeSize) {
         this.space = space;
         this.cubeSize = cubeSize;
         int i = 0;
@@ -202,50 +202,49 @@ public class RubicCube {
                 }
     }
 
-    public void generateNew() {
-        generateNew(space, cubeSize);
+    public void generateStructure() {
+        generateStructure(space, cubeSize);
     }
 
-    private void generateStateValues(State[] array) {
-        for (int i = 0; i < array.length; i++) {
-            array[i] = new State();
-        }
+    private void generateSegments() {
+        for (int x = 0; x < 3; x++)
+            segments.add(new Segment(getXPlate(x), Orientation.X, x));
+        for (int y = 0; y < 3; y++)
+            segments.add(new Segment(getYPlate(y), Orientation.Y, y));
+        for (int z = 0; z < 3; z++)
+            segments.add(new Segment(getZPlate(z), Orientation.Z, z));
     }
 
     public void shuffle() {
+
         Random r = new Random();
 
-        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++) {
-            int y = r.nextInt(2);
-            rotateY(y, Direction.LEFT);
-        }
+        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++)
+            rotateY(r.nextInt(2), Direction.LEFT);
 
-        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++) {
-            int x = r.nextInt(2);
-            rotateX(x, Direction.LEFT);
-        }
+        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++)
+            rotateX(r.nextInt(2), Direction.LEFT);
 
-        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++) {
-            int z = r.nextInt(2);
-            rotateZ(z, Direction.LEFT);
-        }
+        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++)
+            rotateZ(r.nextInt(2), Direction.LEFT);
+
     }
 
     public Cube[] getCubes() {
         return cubes;
     }
 
-    public State getXRot(int yIndex) {
-        return xRots[yIndex];
+    public Optional<Segment> getSegment(Orientation orientation, int index) {
+        return segments.getSegment(orientation, index);
     }
 
-    public State getYRot(int xIndex) {
-        return yRots[xIndex];
+    public Optional<State> getRotationState(Orientation orientation, int index) {
+        if (segments.getSegment(orientation, index).isPresent())
+            return Optional.of(segments.getSegment(orientation, index).get().getState());
+        return Optional.empty();
     }
 
-    public State getZRot(int zIndex) {
-        return zRots[zIndex];
+    public int getRotationCount() {
+        return rotationCount;
     }
-
-
 }

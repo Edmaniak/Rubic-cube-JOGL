@@ -1,17 +1,16 @@
 package rubicCube.gui;
 
 import rubicCube.App;
-import rubicCube.model.RubicCube;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class InitWindow extends JDialog {
 
     private JButton start;
     private JButton close;
+    private JButton mix;
     private JLabel title;
     private JPanel container;
     private JPanel bottom;
@@ -22,11 +21,11 @@ public class InitWindow extends JDialog {
     private static Font h1 = new Font("Arial", Font.BOLD, 22);
     private static String message = "Vítejte v simulaci rubikovi kostky";
 
-    public InitWindow(JFrame parent, RubicCube rubicCube) {
+    public InitWindow(JFrame parent) {
         super(parent, "Nastavení modelu", true);
         container = new JPanel(new BorderLayout());
         container.setBorder(new EmptyBorder(30, 30, 30, 30));
-        bottom = new JPanel(new BorderLayout());
+        bottom = new JPanel(new GridLayout(1,3));
         center = new JPanel(new GridLayout(5, 2));
 
         center.add(new JLabel("Velikost kostek: "));
@@ -43,7 +42,7 @@ public class InitWindow extends JDialog {
                 float sizeV = Float.parseFloat(size.getText());
                 int countV = Integer.valueOf(count.getText());
                 float spaceV = Float.parseFloat(space.getText());
-                rubicCube.generateNew(spaceV, sizeV);
+                App.getRubicCube().generateStructure(spaceV, sizeV);
 
                 setVisible(false);
 
@@ -56,8 +55,15 @@ public class InitWindow extends JDialog {
         close = new JButton("Zavřít aplikaci");
         close.addActionListener(e -> parent.dispose());
 
-        bottom.add(start, BorderLayout.WEST);
-        bottom.add(close, BorderLayout.EAST);
+        mix = new JButton("Generovat a namixovat");
+        mix.addActionListener(e -> {
+            start.doClick();
+            App.getRubicCube().shuffle();
+        });
+
+        bottom.add(start);
+        bottom.add(mix);
+        bottom.add(close);
 
         title = new JLabel(message);
         title.setFont(h1);

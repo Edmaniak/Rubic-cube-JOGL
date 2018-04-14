@@ -7,33 +7,24 @@ import java.util.concurrent.Callable;
 public class Animation {
 
     private int target;
-    private boolean play;
-    private int direction = 1;
+    private int playDirection;
     private Callable<Void> callWhenStopped;
     private State state;
-    private Status groupRotating;
 
-    public Animation(int target, State state, Status groupRotating) {
-        this.target = target;
+    public Animation(int target, State state, PlayDirection playDirection, Callable<Void> callWhenStopped) {
         this.state = state;
-        this.groupRotating = groupRotating;
-    }
-
-    public void positive(Callable<Void> func) {
-        if (state.getStatus() == Status.IDLE && groupRotating == Status.IDLE) {
-            launch(func);
-            direction = 1;
-            state.increase();
+        this.callWhenStopped = callWhenStopped;
+        switch (playDirection) {
+            case FORWARDS:
+                this.playDirection = 1;
+                this.state.increase();
+                break;
+            case BACKWARDS:
+                this.playDirection = -1;
+                this.state.decrease();
+                break;
         }
-    }
-
-    public void negative(Callable<Void> func) {
-        if (state.getStatus() == Status.IDLE && groupRotating == Status.IDLE) {
-            launch(func);
-            state.decrease();
-            direction = -1;
-        }
-
+        this.target = this.playDirection * target;
     }
 
     public void stop() {
@@ -41,29 +32,19 @@ public class Animation {
             callWhenStopped.call();
             callWhenStopped = null;
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(App.mainWindow, "Nebyla přiřazena funkce po rotaci", "FATAL ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showConfirmDialog(App.mainWindow, "Nebyla přiřazena funkce po rotaci", "FATAL ERROR",JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE);
         }
-        play = false;
         state.zero();
-        state.setStatus(Status.IDLE);
-        groupRotating = Status.IDLE;
     }
 
-    public void animate() {
-        if (callWhenStopped == null)
-            return;
-        if (play && state.getValue() % target != 0)
-            state.increase(direction);
-        else
+    public boolean play(float speed) {
+        if (state.getValue() - target >= 0) {
+            state.increase(playDirection * speed);
+            return true;
+        } else {
             stop();
+            return false;
+        }
     }
-
-    private void launch(Callable<Void> func) {
-        play = true;
-        callWhenStopped = func;
-        state.setStatus(Status.RUNNING);
-        groupRotating = Status.RUNNING;
-    }
-
 
 }

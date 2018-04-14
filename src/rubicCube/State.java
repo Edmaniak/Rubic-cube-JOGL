@@ -2,10 +2,10 @@ package rubicCube;
 
 public class State {
 
-    private int value;
+    private float value;
     private Status status = Status.IDLE;
 
-    public int getValue() {
+    public float getValue() {
         return value;
     }
 
@@ -18,18 +18,18 @@ public class State {
     }
 
     public void increase() {
-        value++;
+        value += 0.1f;
     }
 
     public void decrease() {
-        value--;
+        value -= 0.1f;
     }
 
-    public void increase(int amount) {
+    public void increase(float amount) {
         value += amount;
     }
 
-    public void decrease(int amount) {
+    public void decrease(float amount) {
         value -= amount;
     }
 
