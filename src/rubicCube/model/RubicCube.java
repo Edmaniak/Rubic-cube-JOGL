@@ -247,16 +247,10 @@ public class RubicCube {
         return cubes;
     }
 
-    public Optional<Segment> getSegment(Orientation orientation, int index) {
-        return segments.getSegment(orientation, index);
-    }
-
-    public Optional<State> getRotationState(Orientation orientation, int index) {
-        if (segments.getSegment(orientation, index).isPresent())
-            return Optional.of(segments.getSegment(orientation, index).get().getState());
-        return Optional.empty();
     public Segment getSegment(Orientation orientation, int index) {
-        return new Segment(getPlate(orientation,index),orientation,index);
+        Segment segment = segments.getSegment(orientation, index).get();
+        segment.setCubes(getPlate(orientation, index));
+        return segment;
     }
 
     public int getRotationCount() {

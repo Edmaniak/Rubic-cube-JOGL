@@ -105,7 +105,7 @@ public class Renderer implements GLEventListener, MouseListener,
 
             gl.glPushMatrix();
 
-            for (int i = 0; i < rubicCube.getCubeCount(); i++) {
+            for (int i = 0; i < 3; i++) {
                 handleRotation(cube, rubicCube.getSegment(Orientation.X, i));
                 handleRotation(cube, rubicCube.getSegment(Orientation.Y, i));
                 handleRotation(cube, rubicCube.getSegment(Orientation.Z, i));

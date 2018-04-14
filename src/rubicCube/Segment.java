@@ -47,4 +47,8 @@ public class Segment {
     public Vec3Di getRotationVector() {
         return rotationVector;
     }
+
+    public void setCubes(Cube[] cubes) {
+        this.cubes = cubes;
+    }
 }

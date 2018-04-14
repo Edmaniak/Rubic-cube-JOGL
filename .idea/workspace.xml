@@ -3,15 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="17d77d53-33a1-4108-8a2a-ad06b999a9ee" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Animation.java" afterPath="$PROJECT_DIR$/src/rubicCube/Animation.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Animator.java" afterPath="$PROJECT_DIR$/src/rubicCube/Animator.java" />
       <change beforePath="$PROJECT_DIR$/src/rubicCube/Renderer.java" afterPath="$PROJECT_DIR$/src/rubicCube/Renderer.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Rotation.java" afterPath="$PROJECT_DIR$/src/rubicCube/Rotation.java" />
       <change beforePath="$PROJECT_DIR$/src/rubicCube/Segment.java" afterPath="$PROJECT_DIR$/src/rubicCube/Segment.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Segments.java" afterPath="$PROJECT_DIR$/src/rubicCube/Segments.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Status.java" afterPath="$PROJECT_DIR$/src/rubicCube/Status.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Vec3D.java" afterPath="$PROJECT_DIR$/src/rubicCube/Vec3Di.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/model/Cube.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/Cube.java" />
       <change beforePath="$PROJECT_DIR$/src/rubicCube/model/RubicCube.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/RubicCube.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Renderer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Renderer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/rubicCube/Renderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1">
-              <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+            <state relative-caret-position="189">
+              <caret line="107" column="33" lean-forward="false" selection-start-line="107" selection-start-column="33" selection-end-line="107" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -56,8 +49,8 @@
       <file leaf-file-name="Segment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rubicCube/Segment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+            <state relative-caret-position="838">
+              <caret line="51" column="8" lean-forward="false" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="27" />
               <folding>
                 <element signature="e#816#817#0" expanded="true" />
                 <element signature="e#850#851#0" expanded="true" />
@@ -69,6 +62,8 @@
                 <element signature="e#1026#1027#0" expanded="true" />
                 <element signature="e#1067#1068#0" expanded="true" />
                 <element signature="e#1104#1105#0" expanded="true" />
+                <element signature="e#1146#1147#0" expanded="true" />
+                <element signature="e#1180#1181#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -143,16 +138,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RubicCube.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RubicCube.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rubicCube/model/RubicCube.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="38" column="49" lean-forward="true" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+            <state relative-caret-position="702">
+              <caret line="253" column="5" lean-forward="false" selection-start-line="253" selection-start-column="5" selection-end-line="253" selection-end-column="5" />
               <folding>
-                <element signature="e#545#546#0" expanded="true" />
-                <element signature="e#595#596#0" expanded="true" />
-                <element signature="e#7369#7370#0" expanded="true" />
-                <element signature="e#7414#7415#0" expanded="true" />
+                <element signature="e#649#650#0" expanded="true" />
+                <element signature="e#675#676#0" expanded="true" />
+                <element signature="e#6625#6626#0" expanded="true" />
+                <element signature="e#6675#6676#0" expanded="true" />
+                <element signature="e#7464#7465#0" expanded="true" />
+                <element signature="e#7492#7493#0" expanded="true" />
+                <element signature="e#7757#7758#0" expanded="true" />
+                <element signature="e#7793#7794#0" expanded="true" />
+                <element signature="e#7840#7841#0" expanded="true" />
+                <element signature="e#7885#7886#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -232,10 +233,10 @@
         <option value="$PROJECT_DIR$/src/rubicCube/Vec3Di.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/model/Cube.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/Animation.java" />
-        <option value="$PROJECT_DIR$/src/rubicCube/Segment.java" />
-        <option value="$PROJECT_DIR$/src/rubicCube/Renderer.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/Animator.java" />
+        <option value="$PROJECT_DIR$/src/rubicCube/Segment.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/model/RubicCube.java" />
+        <option value="$PROJECT_DIR$/src/rubicCube/Renderer.java" />
       </list>
     </option>
   </component>
@@ -579,7 +580,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="161661000" />
+    <option name="totallyTimeSpent" value="162115000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -594,7 +595,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.125" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -606,7 +607,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33913043" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1062,33 +1063,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/rubicCube/Segment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
-          <folding>
-            <element signature="e#816#817#0" expanded="true" />
-            <element signature="e#850#851#0" expanded="true" />
-            <element signature="e#879#880#0" expanded="true" />
-            <element signature="e#907#908#0" expanded="true" />
-            <element signature="e#938#939#0" expanded="true" />
-            <element signature="e#966#967#0" expanded="true" />
-            <element signature="e#998#999#0" expanded="true" />
-            <element signature="e#1026#1027#0" expanded="true" />
-            <element signature="e#1067#1068#0" expanded="true" />
-            <element signature="e#1104#1105#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/rubicCube/Renderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1">
-          <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/rubicCube/Animator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
@@ -1105,16 +1079,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/rubicCube/Segment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="838">
+          <caret line="51" column="8" lean-forward="false" selection-start-line="51" selection-start-column="8" selection-end-line="51" selection-end-column="27" />
+          <folding>
+            <element signature="e#816#817#0" expanded="true" />
+            <element signature="e#850#851#0" expanded="true" />
+            <element signature="e#879#880#0" expanded="true" />
+            <element signature="e#907#908#0" expanded="true" />
+            <element signature="e#938#939#0" expanded="true" />
+            <element signature="e#966#967#0" expanded="true" />
+            <element signature="e#998#999#0" expanded="true" />
+            <element signature="e#1026#1027#0" expanded="true" />
+            <element signature="e#1067#1068#0" expanded="true" />
+            <element signature="e#1104#1105#0" expanded="true" />
+            <element signature="e#1146#1147#0" expanded="true" />
+            <element signature="e#1180#1181#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/rubicCube/model/RubicCube.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="38" column="49" lean-forward="true" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+        <state relative-caret-position="702">
+          <caret line="253" column="5" lean-forward="false" selection-start-line="253" selection-start-column="5" selection-end-line="253" selection-end-column="5" />
           <folding>
-            <element signature="e#545#546#0" expanded="true" />
-            <element signature="e#595#596#0" expanded="true" />
-            <element signature="e#7369#7370#0" expanded="true" />
-            <element signature="e#7414#7415#0" expanded="true" />
+            <element signature="e#649#650#0" expanded="true" />
+            <element signature="e#675#676#0" expanded="true" />
+            <element signature="e#6625#6626#0" expanded="true" />
+            <element signature="e#6675#6676#0" expanded="true" />
+            <element signature="e#7464#7465#0" expanded="true" />
+            <element signature="e#7492#7493#0" expanded="true" />
+            <element signature="e#7757#7758#0" expanded="true" />
+            <element signature="e#7793#7794#0" expanded="true" />
+            <element signature="e#7840#7841#0" expanded="true" />
+            <element signature="e#7885#7886#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rubicCube/Renderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="107" column="33" lean-forward="false" selection-start-line="107" selection-start-column="33" selection-end-line="107" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
