@@ -64,7 +64,8 @@ public class RubicCube {
                         buffer[x][z][2 - y] = tempBuffer[x][y][z];
                         break;
                 }
-        turns.add(TurnParser.parseTurn(Orientation.X, direction, x));
+
+        turns.add(new Turn(Orientation.X,direction,x));
     }
 
     public void rotateY(int y, Direction direction) {
@@ -101,7 +102,7 @@ public class RubicCube {
                         break;
                 }
 
-        turns.add(TurnParser.parseTurn(Orientation.Y, direction, y));
+        turns.add(new Turn(Orientation.Y, direction, y));
     }
 
 
@@ -138,7 +139,7 @@ public class RubicCube {
                         break;
                 }
 
-        turns.add(TurnParser.parseTurn(Orientation.Z, direction, z));
+        turns.add(new Turn(Orientation.Z,direction,z));
     }
 
     private int[][][] generateTempBuffer() {
@@ -255,6 +256,10 @@ public class RubicCube {
 
     public ArrayList<Segment> getSegments() {
         return segments.getSegments();
+    }
+
+    public ArrayList<Turn> getTurns() {
+        return turns;
     }
 
     public int getCubeCount() {

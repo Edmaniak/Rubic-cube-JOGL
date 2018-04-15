@@ -2,35 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17d77d53-33a1-4108-8a2a-ad06b999a9ee" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/rubicCube/app/GameManager.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/rubicCube/app/Turn.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/rubicCube/app/TurnParser.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/rubicCube/gui/ControlsWindow.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/jogl01start/JOGLApp.java" afterPath="$PROJECT_DIR$/src/jogl01start/JOGLApp.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Animation.java" afterPath="$PROJECT_DIR$/src/rubicCube/animation/Animation.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Animator.java" afterPath="$PROJECT_DIR$/src/rubicCube/animation/Animator.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/App.java" afterPath="$PROJECT_DIR$/src/rubicCube/app/App.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Col.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/Col.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/ColorTopology.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/ColorTopology.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Direction.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/geometry/Direction.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Orientation.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/geometry/Orientation.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/PlayDirection.java" afterPath="$PROJECT_DIR$/src/rubicCube/animation/PlayDirection.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Renderer.java" afterPath="$PROJECT_DIR$/src/rubicCube/app/Renderer.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Rotation.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/RotationManager.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Segment.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/Segment.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Segments.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/Segments.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/State.java" afterPath="$PROJECT_DIR$/src/rubicCube/animation/State.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Status.java" afterPath="$PROJECT_DIR$/src/rubicCube/animation/Status.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Topology.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/geometry/Topology.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Vec3Df.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/geometry/Vec3Df.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/Vec3Di.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/geometry/Vec3Di.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/gui/InitWindow.java" afterPath="$PROJECT_DIR$/src/rubicCube/gui/InitWindow.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/gui/MainWindow.java" afterPath="$PROJECT_DIR$/src/rubicCube/gui/MainWindow.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/model/Cube.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/Cube.java" />
+      <change beforePath="$PROJECT_DIR$/src/rubicCube/animation/Animator.java" afterPath="$PROJECT_DIR$/src/rubicCube/animation/Animator.java" />
+      <change beforePath="$PROJECT_DIR$/src/rubicCube/app/Renderer.java" afterPath="$PROJECT_DIR$/src/rubicCube/app/Renderer.java" />
+      <change beforePath="$PROJECT_DIR$/src/rubicCube/app/Turn.java" afterPath="$PROJECT_DIR$/src/rubicCube/app/Turn.java" />
+      <change beforePath="$PROJECT_DIR$/src/rubicCube/app/TurnParser.java" afterPath="$PROJECT_DIR$/src/rubicCube/app/TurnParser.java" />
       <change beforePath="$PROJECT_DIR$/src/rubicCube/model/RubicCube.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/RubicCube.java" />
-      <change beforePath="$PROJECT_DIR$/src/rubicCube/model/Side.java" afterPath="$PROJECT_DIR$/src/rubicCube/model/Side.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,11 +24,11 @@
       <file leaf-file-name="Renderer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rubicCube/app/Renderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="41" column="69" lean-forward="false" selection-start-line="41" selection-start-column="69" selection-end-line="41" selection-end-column="69" />
+            <state relative-caret-position="-1224">
+              <caret line="34" column="38" lean-forward="false" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
               <folding>
-                <element signature="e#1063#1064#0" expanded="true" />
-                <element signature="e#1141#1142#0" expanded="true" />
+                <element signature="e#1126#1127#0" expanded="true" />
+                <element signature="e#1204#1205#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Animator.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Animator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/rubicCube/animation/Animator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="26" column="13" lean-forward="true" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+            <state relative-caret-position="255">
+              <caret line="19" column="44" lean-forward="true" selection-start-line="19" selection-start-column="44" selection-end-line="19" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -80,9 +57,11 @@
       <file leaf-file-name="TurnParser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rubicCube/app/TurnParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="544">
+              <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -127,9 +106,14 @@
       <file leaf-file-name="Turn.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rubicCube/app/Turn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="238">
+              <caret line="14" column="33" lean-forward="true" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#437#438#0" expanded="true" />
+                <element signature="e#473#474#0" expanded="true" />
+                <element signature="e#501#502#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -147,24 +131,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RubicCube.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RubicCube.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rubicCube/model/RubicCube.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
+            <state relative-caret-position="492">
+              <caret line="261" column="8" lean-forward="false" selection-start-line="261" selection-start-column="8" selection-end-line="261" selection-end-column="21" />
               <folding>
-                <element signature="e#760#761#0" expanded="true" />
-                <element signature="e#786#787#0" expanded="true" />
-                <element signature="e#6673#6674#0" expanded="true" />
-                <element signature="e#6722#6723#0" expanded="true" />
-                <element signature="e#7512#7513#0" expanded="true" />
-                <element signature="e#7540#7541#0" expanded="true" />
-                <element signature="e#7805#7806#0" expanded="true" />
-                <element signature="e#7841#7842#0" expanded="true" />
-                <element signature="e#7888#7889#0" expanded="true" />
-                <element signature="e#7933#7934#0" expanded="true" />
-                <element signature="e#7966#7967#0" expanded="true" />
-                <element signature="e#7998#7999#0" expanded="true" />
+                <element signature="e#865#866#0" expanded="true" />
+                <element signature="e#891#892#0" expanded="true" />
+                <element signature="e#6873#6874#0" expanded="true" />
+                <element signature="e#6923#6924#0" expanded="true" />
+                <element signature="e#7713#7714#0" expanded="true" />
+                <element signature="e#7741#7742#0" expanded="true" />
+                <element signature="e#8016#8017#0" expanded="true" />
+                <element signature="e#8061#8062#0" expanded="true" />
+                <element signature="e#8102#8103#0" expanded="true" />
+                <element signature="e#8130#8131#0" expanded="true" />
+                <element signature="e#8163#8164#0" expanded="true" />
+                <element signature="e#8195#8196#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -251,16 +235,16 @@
         <option value="$PROJECT_DIR$/src/rubicCube/model/ColorTopology.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/model/Col.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/model/Cube.java" />
-        <option value="$PROJECT_DIR$/src/rubicCube/animation/Animator.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/animation/Animation.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/gui/ControlsWindow.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/gui/MainWindow.java" />
-        <option value="$PROJECT_DIR$/src/rubicCube/app/Turn.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/app/App.java" />
-        <option value="$PROJECT_DIR$/src/rubicCube/app/Renderer.java" />
-        <option value="$PROJECT_DIR$/src/rubicCube/app/TurnParser.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/app/GameManager.java" />
+        <option value="$PROJECT_DIR$/src/rubicCube/app/Turn.java" />
+        <option value="$PROJECT_DIR$/src/rubicCube/app/TurnParser.java" />
         <option value="$PROJECT_DIR$/src/rubicCube/model/RubicCube.java" />
+        <option value="$PROJECT_DIR$/src/rubicCube/app/Renderer.java" />
+        <option value="$PROJECT_DIR$/src/rubicCube/animation/Animator.java" />
       </list>
     </option>
   </component>
@@ -633,12 +617,12 @@
       <workItem from="1523383523377" duration="213000" />
       <workItem from="1523545276339" duration="5079000" />
       <workItem from="1523634724032" duration="8388000" />
-      <workItem from="1523797822213" duration="5693000" />
+      <workItem from="1523797822213" duration="8862000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="169505000" />
+    <option name="totallyTimeSpent" value="172674000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -654,7 +638,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.04904051" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17282608" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.075" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15869565" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17217484" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
@@ -933,18 +917,18 @@
         <state relative-caret-position="68">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding>
-            <element signature="e#959#960#0" expanded="true" />
-            <element signature="e#993#994#0" expanded="true" />
-            <element signature="e#1022#1023#0" expanded="true" />
-            <element signature="e#1050#1051#0" expanded="true" />
-            <element signature="e#1081#1082#0" expanded="true" />
-            <element signature="e#1109#1110#0" expanded="true" />
-            <element signature="e#1141#1142#0" expanded="true" />
-            <element signature="e#1169#1170#0" expanded="true" />
-            <element signature="e#1210#1211#0" expanded="true" />
-            <element signature="e#1247#1248#0" expanded="true" />
-            <element signature="e#1289#1290#0" expanded="true" />
-            <element signature="e#1323#1324#0" expanded="true" />
+            <element signature="e#959#960#0" expanded="false" />
+            <element signature="e#993#994#0" expanded="false" />
+            <element signature="e#1022#1023#0" expanded="false" />
+            <element signature="e#1050#1051#0" expanded="false" />
+            <element signature="e#1081#1082#0" expanded="false" />
+            <element signature="e#1109#1110#0" expanded="false" />
+            <element signature="e#1141#1142#0" expanded="false" />
+            <element signature="e#1169#1170#0" expanded="false" />
+            <element signature="e#1210#1211#0" expanded="false" />
+            <element signature="e#1247#1248#0" expanded="false" />
+            <element signature="e#1289#1290#0" expanded="false" />
+            <element signature="e#1323#1324#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -962,8 +946,8 @@
         <state relative-caret-position="68">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding>
-            <element signature="e#697#698#0" expanded="true" />
-            <element signature="e#728#729#0" expanded="true" />
+            <element signature="e#697#698#0" expanded="false" />
+            <element signature="e#728#729#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -989,12 +973,12 @@
         <state relative-caret-position="2567">
           <caret line="177" column="5" lean-forward="false" selection-start-line="177" selection-start-column="5" selection-end-line="177" selection-end-column="5" />
           <folding>
-            <element signature="e#4822#4823#0" expanded="true" />
-            <element signature="e#4857#4858#0" expanded="true" />
-            <element signature="e#4888#4889#0" expanded="true" />
-            <element signature="e#4916#4917#0" expanded="true" />
-            <element signature="e#5347#5348#0" expanded="true" />
-            <element signature="e#5374#5375#0" expanded="true" />
+            <element signature="e#4822#4823#0" expanded="false" />
+            <element signature="e#4857#4858#0" expanded="false" />
+            <element signature="e#4888#4889#0" expanded="false" />
+            <element signature="e#4916#4917#0" expanded="false" />
+            <element signature="e#5347#5348#0" expanded="false" />
+            <element signature="e#5374#5375#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1055,19 +1039,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/rubicCube/app/TurnParser.java">
+    <entry file="file://$PROJECT_DIR$/src/rubicCube/app/GameManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="272">
+          <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/rubicCube/animation/Animator.java">
+    <entry file="file://$PROJECT_DIR$/src/rubicCube/app/TurnParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="26" column="13" lean-forward="true" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="544">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rubicCube/model/RubicCube.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="492">
+          <caret line="261" column="8" lean-forward="false" selection-start-line="261" selection-start-column="8" selection-end-line="261" selection-end-column="21" />
+          <folding>
+            <element signature="e#865#866#0" expanded="true" />
+            <element signature="e#891#892#0" expanded="true" />
+            <element signature="e#6873#6874#0" expanded="true" />
+            <element signature="e#6923#6924#0" expanded="true" />
+            <element signature="e#7713#7714#0" expanded="true" />
+            <element signature="e#7741#7742#0" expanded="true" />
+            <element signature="e#8016#8017#0" expanded="true" />
+            <element signature="e#8061#8062#0" expanded="true" />
+            <element signature="e#8102#8103#0" expanded="true" />
+            <element signature="e#8130#8131#0" expanded="true" />
+            <element signature="e#8163#8164#0" expanded="true" />
+            <element signature="e#8195#8196#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rubicCube/app/Turn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="33" lean-forward="true" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#437#438#0" expanded="true" />
+            <element signature="e#473#474#0" expanded="true" />
+            <element signature="e#501#502#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rubicCube/app/Renderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1224">
+          <caret line="34" column="38" lean-forward="false" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
+          <folding>
+            <element signature="e#1126#1127#0" expanded="true" />
+            <element signature="e#1204#1205#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1079,53 +1112,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/rubicCube/app/Renderer.java">
+    <entry file="file://$PROJECT_DIR$/src/rubicCube/animation/Animator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="41" column="69" lean-forward="false" selection-start-line="41" selection-start-column="69" selection-end-line="41" selection-end-column="69" />
-          <folding>
-            <element signature="e#1063#1064#0" expanded="true" />
-            <element signature="e#1141#1142#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/rubicCube/app/Turn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state relative-caret-position="255">
+          <caret line="19" column="44" lean-forward="true" selection-start-line="19" selection-start-column="44" selection-end-line="19" selection-end-column="44" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/rubicCube/app/GameManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/rubicCube/model/RubicCube.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-          <folding>
-            <element signature="e#760#761#0" expanded="true" />
-            <element signature="e#786#787#0" expanded="true" />
-            <element signature="e#6673#6674#0" expanded="true" />
-            <element signature="e#6722#6723#0" expanded="true" />
-            <element signature="e#7512#7513#0" expanded="true" />
-            <element signature="e#7540#7541#0" expanded="true" />
-            <element signature="e#7805#7806#0" expanded="true" />
-            <element signature="e#7841#7842#0" expanded="true" />
-            <element signature="e#7888#7889#0" expanded="true" />
-            <element signature="e#7933#7934#0" expanded="true" />
-            <element signature="e#7966#7967#0" expanded="true" />
-            <element signature="e#7998#7999#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

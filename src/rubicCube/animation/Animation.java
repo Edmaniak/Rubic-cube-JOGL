@@ -1,12 +1,11 @@
 package rubicCube.animation;
 
-
-import rubicCube.app.App;
 import rubicCube.model.Segment;
 
-import javax.swing.*;
-import java.util.concurrent.Callable;
-
+/**
+ * Class that represents the state of any dynamically changing value
+ * in the time. In this context it serves exclusively for segments rotations.
+ */
 public class Animation {
 
     private int target;
@@ -30,13 +29,24 @@ public class Animation {
         this.target = this.playDirection * target;
     }
 
+    /**
+     * Stops the going animation
+     */
     public void stop() {
-        callWhenStopped.run();
-        callWhenStopped = null;
-        segment.getState().zero();
-        segment.getState().setStatus(Status.IDLE);
+        if (segment.getState().getStatus() == Status.INMOTION) {
+            callWhenStopped.run();
+            callWhenStopped = null;
+            segment.getState().zero();
+            segment.getState().setStatus(Status.IDLE);
+        }
     }
 
+    /**
+     * Plays the animation. It will automatically stop when the
+     * target is reached.
+     * @param speed parameter influencing the speed (comes from FPS)
+     * @return
+     */
     public boolean play(float speed) {
         if (canContinue()) {
             segment.getState().increase(playDirection * speed);
@@ -48,6 +58,11 @@ public class Animation {
         }
     }
 
+    /**
+     * Checks whether the animation can keep going. The logic depends on the
+     * current value, defined target and playDirection;
+     * @return
+     */
     private boolean canContinue() {
         return (segment.getState().getValue() <= target && playDirection == 1)
                 || (segment.getState().getValue() >= target && playDirection == -1);

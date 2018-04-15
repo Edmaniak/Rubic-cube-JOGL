@@ -25,15 +25,14 @@ import static com.jogamp.opengl.GL.*;
 public class Renderer implements GLEventListener, MouseListener,
         MouseMotionListener, KeyListener {
 
-    GLU glu;
-    GL2 gl;
-    int dx, dy, ox, oy;
-    long oldmils;
-    long oldFPSmils;
-    double fps;
-    RubicCube rubicCube = App.getRubicCube();
-    float m[] = new float[16];
-
+    private GLU glu;
+    private GL2 gl;
+    private int dx, dy, ox, oy;
+    private long oldmils;
+    private long oldFPSmils;
+    private double fps;
+    private RubicCube rubicCube = App.getRubicCube();
+    private float m[] = new float[16];
     private Animator animator;
 
     public static float ROTATION_SPEED = 60;
@@ -50,7 +49,6 @@ public class Renderer implements GLEventListener, MouseListener,
         gl.glClearDepth(1.0f);
         gl.glEnable(GL2.GL_DEPTH_TEST);
 
-        // Setting counterclockwise polygons to front face
         gl.glFrontFace(GL2.GL_CCW);
         gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_FILL);
         gl.glDisable(GL2.GL_CULL_FACE);
@@ -59,7 +57,6 @@ public class Renderer implements GLEventListener, MouseListener,
         gl.glEnable(GL2.GL_LINE_SMOOTH);
         gl.glEnable(GL2.GL_POLYGON_SMOOTH);
         gl.glHint(GL2.GL_POLYGON_SMOOTH_HINT, GL2.GL_NICEST);
-
 
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
