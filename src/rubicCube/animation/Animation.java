@@ -4,7 +4,7 @@ import rubicCube.model.Segment;
 
 /**
  * Class that represents the state of any dynamically changing value
- * in the time. In this context it serves exclusively for segments rotations.
+ * with the time. In this context it serves exclusively for segments' rotations.
  */
 public class Animation {
 
@@ -45,7 +45,7 @@ public class Animation {
      * Plays the animation. It will automatically stop when the
      * target is reached.
      * @param speed parameter influencing the speed (comes from FPS)
-     * @return
+     * @return true if the animation can play the current "frame" -> else false
      */
     public boolean play(float speed) {
         if (canContinue()) {
@@ -61,7 +61,7 @@ public class Animation {
     /**
      * Checks whether the animation can keep going. The logic depends on the
      * current value, defined target and playDirection;
-     * @return
+     * @return true if can continue playing
      */
     private boolean canContinue() {
         return (segment.getState().getValue() <= target && playDirection == 1)

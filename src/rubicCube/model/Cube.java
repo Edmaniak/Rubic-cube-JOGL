@@ -6,6 +6,9 @@ import rubicCube.model.geometry.Vec3Df;
 
 import static com.jogamp.opengl.GL2ES3.GL_QUADS;
 
+/**
+ * Logical representation of the small cube within Rubic's cube
+ */
 public class Cube {
 
     private final int index;
@@ -33,6 +36,12 @@ public class Cube {
         this.colorTopology = new ColorTopology(cube.getColorTopology());
     }
 
+    /**
+     * Generates the cube's geometry with the right colors
+     * and topology.
+     *
+     * @param gl reference to main OpenGL pipeline
+     */
     public void render(GL2 gl) {
 
         gl.glBegin(GL_QUADS);
@@ -83,6 +92,13 @@ public class Cube {
         gl.glEnd();
     }
 
+    /**
+     * Generates faces' color based on the original position of
+     * the cube within the Rubic's cube.
+     *
+     * @return the right ColorTopology object that can be used in
+     * the cube geometry generation.
+     */
     private ColorTopology generateColors() {
         ColorTopology colorTopology = new ColorTopology();
         // GREEN FRONT
@@ -109,30 +125,55 @@ public class Cube {
         if (originalPosition.getY() == -getSizeWithSpace())
             colorTopology.setBottomColor(new Col(1, 1, 1));
 
-
         return colorTopology;
 
     }
 
+    /**
+     * Checks whether this cube is the same logical cube as the one
+     * filled in the parameter. It depends on the index only.
+     *
+     * @param cube the tested cube
+     * @return true if it is the same cube
+     */
     public boolean isTheSameCube(Cube cube) {
         if (cube.getIndex() == index)
             return true;
         return false;
     }
 
-
+    /**
+     * Apply the effect of the X plane rotation.
+     *
+     * @param direction the direction of rotation
+     */
     public void rotateX(Direction direction) {
         colorTopology.rotateX(direction);
     }
 
+    /**
+     * Apply the effect of the Y plane rotation.
+     *
+     * @param direction the direction of rotation
+     */
     public void rotateY(Direction direction) {
         colorTopology.rotateY(direction);
     }
 
+    /**
+     * Apply the effect of the Z plane rotation.
+     *
+     * @param direction the direction of rotation
+     */
     public void rotateZ(Direction direction) {
         colorTopology.rotateZ(direction);
     }
 
+    /**
+     * Simply returns the absolute size of the cube including
+     * the space around.
+     * @return
+     */
     public float getSizeWithSpace() {
         return size + space;
     }
