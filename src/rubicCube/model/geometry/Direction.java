@@ -1,4 +1,4 @@
-package rubicCube;
+package rubicCube.model.geometry;
 
 public enum Direction {
     LEFT,

@@ -1,14 +1,17 @@
-package rubicCube;
+package rubicCube.model;
 
+import rubicCube.animation.State;
 import rubicCube.model.Cube;
+import rubicCube.model.geometry.Orientation;
+import rubicCube.model.geometry.Vec3Di;
 
 public class Segment {
 
     private Cube[] cubes;
-    private Orientation orientation;
-    private State state;
+    private final Orientation orientation;
+    private final State state;
     private Vec3Di rotationVector;
-    private int index;
+    private final int index;
 
     public Segment(Cube[] cubes, Orientation orientation, int index) {
         this.cubes = cubes;

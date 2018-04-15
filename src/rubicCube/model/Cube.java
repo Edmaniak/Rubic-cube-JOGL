@@ -1,7 +1,8 @@
 package rubicCube.model;
 
 import com.jogamp.opengl.GL2;
-import rubicCube.*;
+import rubicCube.model.geometry.Direction;
+import rubicCube.model.geometry.Vec3Df;
 
 import static com.jogamp.opengl.GL2ES3.GL_QUADS;
 
@@ -10,7 +11,6 @@ public class Cube {
     private final int index;
     private Vec3Df position;
     private final Vec3Df originalPosition;
-    private final Rotation rotation;
     private float size;
     private float space;
     private ColorTopology colorTopology;
@@ -22,7 +22,6 @@ public class Cube {
         this.position = new Vec3Df(position);
         this.originalPosition = new Vec3Df(position);
         this.colorTopology = new ColorTopology(generateColors());
-        this.rotation = new Rotation();
     }
 
     public Cube(Cube cube) {
@@ -31,24 +30,7 @@ public class Cube {
         this.space = cube.getSpace();
         this.position = new Vec3Df(cube.getPosition());
         this.originalPosition = new Vec3Df(cube.getPosition());
-        this.rotation = new Rotation(cube.getRotation());
         this.colorTopology = new ColorTopology(cube.getColorTopology());
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public float getX() {
-        return position.getX();
-    }
-
-    public float getY() {
-        return position.getY();
-    }
-
-    public float getZ() {
-        return position.getZ();
     }
 
     public void render(GL2 gl) {
@@ -138,9 +120,6 @@ public class Cube {
         return false;
     }
 
-    public Rotation getRotation() {
-        return rotation;
-    }
 
     public void rotateX(Direction direction) {
         colorTopology.rotateX(direction);
@@ -154,8 +133,40 @@ public class Cube {
         colorTopology.rotateZ(direction);
     }
 
+    public float getSizeWithSpace() {
+        return size + space;
+    }
+
+    public float getSpace() {
+        return space;
+    }
+
     public Vec3Df getPosition() {
         return position;
+    }
+
+    public ColorTopology getColorTopology() {
+        return colorTopology;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public float getX() {
+        return position.getX();
+    }
+
+    public float getY() {
+        return position.getY();
+    }
+
+    public float getZ() {
+        return position.getZ();
+    }
+
+    public float getSize() {
+        return size;
     }
 
     public void setPosition(Vec3Df position) {
@@ -171,19 +182,5 @@ public class Cube {
         return "Cube" + getIndex();
     }
 
-    public float getSize() {
-        return size;
-    }
 
-    public float getSizeWithSpace() {
-        return size + space;
-    }
-
-    public float getSpace() {
-        return space;
-    }
-
-    public ColorTopology getColorTopology() {
-        return colorTopology;
-    }
 }

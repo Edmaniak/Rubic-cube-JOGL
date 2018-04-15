@@ -1,5 +1,8 @@
-package rubicCube;
+package rubicCube.animation;
 
+
+import rubicCube.app.App;
+import rubicCube.model.Segment;
 
 import javax.swing.*;
 import java.util.concurrent.Callable;
@@ -8,11 +11,10 @@ public class Animation {
 
     private int target;
     private int playDirection;
-    private Callable<Void> callWhenStopped;
+    private Runnable callWhenStopped;
     private Segment segment;
-    private boolean isPlaying;
 
-    public Animation(int target, Segment segment, PlayDirection playDirection, Callable<Void> callWhenStopped) {
+    public Animation(int target, Segment segment, PlayDirection playDirection, Runnable callWhenStopped) {
         this.segment = segment;
         this.callWhenStopped = callWhenStopped;
         switch (playDirection) {
@@ -29,12 +31,8 @@ public class Animation {
     }
 
     public void stop() {
-        try {
-            callWhenStopped.call();
-            callWhenStopped = null;
-        } catch (Exception e) {
-            JOptionPane.showConfirmDialog(App.mainWindow, "Nebyla přiřazena funkce po rotaci", "FATAL ERROR", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE);
-        }
+        callWhenStopped.run();
+        callWhenStopped = null;
         segment.getState().zero();
         segment.getState().setStatus(Status.IDLE);
     }

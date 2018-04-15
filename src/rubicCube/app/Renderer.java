@@ -1,11 +1,21 @@
-package rubicCube;
+package rubicCube.app;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
+import rubicCube.animation.Animation;
+import rubicCube.animation.Animator;
+import rubicCube.animation.PlayDirection;
+import rubicCube.animation.Status;
+import rubicCube.app.App;
+import rubicCube.gui.MainWindow;
 import rubicCube.model.Cube;
 import rubicCube.model.RubicCube;
+import rubicCube.model.Segment;
+import rubicCube.model.geometry.Direction;
+import rubicCube.model.geometry.Orientation;
+import rubicCube.model.geometry.Vec3Di;
 
 import java.awt.event.*;
 
@@ -24,16 +34,12 @@ public class Renderer implements GLEventListener, MouseListener,
     RubicCube rubicCube = App.getRubicCube();
     float m[] = new float[16];
 
-    private RotationManager rotManager;
     private Animator animator;
 
     public static float ROTATION_SPEED = 60;
 
     public Renderer() {
-
-        rotManager = new RotationManager();
-        animator = new Animator();
-
+        animator = new Animator(() -> App.getGameManager().nextTurn());
     }
 
     @Override
@@ -63,9 +69,6 @@ public class Renderer implements GLEventListener, MouseListener,
 
     }
 
-    /**
-     * metoda zobrazeni, volana pri prekresleni kazdeho snimku
-     */
     @Override
     public void display(GLAutoDrawable glDrawable) {
         gl = glDrawable.getGL().getGL2();
@@ -158,8 +161,6 @@ public class Renderer implements GLEventListener, MouseListener,
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON3) {
-        }
         ox = e.getX();
         oy = e.getY();
     }
@@ -238,19 +239,34 @@ public class Renderer implements GLEventListener, MouseListener,
                                 PlayDirection.FORWARDS,
                                 () -> rubicCube.rotateY(1, Direction.RIGHT)
                         ));
-                break;/*
-            case KeyEvent.VK_Z:
-                if (rotManager.canRotateY())
-                    y0Anim.negative(() -> rubicCube.rotateY(0, Direction.LEFT));
+                break;
+            case KeyEvent.VK_Y:
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.Y, 0),
+                                PlayDirection.BACKWARDS,
+                                () -> rubicCube.rotateY(0, Direction.LEFT)
+                        ));
                 break;
             case KeyEvent.VK_C:
-                if (rotManager.canRotateY())
-                    y0Anim.positive(() -> rubicCube.rotateY(0, Direction.RIGHT));
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.Y, 0),
+                                PlayDirection.FORWARDS,
+                                () -> rubicCube.rotateY(0, Direction.RIGHT)
+                        ));
                 break;
             case KeyEvent.VK_J:
-                if (rotManager.canRotateX())
-                    x0Anim.positive(() -> rubicCube.rotateX(0, Direction.BACK));
-                break;*/
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.X, 0),
+                                PlayDirection.FORWARDS,
+                                () -> rubicCube.rotateX(0, Direction.BACK)
+                        ));
+                break;
             case KeyEvent.VK_U:
                 animator.addToPlaylist(
                         new Animation(
@@ -259,47 +275,97 @@ public class Renderer implements GLEventListener, MouseListener,
                                 PlayDirection.BACKWARDS,
                                 () -> rubicCube.rotateX(0, Direction.THERE)
                         ));
-                break;/*
+                break;
             case KeyEvent.VK_K:
-                if (rotManager.canRotateX())
-                    x1Anim.positive(() -> rubicCube.rotateX(1, Direction.BACK));
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.X, 1),
+                                PlayDirection.FORWARDS,
+                                () -> rubicCube.rotateX(1, Direction.BACK)
+                        ));
                 break;
             case KeyEvent.VK_I:
-                if (rotManager.canRotateX())
-                    x1Anim.negative(() -> rubicCube.rotateX(1, Direction.THERE));
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.X, 1),
+                                PlayDirection.BACKWARDS,
+                                () -> rubicCube.rotateX(1, Direction.THERE)
+                        ));
                 break;
             case KeyEvent.VK_L:
-                if (rotManager.canRotateX())
-                    x2Anim.positive(() -> rubicCube.rotateX(2, Direction.BACK));
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.X, 2),
+                                PlayDirection.FORWARDS,
+                                () -> rubicCube.rotateX(2, Direction.BACK)
+                        ));
                 break;
             case KeyEvent.VK_O:
-                if (rotManager.canRotateX())
-                    x2Anim.negative(() -> rubicCube.rotateX(2, Direction.THERE));
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.X, 2),
+                                PlayDirection.BACKWARDS,
+                                () -> rubicCube.rotateX(2, Direction.THERE)
+                        ));
                 break;
             case KeyEvent.VK_R:
-                if (rotManager.canRotateZ())
-                    z2Anim.positive(() -> rubicCube.rotateZ(2, Direction.LEFT));
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.Z, 2),
+                                PlayDirection.FORWARDS,
+                                () -> rubicCube.rotateZ(2, Direction.LEFT)
+                        ));
                 break;
             case KeyEvent.VK_T:
-                if (rotManager.canRotateZ())
-                    z2Anim.negative(() -> rubicCube.rotateZ(2, Direction.RIGHT));
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.Z, 2),
+                                PlayDirection.BACKWARDS,
+                                () -> rubicCube.rotateZ(2, Direction.RIGHT)
+                        ));
                 break;
             case KeyEvent.VK_F:
-                if (rotManager.canRotateZ())
-                    z1Anim.positive(() -> rubicCube.rotateZ(1, Direction.LEFT));
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.Z, 1),
+                                PlayDirection.FORWARDS,
+                                () -> rubicCube.rotateZ(1, Direction.LEFT)
+                        ));
                 break;
             case KeyEvent.VK_G:
-                if (rotManager.canRotateZ())
-                    z1Anim.negative(() -> rubicCube.rotateZ(1, Direction.RIGHT));
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.Z, 1),
+                                PlayDirection.BACKWARDS,
+                                () -> rubicCube.rotateZ(1, Direction.RIGHT)
+                        ));
                 break;
             case KeyEvent.VK_V:
-                if (rotManager.canRotateZ())
-                    z0Anim.positive(() -> rubicCube.rotateZ(0, Direction.LEFT));
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.Z, 0),
+                                PlayDirection.FORWARDS,
+                                () -> rubicCube.rotateZ(0, Direction.LEFT)
+                        ));
                 break;
             case KeyEvent.VK_B:
-                if (rotManager.canRotateZ())
-                    z0Anim.negative(() -> rubicCube.rotateZ(0, Direction.RIGHT));
-                break;*/
+                animator.addToPlaylist(
+                        new Animation(
+                                90,
+                                rubicCube.getSegment(Orientation.Z, 0),
+                                PlayDirection.BACKWARDS,
+                                () -> rubicCube.rotateZ(0, Direction.RIGHT)
+                        ));
+                break;
         }
     }
 

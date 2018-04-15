@@ -1,6 +1,7 @@
-package rubicCube;
+package rubicCube.model;
 
-import rubicCube.model.Side;
+import rubicCube.model.geometry.Direction;
+import rubicCube.model.geometry.Topology;
 
 public class ColorTopology {
 

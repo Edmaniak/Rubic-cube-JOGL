@@ -1,6 +1,6 @@
 package rubicCube.gui;
 
-import rubicCube.App;
+import rubicCube.app.App;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

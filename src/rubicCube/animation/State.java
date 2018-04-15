@@ -1,4 +1,4 @@
-package rubicCube;
+package rubicCube.animation;
 
 public class State {
 

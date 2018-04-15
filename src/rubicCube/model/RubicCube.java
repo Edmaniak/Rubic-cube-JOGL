@@ -1,27 +1,30 @@
 package rubicCube.model;
 
-import rubicCube.*;
+import rubicCube.app.Turn;
+import rubicCube.app.TurnParser;
+import rubicCube.model.geometry.Direction;
+import rubicCube.model.geometry.Orientation;
+import rubicCube.model.geometry.Vec3Df;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.Random;
 
 public class RubicCube {
 
     private final Cube[] cubes = new Cube[27];
     private final int[][][] buffer = new int[3][3][3];
-
-
+    private final ArrayList<Turn> turns;
     private final Segments segments = new Segments();
 
     public static final int SHUFFLE_PARAMETER = 20;
 
     private float space;
     private float cubeSize;
-    private int rotationCount;
+    private int cubeCount;
     private static Random r = new Random();
 
     public RubicCube(float space, float cubeSize) {
+        this.turns = new ArrayList<>();
         generateStructure(space, cubeSize);
         generateSegments();
     }
@@ -30,7 +33,7 @@ public class RubicCube {
         this(0, 0);
     }
 
-    public Void rotateX(int x, Direction direction) {
+    public void rotateX(int x, Direction direction) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
@@ -61,12 +64,10 @@ public class RubicCube {
                         buffer[x][z][2 - y] = tempBuffer[x][y][z];
                         break;
                 }
-
-        rotationCount++;
-        return null;
+        turns.add(TurnParser.parseTurn(Orientation.X, direction, x));
     }
 
-    public Void rotateY(int y, Direction direction) {
+    public void rotateY(int y, Direction direction) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
@@ -100,12 +101,11 @@ public class RubicCube {
                         break;
                 }
 
-        rotationCount++;
-        return null;
+        turns.add(TurnParser.parseTurn(Orientation.Y, direction, y));
     }
 
 
-    public Void rotateZ(int z, Direction direction) {
+    public void rotateZ(int z, Direction direction) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
@@ -138,8 +138,7 @@ public class RubicCube {
                         break;
                 }
 
-        rotationCount++;
-        return null;
+        turns.add(TurnParser.parseTurn(Orientation.Z, direction, z));
     }
 
     private int[][][] generateTempBuffer() {
@@ -220,6 +219,7 @@ public class RubicCube {
         generateStructure(space, cubeSize);
     }
 
+
     private void generateSegments() {
         for (int x = 0; x < 3; x++)
             segments.add(new Segment(getXPlate(x), Orientation.X, x));
@@ -253,11 +253,11 @@ public class RubicCube {
         return segment;
     }
 
-    public int getRotationCount() {
-        return rotationCount;
-    }
-
     public ArrayList<Segment> getSegments() {
         return segments.getSegments();
+    }
+
+    public int getCubeCount() {
+        return cubeCount;
     }
 }

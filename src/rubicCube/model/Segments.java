@@ -1,7 +1,9 @@
-package rubicCube;
+package rubicCube.model;
+
+import rubicCube.model.Segment;
+import rubicCube.model.geometry.Orientation;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class Segments {
 

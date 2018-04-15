@@ -4,8 +4,8 @@ import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
-import rubicCube.App;
-import rubicCube.Renderer;
+import rubicCube.app.App;
+import rubicCube.app.Renderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,33 +68,34 @@ public class MainWindow extends JFrame {
 
     private void initGui() {
         JPanel gui = new JPanel(new BorderLayout());
-        JPanel infoPanel = new JPanel(new GridLayout(1,3));
+        JPanel infoPanel = new JPanel(new GridLayout(1, 3));
         JPanel right = new JPanel();
         JPanel left = new JPanel();
 
         turn = new JLabel("Počet tahů: 0");
+        infoPanel.add(turn);
 
         gui.add(right, BorderLayout.EAST);
         gui.add(left, BorderLayout.WEST);
-        gui.add(infoPanel,BorderLayout.CENTER);
+        gui.add(infoPanel, BorderLayout.CENTER);
 
         JButton shuffle = new JButton("Quick Shuffle");
         JButton menu = new JButton("Menu");
         JButton reset = new JButton("Reset");
-        shuffle.addActionListener(e -> App.getRubicCube().shuffle());
-        reset.addActionListener(e -> App.getRubicCube().generateStructure());
-        menu.addActionListener(e -> App.initWindow.setVisible(true));
         JButton debug = new JButton("Debug");
+
+        shuffle.addActionListener(e -> App.getRubicCube().shuffle());
+        reset.addActionListener(e -> App.reset());
+        menu.addActionListener(e -> App.initWindow.setVisible(true));
         debug.addActionListener(e -> App.debug = !App.debug);
+
         JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 60);
         JLabel speed = new JLabel("Rotating speed:");
-
 
         left.add(menu);
         left.add(shuffle);
         left.add(reset);
         left.add(debug);
-
 
         right.add(speed);
         right.add(speedSlider);
@@ -105,6 +106,11 @@ public class MainWindow extends JFrame {
 
     public void increaseTurnCount() {
         turnCount++;
+        turn.setText("Počet tahů: " + turnCount);
+    }
+
+    public void setTurnCount(int amount) {
+        turnCount = amount;
         turn.setText("Počet tahů: " + turnCount);
     }
 }
