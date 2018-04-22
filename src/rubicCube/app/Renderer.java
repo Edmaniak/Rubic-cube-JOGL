@@ -8,8 +8,6 @@ import rubicCube.animation.Animation;
 import rubicCube.animation.Animator;
 import rubicCube.animation.PlayDirection;
 import rubicCube.animation.Status;
-import rubicCube.app.App;
-import rubicCube.gui.MainWindow;
 import rubicCube.model.Cube;
 import rubicCube.model.RubicCube;
 import rubicCube.model.Segment;
@@ -36,6 +34,8 @@ public class Renderer implements GLEventListener, MouseListener,
     private Animator animator;
 
     public static float ROTATION_SPEED = 60;
+    public static float OBJECT_ROTATION_SPEED = 0.2f;
+    private float delay;
 
     public Renderer() {
         animator = new Animator(() -> App.getGameManager().nextTurn());
@@ -89,12 +89,17 @@ public class Renderer implements GLEventListener, MouseListener,
 
         // rotace podle zmeny pozice mysi, osy rotace zustavaji svisle a vodorovne
         gl.glLoadIdentity();
-        gl.glRotatef(dx, 0, 1, 0);
-        gl.glRotatef(dy, 1, 0, 0);
+        gl.glRotatef((dx * delay) * OBJECT_ROTATION_SPEED, 0, 1, 0);
+        gl.glRotatef((dy * delay) * OBJECT_ROTATION_SPEED, 1, 0, 0);
         gl.glMultMatrixf(m, 0);
         gl.glGetFloatv(GL2.GL_MODELVIEW_MATRIX, m, 0);
-        dx = 0;
-        dy = 0;
+
+        if (delay >= 0)
+            delay -= 0.02f;
+        else {
+            dx = 0;
+            dy = 0;
+        }
 
 
         if (App.debug)
@@ -124,7 +129,7 @@ public class Renderer implements GLEventListener, MouseListener,
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         glu.gluPerspective(45, 1280 / (float) 728, 0.1f, 100.0f);
-        glu.gluLookAt(-20, 20, 20, 0, 0, 0, 0, 1, 0);
+        glu.gluLookAt(0, 0, 40, 0, 0, 0, 0, 1, 0);
 
     }
 
@@ -160,6 +165,7 @@ public class Renderer implements GLEventListener, MouseListener,
     public void mousePressed(MouseEvent e) {
         ox = e.getX();
         oy = e.getY();
+        delay = 1;
     }
 
     @Override
@@ -170,6 +176,7 @@ public class Renderer implements GLEventListener, MouseListener,
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        delay = 1;
         dx = e.getX() - ox;
         dy = e.getY() - oy;
         ox = e.getX();

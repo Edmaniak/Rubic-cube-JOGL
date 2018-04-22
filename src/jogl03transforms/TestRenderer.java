@@ -176,11 +176,37 @@ public class TestRenderer implements GLEventListener, MouseListener,
 		// divame se do sceny z kladne osy x, osa z je svisla
 		glu.gluLookAt(50, 0, 0, 0, 0, 0, 0, 0, 1);
 
+		gl.glBegin(GL2.GL_TRIANGLE_FAN);
+		gl.glColor3f(1.0f, 1.0f, 1.0f);
+		gl.glVertex3f(5.0f, 5.0f, 10.0f);
+		gl.glColor3f(1.0f, 0.0f, 0.0f);
+		gl.glVertex3f(0.0f, 0.0f, 0.0f);
+		gl.glColor3f(0.0f, 1.0f, 0.0f);
+		gl.glVertex3f(10.0f, 0.0f, 0.0f);
+		gl.glColor3f(0.0f, 0.0f, 1.0f);
+		gl.glVertex3f(10.0f, 10.0f, 0.0f);
+		gl.glColor3f(1.0f, 1.0f, 0.0f);
+		gl.glVertex3f(0.0f, 10.0f, 0.0f);
+		gl.glEnd();
+
+		gl.glBegin(GL2.GL_LINES);
+		gl.glColor3f(1.0f, 0f, 0f);
+		gl.glVertex3f(0f, 0f, 0f);
+		gl.glVertex3f(100.0f, 0.0f, 0.0f);
+		gl.glColor3f(0f, 1f, 0f);
+		gl.glVertex3f(0f, 0f, 0f);
+		gl.glVertex3f(0.0f, 100.0f, 0.0f);
+		gl.glColor3f(0f, 0f, 1f);
+		gl.glVertex3f(0f, 0f, 0f);
+		gl.glVertex3f(0.0f, 0.0f, 100.0f);
+		gl.glEnd();
+
 		// glut.glutWireCube(10);
 
 		float color[] = { 1.0f, 1.0f, 1.0f };
 		gl.glColor3fv(color, 0);
 		gl.glDisable(GL2.GL_DEPTH_TEST);
+
 
 
 		String text = new String(this.getClass().getName() + ": [Mouse] [M]ode: "

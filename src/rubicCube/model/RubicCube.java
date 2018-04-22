@@ -15,6 +15,7 @@ public class RubicCube {
     private final int[][][] buffer = new int[3][3][3];
     private final ArrayList<Turn> turns;
     private final Segments segments = new Segments();
+    private Vec3Df objectRotation = new Vec3Df();
 
     public static final int SHUFFLE_PARAMETER = 20;
 
@@ -65,7 +66,7 @@ public class RubicCube {
                         break;
                 }
 
-        turns.add(new Turn(Orientation.X,direction,x));
+        turns.add(new Turn(Orientation.X, direction, x));
     }
 
     public void rotateY(int y, Direction direction) {
@@ -139,7 +140,7 @@ public class RubicCube {
                         break;
                 }
 
-        turns.add(new Turn(Orientation.Z,direction,z));
+        turns.add(new Turn(Orientation.Z, direction, z));
     }
 
     private int[][][] generateTempBuffer() {
@@ -264,5 +265,10 @@ public class RubicCube {
 
     public int getCubeCount() {
         return cubeCount;
+    }
+
+    public void rotateCube(float dx, float dy) {
+        objectRotation = objectRotation.add(dx, dy, 0);
+        System.out.println(objectRotation);
     }
 }

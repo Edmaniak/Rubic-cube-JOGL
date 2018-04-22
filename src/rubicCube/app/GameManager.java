@@ -18,7 +18,6 @@ public class GameManager {
     }
 
     public void nextTurn() {
-        turns.add(new Turn());
         gui.increaseTurnCount();
 
     }
