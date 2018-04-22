@@ -79,15 +79,17 @@ public class MainWindow extends JFrame {
         gui.add(left, BorderLayout.WEST);
         gui.add(infoPanel, BorderLayout.CENTER);
 
-        JButton shuffle = new JButton("Quick Shuffle");
+        JButton shuffle = new JButton("Rozmixovat");
         JButton menu = new JButton("Menu");
         JButton reset = new JButton("Reset");
         JButton debug = new JButton("Debug");
+        JButton solve = new JButton("Vyřešit");
 
         shuffle.addActionListener(e -> App.getRubicCube().shuffle());
         reset.addActionListener(e -> App.reset());
         menu.addActionListener(e -> App.initWindow.setVisible(true));
         debug.addActionListener(e -> App.debug = !App.debug);
+
 
         JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 60);
         JLabel speed = new JLabel("Rotating speed:");

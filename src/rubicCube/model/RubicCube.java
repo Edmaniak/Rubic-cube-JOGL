@@ -1,5 +1,6 @@
 package rubicCube.model;
 
+import rubicCube.animation.Animation;
 import rubicCube.app.Turn;
 import rubicCube.app.TurnParser;
 import rubicCube.model.geometry.Direction;
@@ -66,7 +67,7 @@ public class RubicCube {
                         break;
                 }
 
-        turns.add(new Turn(Orientation.X, direction, x));
+        turns.add(new Turn(getSegment(Orientation.X, x), direction));
     }
 
     public void rotateY(int y, Direction direction) {
@@ -103,7 +104,7 @@ public class RubicCube {
                         break;
                 }
 
-        turns.add(new Turn(Orientation.Y, direction, y));
+        turns.add(new Turn(getSegment(Orientation.Y, y), direction));
     }
 
 
@@ -140,7 +141,7 @@ public class RubicCube {
                         break;
                 }
 
-        turns.add(new Turn(Orientation.Z, direction, z));
+        turns.add(new Turn(getSegment(Orientation.Z, z), direction));
     }
 
     private int[][][] generateTempBuffer() {
@@ -261,6 +262,23 @@ public class RubicCube {
 
     public ArrayList<Turn> getTurns() {
         return turns;
+    }
+
+    private Runnable getSolvingCallback(Turn turn) {
+        switch (turn.getOrientation()) {
+            case X:
+                return () -> rotateX(turn.getIndex(), turn.getReverseDirection());
+            case Y:
+                return () -> rotateY(turn.getIndex(), turn.getReverseDirection());
+            case Z:
+                return () -> rotateZ(turn.getIndex(), turn.getReverseDirection());
+            default:
+                return null;
+        }
+    }
+
+    public Animation solveTurn(Turn turn) {
+        return new Animation(90, turn.getSegment(), turn.getReversePlayDirection(), getSolvingCallback(turn));
     }
 
     public int getCubeCount() {

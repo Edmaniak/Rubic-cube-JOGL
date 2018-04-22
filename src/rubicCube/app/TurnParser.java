@@ -1,5 +1,6 @@
 package rubicCube.app;
 
+import rubicCube.animation.Animation;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Orientation;
 
@@ -33,4 +34,6 @@ public class TurnParser {
 
         return notation;
     }
+
+
 }
