@@ -1,6 +1,5 @@
 package rubicCube.app;
 
-import rubicCube.animation.Animation;
 import rubicCube.animation.PlayDirection;
 import rubicCube.model.Segment;
 import rubicCube.model.geometry.Direction;
@@ -45,9 +44,13 @@ public class Turn {
     }
 
     public PlayDirection getReversePlayDirection() {
-        if (notation.contains("'"))
-            return PlayDirection.FORWARDS;
-        return PlayDirection.BACKWARDS;
+        if (direction == Direction.RIGHT && orientation == Orientation.Y)
+            return PlayDirection.BACKWARDS;
+        if(direction == Direction.LEFT && orientation == Orientation.Z)
+            return PlayDirection.BACKWARDS;
+        if(direction == Direction.BACK && orientation == Orientation.X)
+            return PlayDirection.BACKWARDS;
+        return PlayDirection.FORWARDS;
     }
 
     public Segment getSegment() {

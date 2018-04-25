@@ -30,6 +30,14 @@ public class Vec3Df {
         return add(vec3Df.x, vec3Df.y, vec3Df.z);
     }
 
+    public Vec3Df mul(Vec3Df vec3Df) {
+        return mul(vec3Df.x, vec3Df.y, vec3Df.z);
+    }
+
+    public Vec3Df mul(float x, float y, float z) {
+        return new Vec3Df(this.x * x, this.y * y, this.z * z);
+    }
+
     public float getX() {
         return x;
     }

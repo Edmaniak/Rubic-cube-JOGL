@@ -84,18 +84,22 @@ public class MainWindow extends JFrame {
         JButton reset = new JButton("Reset");
         JButton debug = new JButton("Debug");
         JButton solve = new JButton("Vyřešit");
+        JButton moves = new JButton("Ukaž tahy");
 
         shuffle.addActionListener(e -> App.getRubicCube().shuffle());
-        reset.addActionListener(e -> App.reset());
-        menu.addActionListener(e -> App.initWindow.setVisible(true));
+        reset.addActionListener(e -> App.getGameManager().reset());
+        menu.addActionListener(e -> App.getInitWindow().setVisible(true));
         debug.addActionListener(e -> App.debug = !App.debug);
-
+        moves.addActionListener(e -> App.getTurnWindow().setVisible(true));
+        solve.addActionListener(e -> App.getGameManager().solve());
 
         JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 60);
         JLabel speed = new JLabel("Rotating speed:");
 
         left.add(menu);
         left.add(shuffle);
+        left.add(solve);
+        left.add(moves);
         left.add(reset);
         left.add(debug);
 

@@ -1,8 +1,8 @@
 package rubicCube.model;
 
-import rubicCube.animation.Animation;
+import rubicCube.animation.PlayMode;
+import rubicCube.animation.PropAnimation;
 import rubicCube.app.Turn;
-import rubicCube.app.TurnParser;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Orientation;
 import rubicCube.model.geometry.Vec3Df;
@@ -18,7 +18,7 @@ public class RubicCube {
     private final Segments segments = new Segments();
     private Vec3Df objectRotation = new Vec3Df();
 
-    public static final int SHUFFLE_PARAMETER = 20;
+    public static final int SHUFFLE_PARAMETER = 5;
 
     private float space;
     private float cubeSize;
@@ -35,7 +35,7 @@ public class RubicCube {
         this(0, 0);
     }
 
-    public void rotateX(int x, Direction direction) {
+    public void rotateX(int x, Direction direction, boolean record) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
@@ -66,11 +66,11 @@ public class RubicCube {
                         buffer[x][z][2 - y] = tempBuffer[x][y][z];
                         break;
                 }
-
-        turns.add(new Turn(getSegment(Orientation.X, x), direction));
+        if (record)
+            turns.add(new Turn(getSegment(Orientation.X, x), direction));
     }
 
-    public void rotateY(int y, Direction direction) {
+    public void rotateY(int y, Direction direction, boolean record) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
@@ -103,12 +103,12 @@ public class RubicCube {
                         buffer[2 - z][y][x] = tempBuffer[x][y][z];
                         break;
                 }
-
-        turns.add(new Turn(getSegment(Orientation.Y, y), direction));
+        if (record)
+            turns.add(new Turn(getSegment(Orientation.Y, y), direction));
     }
 
 
-    public void rotateZ(int z, Direction direction) {
+    public void rotateZ(int z, Direction direction, boolean record) {
 
         // Arrays before rotation
         int[][][] tempBuffer = generateTempBuffer();
@@ -140,8 +140,8 @@ public class RubicCube {
                         buffer[y][2 - x][z] = tempBuffer[x][y][z];
                         break;
                 }
-
-        turns.add(new Turn(getSegment(Orientation.Z, z), direction));
+        if (record)
+            turns.add(new Turn(getSegment(Orientation.Z, z), direction));
     }
 
     private int[][][] generateTempBuffer() {
@@ -216,6 +216,7 @@ public class RubicCube {
                     float zf = (1 - z) * (cubeSize + space);
                     cubes[i++] = new Cube(i - 1, new Vec3Df(xf, yf, zf), cubeSize, space);
                 }
+        turns.clear();
     }
 
     public void generateStructure() {
@@ -233,17 +234,16 @@ public class RubicCube {
     }
 
 
+    public void shuffle(int steps) {
+        for (int i = 0; i < steps; i++) {
+            rotateY(0, Direction.LEFT, true);
+            rotateZ(1, Direction.LEFT, true);
+            rotateX(2, Direction.THERE, true);
+        }
+    }
+
     public void shuffle() {
-
-        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++)
-            rotateY(r.nextInt(2), Direction.LEFT);
-
-        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++)
-            rotateX(r.nextInt(2), Direction.LEFT);
-
-        for (int r1 = 0; r1 < r.nextInt(SHUFFLE_PARAMETER); r1++)
-            rotateZ(r.nextInt(2), Direction.LEFT);
-
+        shuffle(SHUFFLE_PARAMETER);
     }
 
     public Cube[] getCubes() {
@@ -267,18 +267,19 @@ public class RubicCube {
     private Runnable getSolvingCallback(Turn turn) {
         switch (turn.getOrientation()) {
             case X:
-                return () -> rotateX(turn.getIndex(), turn.getReverseDirection());
+                return () -> rotateX(turn.getIndex(), turn.getReverseDirection(), false);
             case Y:
-                return () -> rotateY(turn.getIndex(), turn.getReverseDirection());
+                return () -> rotateY(turn.getIndex(), turn.getReverseDirection(), false);
             case Z:
-                return () -> rotateZ(turn.getIndex(), turn.getReverseDirection());
+                return () -> rotateZ(turn.getIndex(), turn.getReverseDirection(), false);
             default:
                 return null;
         }
     }
 
-    public Animation solveTurn(Turn turn) {
-        return new Animation(90, turn.getSegment(), turn.getReversePlayDirection(), getSolvingCallback(turn));
+    public PropAnimation solveTurn(Turn turn) {
+        PropAnimation animation = new PropAnimation(90, turn.getSegment(), turn.getReversePlayDirection(), getSolvingCallback(turn), PlayMode.SINGLE);
+        return animation;
     }
 
     public int getCubeCount() {
@@ -287,6 +288,5 @@ public class RubicCube {
 
     public void rotateCube(float dx, float dy) {
         objectRotation = objectRotation.add(dx, dy, 0);
-        System.out.println(objectRotation);
     }
 }

@@ -18,6 +18,7 @@ public class InitWindow extends JDialog {
     private JTextField size = new JTextField("5.0", 2);
     private JTextField count = new JTextField("3", 2);
     private JTextField space = new JTextField("0.2", 2);
+    private JTextField random = new JTextField("3", 2);
     private static Font h1 = new Font("Arial", Font.BOLD, 22);
     private static String message = "Vítejte v simulaci rubikovi kostky";
 
@@ -25,7 +26,7 @@ public class InitWindow extends JDialog {
         super(parent, "Nastavení modelu", true);
         container = new JPanel(new BorderLayout());
         container.setBorder(new EmptyBorder(30, 30, 30, 30));
-        bottom = new JPanel(new GridLayout(1,3));
+        bottom = new JPanel(new GridLayout(1, 3));
         center = new JPanel(new GridLayout(5, 2));
 
         center.add(new JLabel("Velikost kostek: "));
@@ -34,6 +35,8 @@ public class InitWindow extends JDialog {
         center.add(count);
         center.add(new JLabel("Mezera mezi kostkami: "));
         center.add(space);
+        center.add(new JLabel("Nahodilost rozmixování"));
+        center.add(random);
 
         start = new JButton("Generovat kostku");
         start.addActionListener(e -> {
@@ -58,7 +61,12 @@ public class InitWindow extends JDialog {
         mix = new JButton("Generovat a namixovat");
         mix.addActionListener(e -> {
             start.doClick();
-            App.getRubicCube().shuffle();
+            try {
+                int steps = Integer.parseInt(random.getText());
+                App.getRubicCube().shuffle(steps);
+            } catch (Exception ex) {
+                JOptionPane.showConfirmDialog(this, "Vyplněná pole musí obsahovat jen čísla", "Chyba", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         bottom.add(start);
@@ -67,7 +75,7 @@ public class InitWindow extends JDialog {
 
         title = new JLabel(message);
         title.setFont(h1);
-        title.setBorder(new EmptyBorder(0,0,30,0));
+        title.setBorder(new EmptyBorder(0, 0, 30, 0));
 
         container.add(title, BorderLayout.NORTH);
         container.add(bottom, BorderLayout.SOUTH);

@@ -1,24 +1,26 @@
 package rubicCube.animation;
 
+import rubicCube.app.Camera;
 import rubicCube.model.Segment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
- * Animation manager that serves as a coordinator for
+ * PropAnimation manager that serves as a coordinator for
  * synchronous animations. It checks if the animations
  * can be played together and manages the animation playlist.
  */
 public class Animator {
 
-    private final List<Animation> playList;
-    private final List<Animation> toRemove;
+    private final List<PropAnimation<Camera>> cameraPropAnimationList;
+    private final List<PropAnimation<Segment>> segmentPropAnimationList;
+    private final List<PropAnimation> toRemove;
     private final Runnable turnFunction;
 
     public Animator(Runnable turnFunction) {
-        playList = new ArrayList<>();
+        segmentPropAnimationList = new ArrayList<>();
+        cameraPropAnimationList = new ArrayList<>();
         toRemove = new ArrayList<>();
         this.turnFunction = turnFunction;
     }
@@ -26,24 +28,32 @@ public class Animator {
     /**
      * Play all the animations from the playlist. If the animations
      * are in the same rotation plane they can be played synchronously.
+     *
      * @param speed speed parameter that comes from the actual FPS
      */
     public void play(float speed) {
-        for (Animation a : playList)
+        for (PropAnimation a : segmentPropAnimationList) {
             if (!a.play(speed)) {
                 toRemove.add(a);
                 turnFunction.run();
             }
+            if (a.getPlayMode() == PlayMode.SINGLE)
+                break;
+        }
         check();
     }
 
     /**
-     * Add the animation to the queue
-     * @param animation
+     * Add the propAnimation to the queue
+     *
+     * @param propAnimation
      */
-    public void addToPlaylist(Animation animation) {
-        if (canBeAdded(animation))
-            playList.add(animation);
+    public void addToPlaylist(PropAnimation propAnimation) {
+
+        if (canBeAdded(propAnimation)) {
+            segmentPropAnimationList.add(propAnimation);
+        }
+
     }
 
     /**
@@ -51,19 +61,20 @@ public class Animator {
      * and it removes them from the playlist
      */
     private void check() {
-        for (Animation a : toRemove)
-            playList.remove(a);
+        for (PropAnimation a : toRemove)
+            segmentPropAnimationList.remove(a);
         toRemove.clear();
     }
 
     /**
      * It checks whether the segment is rotating in the current time
+     *
      * @param segment the tested segment
      * @return
      */
     private boolean isSegmentRotating(Segment segment) {
-        for (Animation animation : playList)
-            if (segment.equals(animation.getSegment()))
+        for (PropAnimation propAnimation : segmentPropAnimationList)
+            if (segment.equals(propAnimation.getAnimatable()))
                 return true;
         return false;
     }
@@ -71,25 +82,30 @@ public class Animator {
     /**
      * It checks whether an another segment is rotating within the same orientation plane
      * eg. Row 1 and Row 2.
+     *
      * @param segment the tested segment
      * @return
      */
     private boolean isCrossAnimation(Segment segment) {
-        for (Animation animation : playList)
-            if (animation.getSegment().getOrientation() != segment.getOrientation())
+        for (PropAnimation<Segment> propAnimation : segmentPropAnimationList)
+            if (propAnimation.getAnimatable().getOrientation() != segment.getOrientation())
                 return true;
         return false;
     }
 
     /**
-     * It checks whether the animation (rotation) can be added, thus
+     * It checks whether the propAnimation (rotation) can be added, thus
      * segment that is animated is not rotated right now and there is no
-     * animation going on in the other rotation plane
-     * @param animation the desired animation for addition
+     * propAnimation going on in the other rotation plane
+     *
+     * @param propAnimation the desired propAnimation for addition
      * @return
      */
-    private boolean canBeAdded(Animation animation) {
-        return !isSegmentRotating(animation.getSegment()) && !isCrossAnimation(animation.getSegment());
+    private boolean canBeAdded(PropAnimation<Segment> propAnimation) {
+        if (propAnimation.getPlayMode() == PlayMode.SINGLE)
+            return true;
+        return !isSegmentRotating(propAnimation.getAnimatable()) && !isCrossAnimation(propAnimation.getAnimatable());
     }
+
 
 }

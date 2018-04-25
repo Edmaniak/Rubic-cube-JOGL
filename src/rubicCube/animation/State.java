@@ -17,9 +17,7 @@ public class State {
         this.status = status;
     }
 
-    public void increase() {
-        value += 0.1f;
-    }
+    public void increase() { value += 0.1f; }
 
     public void decrease() {
         value -= 0.1f;

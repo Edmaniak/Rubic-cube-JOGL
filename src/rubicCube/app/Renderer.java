@@ -4,7 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
-import rubicCube.animation.Animation;
+import rubicCube.animation.PropAnimation;
 import rubicCube.animation.Animator;
 import rubicCube.animation.PlayDirection;
 import rubicCube.animation.Status;
@@ -29,16 +29,19 @@ public class Renderer implements GLEventListener, MouseListener,
     private long oldmils;
     private long oldFPSmils;
     private double fps;
-    private RubicCube rubicCube = App.getRubicCube();
+    private RubicCube rubicCube;
     private float m[] = new float[16];
     private Animator animator;
 
     public static float ROTATION_SPEED = 60;
-    public static float OBJECT_ROTATION_SPEED = 0.2f;
+    public static float OBJECT_ROTATION_SPEED = 0.3f;
     private float delay;
+    private Camera camera;
 
-    public Renderer() {
-        animator = new Animator(() -> App.getGameManager().nextTurn());
+    public Renderer(Animator animator, RubicCube rubicCube) {
+        this.animator = animator;
+        this.rubicCube = rubicCube;
+        this.camera = new Camera(-40, 40, 40, 2);
     }
 
     @Override
@@ -129,7 +132,8 @@ public class Renderer implements GLEventListener, MouseListener,
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         glu.gluPerspective(45, 1280 / (float) 728, 0.1f, 100.0f);
-        glu.gluLookAt(0, 0, 40, 0, 0, 0, 0, 1, 0);
+        camera.animate(step);
+        glu.gluLookAt(camera.getVActX(), camera.getVActY(), camera.getVActZ(), 0, 0, 0, 0, 1, 0);
 
     }
 
@@ -210,165 +214,177 @@ public class Renderer implements GLEventListener, MouseListener,
         switch (e.getKeyCode()) {
             case KeyEvent.VK_Q:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 2),
                                 PlayDirection.BACKWARDS,
-                                () -> rubicCube.rotateY(2, Direction.LEFT)
+                                () -> rubicCube.rotateY(2, Direction.LEFT, true)
                         ));
                 break;
             case KeyEvent.VK_E:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 2),
                                 PlayDirection.FORWARDS,
-                                () -> rubicCube.rotateY(2, Direction.RIGHT)
+                                () -> rubicCube.rotateY(2, Direction.RIGHT, true)
                         ));
                 break;
             case KeyEvent.VK_A:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 1),
                                 PlayDirection.BACKWARDS,
-                                () -> rubicCube.rotateY(1, Direction.LEFT)
+                                () -> rubicCube.rotateY(1, Direction.LEFT, true)
                         ));
                 break;
             case KeyEvent.VK_D:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 1),
                                 PlayDirection.FORWARDS,
-                                () -> rubicCube.rotateY(1, Direction.RIGHT)
+                                () -> rubicCube.rotateY(1, Direction.RIGHT, true)
                         ));
                 break;
             case KeyEvent.VK_Y:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 0),
                                 PlayDirection.BACKWARDS,
-                                () -> rubicCube.rotateY(0, Direction.LEFT)
+                                () -> rubicCube.rotateY(0, Direction.LEFT, true)
                         ));
                 break;
             case KeyEvent.VK_C:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 0),
                                 PlayDirection.FORWARDS,
-                                () -> rubicCube.rotateY(0, Direction.RIGHT)
+                                () -> rubicCube.rotateY(0, Direction.RIGHT, true)
                         ));
                 break;
             case KeyEvent.VK_J:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 0),
                                 PlayDirection.FORWARDS,
-                                () -> rubicCube.rotateX(0, Direction.BACK)
+                                () -> rubicCube.rotateX(0, Direction.BACK, true)
                         ));
                 break;
             case KeyEvent.VK_U:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 0),
                                 PlayDirection.BACKWARDS,
-                                () -> rubicCube.rotateX(0, Direction.THERE)
+                                () -> rubicCube.rotateX(0, Direction.THERE, true)
                         ));
                 break;
             case KeyEvent.VK_K:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 1),
                                 PlayDirection.FORWARDS,
-                                () -> rubicCube.rotateX(1, Direction.BACK)
+                                () -> rubicCube.rotateX(1, Direction.BACK, true)
                         ));
                 break;
             case KeyEvent.VK_I:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 1),
                                 PlayDirection.BACKWARDS,
-                                () -> rubicCube.rotateX(1, Direction.THERE)
+                                () -> rubicCube.rotateX(1, Direction.THERE, true)
                         ));
                 break;
             case KeyEvent.VK_L:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 2),
                                 PlayDirection.FORWARDS,
-                                () -> rubicCube.rotateX(2, Direction.BACK)
+                                () -> rubicCube.rotateX(2, Direction.BACK, true)
                         ));
                 break;
             case KeyEvent.VK_O:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 2),
                                 PlayDirection.BACKWARDS,
-                                () -> rubicCube.rotateX(2, Direction.THERE)
+                                () -> rubicCube.rotateX(2, Direction.THERE, true)
                         ));
                 break;
             case KeyEvent.VK_R:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 2),
                                 PlayDirection.FORWARDS,
-                                () -> rubicCube.rotateZ(2, Direction.LEFT)
+                                () -> rubicCube.rotateZ(2, Direction.LEFT, true)
                         ));
                 break;
             case KeyEvent.VK_T:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 2),
                                 PlayDirection.BACKWARDS,
-                                () -> rubicCube.rotateZ(2, Direction.RIGHT)
+                                () -> rubicCube.rotateZ(2, Direction.RIGHT, true)
                         ));
                 break;
             case KeyEvent.VK_F:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 1),
                                 PlayDirection.FORWARDS,
-                                () -> rubicCube.rotateZ(1, Direction.LEFT)
+                                () -> rubicCube.rotateZ(1, Direction.LEFT, true)
                         ));
                 break;
             case KeyEvent.VK_G:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 1),
                                 PlayDirection.BACKWARDS,
-                                () -> rubicCube.rotateZ(1, Direction.RIGHT)
+                                () -> rubicCube.rotateZ(1, Direction.RIGHT, true)
                         ));
                 break;
             case KeyEvent.VK_V:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 0),
                                 PlayDirection.FORWARDS,
-                                () -> rubicCube.rotateZ(0, Direction.LEFT)
+                                () -> rubicCube.rotateZ(0, Direction.LEFT, true)
                         ));
                 break;
             case KeyEvent.VK_B:
                 animator.addToPlaylist(
-                        new Animation(
+                        new PropAnimation<Segment>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 0),
                                 PlayDirection.BACKWARDS,
-                                () -> rubicCube.rotateZ(0, Direction.RIGHT)
+                                () -> rubicCube.rotateZ(0, Direction.RIGHT, true)
                         ));
+                break;
+            case KeyEvent.VK_LEFT:
+                camera.move(Direction.LEFT);
+                break;
+            case KeyEvent.VK_RIGHT:
+                camera.move(Direction.RIGHT);
+                break;
+            case KeyEvent.VK_UP:
+                camera.move(Direction.UP);
+                break;
+            case KeyEvent.VK_DOWN:
+                camera.move(Direction.DOWN);
                 break;
         }
     }

@@ -1,11 +1,12 @@
 package rubicCube.model;
 
+import rubicCube.animation.Animatable;
 import rubicCube.animation.State;
 import rubicCube.model.Cube;
 import rubicCube.model.geometry.Orientation;
 import rubicCube.model.geometry.Vec3Di;
 
-public class Segment {
+public class Segment implements Animatable<Segment> {
 
     private Cube[] cubes;
     private final Orientation orientation;
@@ -41,6 +42,11 @@ public class Segment {
 
     public State getState() {
         return state;
+    }
+
+    @Override
+    public Segment getObject() {
+        return null;
     }
 
     public Cube[] getCubes() {
