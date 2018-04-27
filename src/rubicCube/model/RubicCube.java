@@ -28,13 +28,19 @@ public class RubicCube {
     public RubicCube(float space, float cubeSize) {
         this.turns = new ArrayList<>();
         generateStructure(space, cubeSize);
-        generateSegments();
     }
 
     public RubicCube() {
         this(0, 0);
     }
 
+    /**
+     * Rotates the segment logically around y axis.
+     *
+     * @param x         index of the concrete segment
+     * @param direction of the rotation eg. LEFT, RIGHT
+     * @param record    determines if the rotation should be added into the turns records
+     */
     public void rotateX(int x, Direction direction, boolean record) {
 
         // Arrays before rotation
@@ -70,6 +76,13 @@ public class RubicCube {
             turns.add(new Turn(getSegment(Orientation.X, x), direction));
     }
 
+    /**
+     * Rotates the segment logically around y axis.
+     *
+     * @param y         index of the concrete segment
+     * @param direction of the rotation eg. LEFT, RIGHT
+     * @param record    determines if the rotation should be added into the turns records
+     */
     public void rotateY(int y, Direction direction, boolean record) {
 
         // Arrays before rotation
@@ -107,7 +120,13 @@ public class RubicCube {
             turns.add(new Turn(getSegment(Orientation.Y, y), direction));
     }
 
-
+    /**
+     * Rotates the segment logically around z axis.
+     *
+     * @param z         index of the concrete segment
+     * @param direction of the rotation eg. THERE, BACK
+     * @param record    determines if the rotation should be added into the turns records
+     */
     public void rotateZ(int z, Direction direction, boolean record) {
 
         // Arrays before rotation
@@ -161,6 +180,14 @@ public class RubicCube {
         return tempCubes;
     }
 
+    /**
+     * Universal way to get the concrete partial cubes array
+     * based on the orientation and index of the plate
+     *
+     * @param orientation
+     * @param index
+     * @return
+     */
     public Cube[] getPlate(Orientation orientation, int index) {
         switch (orientation) {
             case X:
@@ -169,11 +196,18 @@ public class RubicCube {
                 return getYPlate(index);
             case Z:
                 return getZPlate(index);
+            default:
+                return null;
         }
-        return null;
     }
 
-    public Cube[] getYPlate(int index) {
+    /**
+     * Get all the partial cubes in the Y(index) plane
+     *
+     * @param index
+     * @return
+     */
+    private Cube[] getYPlate(int index) {
         Cube[] plate = new Cube[9];
         int i = 0;
         for (int z = 0; z < 3; z++)
@@ -183,7 +217,13 @@ public class RubicCube {
         return plate;
     }
 
-    public Cube[] getXPlate(int index) {
+    /**
+     * Get all the partial cubes in the X(index) plane
+     *
+     * @param index
+     * @return
+     */
+    private Cube[] getXPlate(int index) {
         Cube[] plate = new Cube[9];
         int i = 0;
         for (int y = 0; y < 3; y++)
@@ -193,7 +233,13 @@ public class RubicCube {
         return plate;
     }
 
-    public Cube[] getZPlate(int index) {
+    /**
+     * Get all the partial cubes in the Z(index) plane
+     *
+     * @param index
+     * @return
+     */
+    private Cube[] getZPlate(int index) {
         Cube[] plate = new Cube[9];
         int i = 0;
         for (int y = 0; y < 3; y++)
@@ -203,6 +249,13 @@ public class RubicCube {
         return plate;
     }
 
+    /**
+     * Generates all the logical back-end for rubic's cube based ont
+     * the space between partial cubes and cubeSize
+     *
+     * @param space    between cubes
+     * @param cubeSize the size of one partial cube within the rubic's cube
+     */
     public void generateStructure(float space, float cubeSize) {
         this.space = space;
         this.cubeSize = cubeSize;
@@ -216,6 +269,7 @@ public class RubicCube {
                     float zf = (1 - z) * (cubeSize + space);
                     cubes[i++] = new Cube(i - 1, new Vec3Df(xf, yf, zf), cubeSize, space);
                 }
+        generateSegments();
         turns.clear();
     }
 
@@ -223,7 +277,9 @@ public class RubicCube {
         generateStructure(space, cubeSize);
     }
 
-
+    /**
+     * Generates logical segments of the cube 3*3
+     */
     private void generateSegments() {
         for (int x = 0; x < 3; x++)
             segments.add(new Segment(getXPlate(x), Orientation.X, x));
@@ -233,37 +289,48 @@ public class RubicCube {
             segments.add(new Segment(getZPlate(z), Orientation.Z, z));
     }
 
-
+    /**
+     * Mix the rubic cube randomly based on the steps parameter
+     *
+     * @param steps the amount of randomness
+     */
     public void shuffle(int steps) {
         for (int i = 0; i < steps; i++) {
-            rotateY(0, Direction.LEFT, true);
-            rotateZ(1, Direction.LEFT, true);
-            rotateX(2, Direction.THERE, true);
+            rotateY(r.nextInt(2), Direction.LEFT, true);
+            rotateZ(r.nextInt(2), Direction.LEFT, true);
+            rotateX(r.nextInt(2), Direction.THERE, true);
         }
     }
 
+    /**
+     * Mix the rubic cube randomly based on the default
+     * parameter RubicCube.SHUFFLE_PARAMETER
+     */
     public void shuffle() {
         shuffle(SHUFFLE_PARAMETER);
     }
 
-    public Cube[] getCubes() {
-        return cubes;
-    }
-
+    /**
+     * Get the concrete segment
+     *
+     * @param orientation rotation axis of the cubes
+     * @param index       of the segment within the plane
+     * @return
+     */
     public Segment getSegment(Orientation orientation, int index) {
         Segment segment = segments.getSegment(orientation, index).get();
         segment.setCubes(getPlate(orientation, index));
         return segment;
     }
 
-    public ArrayList<Segment> getSegments() {
-        return segments.getSegments();
-    }
-
-    public ArrayList<Turn> getTurns() {
-        return turns;
-    }
-
+    /**
+     * Get the appropriate "reverse-solving" function that is meant to be called
+     * after segment animation is finished. The specific function
+     * is defined by the turn that it is called for.
+     *
+     * @param turn the turn to be solved
+     * @return
+     */
     private Runnable getSolvingCallback(Turn turn) {
         switch (turn.getOrientation()) {
             case X:
@@ -277,9 +344,52 @@ public class RubicCube {
         }
     }
 
+    /**
+     * Get the right animation in order to solve the turn
+     *
+     * @param turn the turn to be solved
+     * @return
+     */
     public PropAnimation solveTurn(Turn turn) {
         PropAnimation animation = new PropAnimation(90, turn.getSegment(), turn.getReversePlayDirection(), getSolvingCallback(turn), PlayMode.SINGLE);
         return animation;
+    }
+
+    /**
+     * Simply checks if two border planes are in the same color.
+     * If they are the rubic's cube's solved
+     * @return true if it is solved
+     */
+    public boolean isSolved() {
+
+        Cube[] cubesTop = getYPlate(2);
+        Col topRefCol = cubesTop[0].getColorTopology().getTopColor();
+
+        for (Cube cube : cubesTop)
+            if (!cube.getColorTopology().getTopColor().isTheSame(topRefCol))
+                return false;
+
+        Cube[] cubesLeft = getXPlate(0);
+        Col leftRefCol = cubesLeft[0].getColorTopology().getLeftColor();
+
+        for(Cube cube : cubesLeft)
+            if(!cube.getColorTopology().getLeftColor().isTheSame(leftRefCol))
+                return false;
+
+        return true;
+
+    }
+
+    public ArrayList<Segment> getSegments() {
+        return segments.getSegments();
+    }
+
+    public ArrayList<Turn> getTurns() {
+        return turns;
+    }
+
+    public Cube[] getCubes() {
+        return cubes;
     }
 
     public int getCubeCount() {

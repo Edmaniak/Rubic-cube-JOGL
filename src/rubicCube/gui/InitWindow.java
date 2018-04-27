@@ -46,7 +46,7 @@ public class InitWindow extends JDialog {
                 int countV = Integer.valueOf(count.getText());
                 float spaceV = Float.parseFloat(space.getText());
                 App.getRubicCube().generateStructure(spaceV, sizeV);
-
+                App.getHelpWindow().setVisible(true);
                 setVisible(false);
 
             } catch (Exception ex) {

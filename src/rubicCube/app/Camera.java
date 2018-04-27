@@ -29,6 +29,7 @@ public class Camera {
     }
 
     public void move(Direction direction) {
+
         switch (direction) {
             case RIGHT:
                 right();
@@ -48,9 +49,9 @@ public class Camera {
     }
 
     public void animate(float speed) {
-        float x = anim(vectorDesired.getX(), vectorActual.getX(), speed);
-        float y = anim(vectorDesired.getY(), vectorActual.getY(), speed);
-        float z = anim(vectorDesired.getZ(), vectorActual.getZ(), speed);
+        float x = anim(vectorDesired.getX(), vectorActual.getX(), speed );
+        float y = anim(vectorDesired.getY(), vectorActual.getY(), speed );
+        float z = anim(vectorDesired.getZ(), vectorActual.getZ(), speed );
         vectorActual = new Vec3Df(x, y, z);
     }
 
@@ -71,7 +72,6 @@ public class Camera {
             return desired < actual;
         return actual < desired;
     }
-
 
 
     private int right() {

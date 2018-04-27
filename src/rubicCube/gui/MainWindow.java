@@ -72,7 +72,7 @@ public class MainWindow extends JFrame {
         JPanel right = new JPanel();
         JPanel left = new JPanel();
 
-        turn = new JLabel("Počet tahů: 0");
+        turn = new JLabel("Počet tahů: 0", JLabel.CENTER);
         infoPanel.add(turn);
 
         gui.add(right, BorderLayout.EAST);
@@ -85,6 +85,8 @@ public class MainWindow extends JFrame {
         JButton debug = new JButton("Debug");
         JButton solve = new JButton("Vyřešit");
         JButton moves = new JButton("Ukaž tahy");
+        JButton help = new JButton("Jak ovládat");
+        JCheckBox freeMotion = new JCheckBox("Volný pohyb");
 
         shuffle.addActionListener(e -> App.getRubicCube().shuffle());
         reset.addActionListener(e -> App.getGameManager().reset());
@@ -92,17 +94,27 @@ public class MainWindow extends JFrame {
         debug.addActionListener(e -> App.debug = !App.debug);
         moves.addActionListener(e -> App.getTurnWindow().setVisible(true));
         solve.addActionListener(e -> App.getGameManager().solve());
+        help.addActionListener(e -> App.getHelpWindow().setVisible(true));
+        freeMotion.addActionListener(e -> App.freeMotion = !App.freeMotion);
 
-        JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 60);
-        JLabel speed = new JLabel("Rotating speed:");
+        JSlider speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 300, 60);
+        speedSlider.addChangeListener(e -> {
+            JSlider sl = (JSlider) e.getSource();
+            if (!sl.getValueIsAdjusting())
+                App.getRenderer().setRotationSpeed((float) sl.getValue());
+        });
+        JLabel speed = new JLabel("Rychlost rotace:");
 
         left.add(menu);
+        left.add(help);
         left.add(shuffle);
         left.add(solve);
         left.add(moves);
         left.add(reset);
         left.add(debug);
 
+
+        right.add(freeMotion);
         right.add(speed);
         right.add(speedSlider);
 

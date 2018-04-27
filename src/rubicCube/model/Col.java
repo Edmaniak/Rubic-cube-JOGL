@@ -32,6 +32,10 @@ public class Col {
         return b;
     }
 
+    public boolean isTheSame(Col col) {
+        return r == col.r && b == col.b && g == col.g;
+    }
+
     @Override
     public String toString() {
         if (r == 1 && g == 0 && b == 0)

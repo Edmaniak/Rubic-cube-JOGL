@@ -91,19 +91,21 @@ public class Renderer implements GLEventListener, MouseListener,
         gl.glMatrixMode(GL2.GL_MODELVIEW);
 
         // rotace podle zmeny pozice mysi, osy rotace zustavaji svisle a vodorovne
-        gl.glLoadIdentity();
-        gl.glRotatef((dx * delay) * OBJECT_ROTATION_SPEED, 0, 1, 0);
-        gl.glRotatef((dy * delay) * OBJECT_ROTATION_SPEED, 1, 0, 0);
-        gl.glMultMatrixf(m, 0);
-        gl.glGetFloatv(GL2.GL_MODELVIEW_MATRIX, m, 0);
+        if (App.freeMotion) {
+            gl.glLoadIdentity();
+            gl.glRotatef((dx * delay) * OBJECT_ROTATION_SPEED, 0, 1, 0);
+            gl.glRotatef((dy * delay) * OBJECT_ROTATION_SPEED, 1, 0, 0);
+            gl.glMultMatrixf(m, 0);
+            gl.glGetFloatv(GL2.GL_MODELVIEW_MATRIX, m, 0);
+        }
 
+        // Delaying the mouse camera rotation
         if (delay >= 0)
             delay -= 0.02f;
         else {
             dx = 0;
             dy = 0;
         }
-
 
         if (App.debug)
             drawAxis(10f);
@@ -137,6 +139,12 @@ public class Renderer implements GLEventListener, MouseListener,
 
     }
 
+    /**
+     * The main logic for rubic's cube interaction. Basically we're asking...
+     *
+     * @param cube    the partial cube of rubic cube
+     * @param segment segment the partial cube is in
+     */
     public void handleRotation(Cube cube, Segment segment) {
         if (segment.getState().getStatus() == Status.INMOTION)
             for (Cube segmentCube : segment.getCubes())
@@ -191,6 +199,11 @@ public class Renderer implements GLEventListener, MouseListener,
     public void mouseMoved(MouseEvent e) {
     }
 
+    /**
+     * Axis drawing snippet. Mainly for debugging.
+     *
+     * @param size size of the axis
+     */
     private void drawAxis(float size) {
         // draw our axes
         gl.glBegin(GL_LINES);
@@ -386,6 +399,9 @@ public class Renderer implements GLEventListener, MouseListener,
             case KeyEvent.VK_DOWN:
                 camera.move(Direction.DOWN);
                 break;
+            case KeyEvent.VK_SPACE:
+                rubicCube.isSolved();
+                break;
         }
     }
 
@@ -403,5 +419,9 @@ public class Renderer implements GLEventListener, MouseListener,
     @Override
     public void dispose(GLAutoDrawable arg0) {
 
+    }
+
+    public static void setRotationSpeed(float rotationSpeed) {
+        ROTATION_SPEED = rotationSpeed;
     }
 }
