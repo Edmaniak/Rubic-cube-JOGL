@@ -134,7 +134,7 @@ public class Renderer implements GLEventListener, MouseListener,
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         glu.gluPerspective(45, 1280 / (float) 728, 0.1f, 100.0f);
-        camera.animate(step);
+        camera.animate();
         glu.gluLookAt(camera.getVActX(), camera.getVActY(), camera.getVActZ(), 0, 0, 0, 0, 1, 0);
 
     }

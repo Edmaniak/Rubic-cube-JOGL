@@ -5,6 +5,10 @@ import rubicCube.model.Segment;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Orientation;
 
+/**
+ * Represents the data structure needed for turn representation.
+ * One turn is one rotation done by player
+ */
 public class Turn {
 
     private String notation;
@@ -23,14 +27,11 @@ public class Turn {
         this.order++;
     }
 
-    public String getNotation() {
-        return notation;
-    }
-
-    public Direction getDirection() {
-        return direction;
-    }
-
+    /**
+     * Returns the reverse direction compared to the actual
+     * turn direction.
+     * @return
+     */
     public Direction getReverseDirection() {
         if (direction == Direction.LEFT)
             return Direction.RIGHT;
@@ -43,6 +44,11 @@ public class Turn {
         return null;
     }
 
+    /**
+     * Returns the reverse direction compared to the actual
+     * turn direction.
+     * @return
+     */
     public PlayDirection getReversePlayDirection() {
         if (direction == Direction.RIGHT && orientation == Orientation.Y)
             return PlayDirection.BACKWARDS;
@@ -51,6 +57,14 @@ public class Turn {
         if(direction == Direction.BACK && orientation == Orientation.X)
             return PlayDirection.BACKWARDS;
         return PlayDirection.FORWARDS;
+    }
+
+    public String getNotation() {
+        return notation;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     public Segment getSegment() {

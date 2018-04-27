@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * Dialog that shows how the cube can be controlled
+ */
 public class HelpWindow extends JDialog {
 
     private JLabel helpTextLbl;

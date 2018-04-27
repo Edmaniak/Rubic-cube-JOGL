@@ -1,5 +1,8 @@
 package rubicCube.animation;
 
+/**
+ * State of animatable object value.
+ */
 public class State {
 
     private float value;

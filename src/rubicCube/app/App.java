@@ -8,14 +8,13 @@ import javax.swing.*;
 
 public class App {
 
-    public static final int FPS = 60; // animator's target frames per second
+    public static final int FPS = 60;
     public static boolean debug = false;
     public static boolean freeMotion = false;
 
     private static MainWindow mainWindow;
     private static InitWindow initWindow;
     private static WinnerWindow winnerWindow;
-    private static ControlsWindow controlsWindow;
     private static TurnWindow turnWindow;
     private static HelpWindow helpWindow;
 
@@ -32,7 +31,6 @@ public class App {
         turnWindow = new TurnWindow(mainWindow, rubicCube);
         helpWindow = new HelpWindow(mainWindow);
         initWindow = new InitWindow(mainWindow);
-        controlsWindow = new ControlsWindow(mainWindow);
         gameManager = new GameManager(rubicCube, mainWindow, animator);
         winnerWindow = new WinnerWindow(mainWindow,0);
     }
@@ -59,10 +57,6 @@ public class App {
 
     public static MainWindow getMainWindow() {
         return mainWindow;
-    }
-
-    public static ControlsWindow getControlsWindow() {
-        return controlsWindow;
     }
 
     public static InitWindow getInitWindow() {

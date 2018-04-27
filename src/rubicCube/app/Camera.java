@@ -1,10 +1,12 @@
 package rubicCube.app;
 
-
-import rubicCube.animation.State;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Vec3Df;
 
+/**
+ * Specific four angle view camera for displaying the cube
+ * from 4 different angles. The movement is always by 90 degrees
+ */
 public class Camera {
 
     private Vec3Df vectorActual;
@@ -28,6 +30,11 @@ public class Camera {
         this(new Vec3Df(x, y, z), moveSpeed);
     }
 
+    /**
+     * Moves the camera about 90 degrees
+     *
+     * @param direction the direction of movement
+     */
     public void move(Direction direction) {
 
         switch (direction) {
@@ -48,19 +55,23 @@ public class Camera {
         }
     }
 
-    public void animate(float speed) {
-        float x = anim(vectorDesired.getX(), vectorActual.getX(), speed );
-        float y = anim(vectorDesired.getY(), vectorActual.getY(), speed );
-        float z = anim(vectorDesired.getZ(), vectorActual.getZ(), speed );
+    /**
+     * Function intended for the rendering pipeline. It animates the camera movement
+     * when the desired angle is different from the actual angle (vector)
+     */
+    public void animate() {
+        float x = anim(vectorDesired.getX(), vectorActual.getX());
+        float y = anim(vectorDesired.getY(), vectorActual.getY());
+        float z = anim(vectorDesired.getZ(), vectorActual.getZ());
         vectorActual = new Vec3Df(x, y, z);
     }
 
 
-    private float anim(float desired, float actual, float speed) {
-        return canContinue(desired, actual) ? shift(desired, actual, speed) : actual;
+    private float anim(float desired, float actual) {
+        return canContinue(desired, actual) ? shift(desired, actual) : actual;
     }
 
-    private float shift(float desired, float actual, float speed) {
+    private float shift(float desired, float actual) {
         if (desired < actual) {
             return actual - (moveSpeed);
         }

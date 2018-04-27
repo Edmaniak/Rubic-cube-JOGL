@@ -13,14 +13,12 @@ import java.util.List;
  */
 public class Animator {
 
-    private final List<PropAnimation<Camera>> cameraPropAnimationList;
     private final List<PropAnimation<Segment>> segmentPropAnimationList;
     private final List<PropAnimation> toRemove;
     private final Runnable turnFunction;
 
     public Animator(Runnable turnFunction) {
         segmentPropAnimationList = new ArrayList<>();
-        cameraPropAnimationList = new ArrayList<>();
         toRemove = new ArrayList<>();
         this.turnFunction = turnFunction;
     }

@@ -7,6 +7,9 @@ import rubicCube.model.RubicCube;
 
 import java.util.ArrayList;
 
+/**
+ * Handles the game state, turns and solving
+ */
 public class GameManager {
 
     private ArrayList<Turn> turns;
@@ -24,6 +27,9 @@ public class GameManager {
         this.animator = animator;
     }
 
+    /**
+     * Routine needed for next turn
+     */
     public void nextTurn() {
         if (!checkForSolved()) {
             gui.increaseTurnCount();
@@ -31,6 +37,9 @@ public class GameManager {
         }
     }
 
+    /**
+     * Calls the routine for the rubic cube to be solved.
+     */
     public void solve() {
         this.gameState = GameState.AUTO_SOLVING;
         for (int i = turns.size() - 1; i >= 0; i--) {
@@ -40,10 +49,17 @@ public class GameManager {
         rubicCube.getTurns().clear();
     }
 
+    /**
+     * Starts the game logically.
+     */
     public void start() {
         this.gameState = GameState.SOLVING;
     }
 
+    /**
+     * Routine needed for the game restart. Regenerates the rubic cube a clears turn
+     * records
+     */
     public void reset() {
         this.gameState = GameState.SOLVING;
         rubicCube.generateStructure();
@@ -51,8 +67,12 @@ public class GameManager {
         turnCount = 0;
     }
 
+    /**
+     * Checks whether the cube is solved
+     * @return true if it is solved
+     */
     public boolean checkForSolved() {
-        if (rubicCube.isSolved()) {
+        if (rubicCube.isSolved() && gameState != GameState.AUTO_SOLVING) {
             App.getWinnerWindow().setVisible(true);
             gameState = GameState.SOLVED;
             return true;

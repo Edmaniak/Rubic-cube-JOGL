@@ -3,6 +3,10 @@ package rubicCube.app;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Orientation;
 
+/**
+ * Static class for parsing the turn to the standardized
+ * rubic cube notation
+ */
 public class TurnParser {
     public static String parseTurn(Orientation orientation, Direction direction, int index) {
         String notation = "";

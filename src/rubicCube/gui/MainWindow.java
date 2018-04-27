@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Main canvas with OpenGL canvas
+ */
 public class MainWindow extends JFrame {
 
     private int turnCount;

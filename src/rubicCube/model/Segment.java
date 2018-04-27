@@ -44,11 +44,6 @@ public class Segment implements Animatable<Segment> {
         return state;
     }
 
-    @Override
-    public Segment getObject() {
-        return null;
-    }
-
     public Cube[] getCubes() {
         return cubes;
     }

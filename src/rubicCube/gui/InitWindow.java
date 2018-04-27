@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * Dialog that is showed in the beginning of the game runtime.
+ */
 public class InitWindow extends JDialog {
 
     private JButton start;

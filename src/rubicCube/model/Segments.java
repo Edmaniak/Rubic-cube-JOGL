@@ -1,6 +1,5 @@
 package rubicCube.model;
 
-import rubicCube.model.Segment;
 import rubicCube.model.geometry.Orientation;
 
 import java.util.*;
@@ -8,7 +7,6 @@ import java.util.*;
 public class Segments {
 
     private ArrayList<Segment> segments;
-    private int count;
 
     public Segments() {
         segments = new ArrayList<>();

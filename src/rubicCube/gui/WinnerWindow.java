@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * Dialog that is showed when the cube is solved
+ */
 public class WinnerWindow extends JDialog {
 
     private int turnCount;

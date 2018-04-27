@@ -7,6 +7,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * Show the turn history based on standard notaion
+ */
 public class TurnWindow extends JDialog {
 
     private JLabel moves;
