@@ -1,7 +1,7 @@
-package rubicCube.app;
+package rubicCube.app.turn;
 
 import rubicCube.animation.PlayDirection;
-import rubicCube.model.Segment;
+import rubicCube.model.cube.Segment;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Orientation;
 
@@ -11,12 +11,12 @@ import rubicCube.model.geometry.Orientation;
  */
 public class Turn {
 
-    private String notation;
+    private final String notation;
     private static int order;
-    private Segment segment;
-    private int index;
-    private Orientation orientation;
-    private Direction direction;
+    private final Segment segment;
+    private final int index;
+    private final Orientation orientation;
+    private final Direction direction;
 
     public Turn(Segment segment, Direction direction) {
         this.segment = segment;
@@ -24,7 +24,7 @@ public class Turn {
         this.index = segment.getIndex();
         this.orientation = segment.getOrientation();
         this.notation = TurnParser.parseTurn(orientation, direction, index);
-        this.order++;
+        order++;
     }
 
     /**

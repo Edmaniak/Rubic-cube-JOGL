@@ -1,7 +1,6 @@
 package rubicCube.animation;
 
-import rubicCube.app.Camera;
-import rubicCube.model.Segment;
+import rubicCube.model.cube.Segment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,7 @@ public class Animator {
      *
      * @param propAnimation
      */
-    public void addToPlaylist(PropAnimation propAnimation) {
+    public void addToPlaylist(PropAnimation<Segment> propAnimation) {
 
         if (canBeAdded(propAnimation)) {
             segmentPropAnimationList.add(propAnimation);
@@ -100,9 +99,7 @@ public class Animator {
      * @return
      */
     private boolean canBeAdded(PropAnimation<Segment> propAnimation) {
-        if (propAnimation.getPlayMode() == PlayMode.SINGLE)
-            return true;
-        return !isSegmentRotating(propAnimation.getAnimatable()) && !isCrossAnimation(propAnimation.getAnimatable());
+        return propAnimation.getPlayMode() == PlayMode.SINGLE || !isSegmentRotating(propAnimation.getAnimatable()) && !isCrossAnimation(propAnimation.getAnimatable());
     }
 
 

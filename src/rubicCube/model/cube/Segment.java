@@ -1,8 +1,7 @@
-package rubicCube.model;
+package rubicCube.model.cube;
 
 import rubicCube.animation.Animatable;
 import rubicCube.animation.State;
-import rubicCube.model.Cube;
 import rubicCube.model.geometry.Orientation;
 import rubicCube.model.geometry.Vec3Di;
 

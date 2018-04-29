@@ -1,4 +1,4 @@
-package rubicCube.app;
+package rubicCube.app.render;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
@@ -8,12 +8,15 @@ import rubicCube.animation.PropAnimation;
 import rubicCube.animation.Animator;
 import rubicCube.animation.PlayDirection;
 import rubicCube.animation.Status;
-import rubicCube.model.Cube;
-import rubicCube.model.RubicCube;
-import rubicCube.model.Segment;
+import rubicCube.app.App;
+import rubicCube.app.manager.GameState;
+import rubicCube.model.cube.Cube;
+import rubicCube.model.cube.RubicCube;
+import rubicCube.model.cube.Segment;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Orientation;
 import rubicCube.model.geometry.Vec3Di;
+import utils.OglUtils;
 
 import java.awt.event.*;
 
@@ -28,7 +31,6 @@ public class Renderer implements GLEventListener, MouseListener,
     private int dx, dy, ox, oy;
     private long oldmils;
     private long oldFPSmils;
-    private double fps;
     private RubicCube rubicCube;
     private float m[] = new float[16];
     private Animator animator;
@@ -75,7 +77,6 @@ public class Renderer implements GLEventListener, MouseListener,
 
         long mils = System.currentTimeMillis();
         if ((mils - oldFPSmils) > 300) {
-            fps = 1000 / (double) (mils - oldmils + 1);
             oldFPSmils = mils;
         }
 
@@ -94,7 +95,7 @@ public class Renderer implements GLEventListener, MouseListener,
         if (App.freeMotion) {
             gl.glLoadIdentity();
             gl.glRotatef((dx * delay) * OBJECT_ROTATION_SPEED, 0, 1, 0);
-            gl.glRotatef((dy * delay) * OBJECT_ROTATION_SPEED, 1, 0, 0);
+            gl.glRotatef((dy * delay) * OBJECT_ROTATION_SPEED, 0, 0, 1);
             gl.glMultMatrixf(m, 0);
             gl.glGetFloatv(GL2.GL_MODELVIEW_MATRIX, m, 0);
         }
@@ -137,6 +138,8 @@ public class Renderer implements GLEventListener, MouseListener,
         camera.animate();
         glu.gluLookAt(camera.getVActX(), camera.getVActY(), camera.getVActZ(), 0, 0, 0, 0, 1, 0);
 
+        OglUtils.drawStr2D(glDrawable, 20, 20,"Závěrečný projekt FIM - PGRF2 [Adam Ouhrabka]");
+
     }
 
     /**
@@ -145,7 +148,7 @@ public class Renderer implements GLEventListener, MouseListener,
      * @param cube    the partial cube of rubic cube
      * @param segment segment the partial cube is in
      */
-    public void handleRotation(Cube cube, Segment segment) {
+    private void handleRotation(Cube cube, Segment segment) {
         if (segment.getState().getStatus() == Status.INMOTION)
             for (Cube segmentCube : segment.getCubes())
                 if (segmentCube.isTheSameCube(cube)) {
@@ -224,10 +227,12 @@ public class Renderer implements GLEventListener, MouseListener,
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (App.getGameManager().getGameState() == GameState.AUTO_SOLVING)
+            return;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_Q:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 2),
                                 PlayDirection.BACKWARDS,
@@ -236,7 +241,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_E:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 2),
                                 PlayDirection.FORWARDS,
@@ -245,7 +250,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_A:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 1),
                                 PlayDirection.BACKWARDS,
@@ -254,7 +259,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_D:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 1),
                                 PlayDirection.FORWARDS,
@@ -263,7 +268,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_Y:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 0),
                                 PlayDirection.BACKWARDS,
@@ -272,7 +277,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_C:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Y, 0),
                                 PlayDirection.FORWARDS,
@@ -281,7 +286,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_J:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 0),
                                 PlayDirection.FORWARDS,
@@ -290,7 +295,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_U:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 0),
                                 PlayDirection.BACKWARDS,
@@ -299,7 +304,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_K:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 1),
                                 PlayDirection.FORWARDS,
@@ -308,7 +313,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_I:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 1),
                                 PlayDirection.BACKWARDS,
@@ -317,7 +322,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_L:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 2),
                                 PlayDirection.FORWARDS,
@@ -326,7 +331,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_O:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.X, 2),
                                 PlayDirection.BACKWARDS,
@@ -335,7 +340,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_R:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 2),
                                 PlayDirection.FORWARDS,
@@ -344,7 +349,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_T:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 2),
                                 PlayDirection.BACKWARDS,
@@ -353,7 +358,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_F:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 1),
                                 PlayDirection.FORWARDS,
@@ -362,7 +367,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_G:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 1),
                                 PlayDirection.BACKWARDS,
@@ -371,7 +376,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_V:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 0),
                                 PlayDirection.FORWARDS,
@@ -380,7 +385,7 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_B:
                 animator.addToPlaylist(
-                        new PropAnimation<Segment>(
+                        new PropAnimation<>(
                                 90,
                                 rubicCube.getSegment(Orientation.Z, 0),
                                 PlayDirection.BACKWARDS,
@@ -398,9 +403,6 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_DOWN:
                 camera.move(Direction.DOWN);
-                break;
-            case KeyEvent.VK_SPACE:
-                rubicCube.isSolved();
                 break;
         }
     }

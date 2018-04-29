@@ -1,7 +1,11 @@
-package rubicCube.model;
+package rubicCube.model.cube;
 
+import rubicCube.model.color.Col;
 import rubicCube.model.geometry.Topology;
 
+/**
+ * Logical representation of one partial cube side
+ */
 public class Side {
     private Col color;
     private int index;

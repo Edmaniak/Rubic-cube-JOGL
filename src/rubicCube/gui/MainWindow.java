@@ -5,7 +5,7 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 import rubicCube.app.App;
-import rubicCube.app.Renderer;
+import rubicCube.app.render.Renderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +24,7 @@ public class MainWindow extends JFrame {
         try {
             setSize(1280, 768);
             setTitle("Rubic's cube <PGRF2 UHK>");
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
             // setup OpenGL Version 2
             GLProfile profile = GLProfile.get(GLProfile.GL2);
@@ -104,7 +104,7 @@ public class MainWindow extends JFrame {
         speedSlider.addChangeListener(e -> {
             JSlider sl = (JSlider) e.getSource();
             if (!sl.getValueIsAdjusting())
-                App.getRenderer().setRotationSpeed((float) sl.getValue());
+                Renderer.setRotationSpeed((float) sl.getValue());
         });
         JLabel speed = new JLabel("Rychlost rotace:");
 

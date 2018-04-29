@@ -1,8 +1,10 @@
 package rubicCube.app;
 
 import rubicCube.animation.Animator;
+import rubicCube.app.manager.GameManager;
+import rubicCube.app.render.Renderer;
 import rubicCube.gui.*;
-import rubicCube.model.RubicCube;
+import rubicCube.model.cube.RubicCube;
 
 import javax.swing.*;
 
@@ -19,14 +21,14 @@ public class App {
     private static HelpWindow helpWindow;
 
     private static RubicCube rubicCube;
-    private static Renderer renderer;
+    private static rubicCube.app.render.Renderer renderer;
     private static Animator animator;
     private static GameManager gameManager;
 
-    public App() {
+    private App() {
         animator = new Animator(() -> gameManager.nextTurn());
         rubicCube = new RubicCube();
-        renderer = new Renderer(animator, rubicCube);
+        renderer = new rubicCube.app.render.Renderer(animator, rubicCube);
         mainWindow = new MainWindow(renderer);
         turnWindow = new TurnWindow(mainWindow, rubicCube);
         helpWindow = new HelpWindow(mainWindow);

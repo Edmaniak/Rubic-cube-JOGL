@@ -9,12 +9,13 @@ import java.awt.*;
  */
 public class HelpWindow extends JDialog {
 
-    private JLabel helpTextLbl;
-    private String text;
-    private JPanel panel;
+    private final JLabel helpTextLbl;
+    private final String text;
+    private final JPanel panel;
 
     public HelpWindow(JFrame parent) {
         super(parent, "Nápověda", false);
+        setLocationRelativeTo(parent);
         panel = new JPanel(new BorderLayout());
         text = "<html>Rotování kamerou: <br>" +
                 "Kurzorové šipky / myš <br> <br>" +

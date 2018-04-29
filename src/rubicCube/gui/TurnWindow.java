@@ -1,7 +1,7 @@
 package rubicCube.gui;
 
-import rubicCube.app.Turn;
-import rubicCube.model.RubicCube;
+import rubicCube.app.turn.Turn;
+import rubicCube.model.cube.RubicCube;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,15 +12,16 @@ import java.awt.*;
  */
 public class TurnWindow extends JDialog {
 
-    private JLabel moves;
-    private JLabel heading = new JLabel("Odehrané tahy dle standartní notace");
-    private Font h1 = new Font("Arial", Font.BOLD, 20);
+    private final JLabel moves;
+    private final JLabel heading = new JLabel("Odehrané tahy dle standartní notace");
+    private final Font h1 = new Font("Arial", Font.BOLD, 20);
     private String movesString;
-    private JPanel panel;
-    private RubicCube rubicCube;
+    private final JPanel panel;
+    private final RubicCube rubicCube;
 
     public TurnWindow(JFrame parent, RubicCube rubicCube) {
         super(parent, "Tahy", false);
+        setLocationRelativeTo(parent);
         this.rubicCube = rubicCube;
         panel = new JPanel(new BorderLayout());
         panel.setBorder(new EmptyBorder(30, 30, 30, 30));

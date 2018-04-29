@@ -1,4 +1,4 @@
-package rubicCube.app;
+package rubicCube.app.turn;
 
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Orientation;

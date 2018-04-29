@@ -11,24 +11,33 @@ import java.awt.*;
  */
 public class WinnerWindow extends JDialog {
 
-    private int turnCount;
-    private JPanel container;
-    private JPanel bottom;
-    private JButton newGame;
-    private JButton close;
+    private final int turnCount;
+    private final JPanel container;
+    private final JPanel bottom;
+    private final JButton newGame;
+    private final JButton close;
     private JLabel messageLabel;
-    private static String message = "Skvěle! Podařilo se Vám kostku složit v ";
-    private static Font h1 = new Font("Arial", Font.BOLD, 20);
+    private static final String message = "Skvěle! Podařilo se Vám kostku složit v ";
+    private static final Font h1 = new Font("Arial", Font.BOLD, 20);
 
     public WinnerWindow(JFrame parent, int turnCount) {
         super(parent, "Výborně", true);
+        setLocationRelativeTo(parent);
         this.turnCount = turnCount;
         container = new JPanel(new BorderLayout());
         container.setBorder(new EmptyBorder(30, 30, 30, 30));
         bottom = new JPanel(new GridLayout(1,2));
         bottom.setBorder(new EmptyBorder(30,0,0,0));
+
         newGame = new JButton("Nová hra");
         close = new JButton("Zavřít");
+        newGame.addActionListener(e -> {
+            dispose();
+            App.getInitWindow().setVisible(true);
+        });
+        close.addActionListener(e -> dispose());
+
+
         messageLabel = new JLabel(message + App.getGameManager().getTurnCount() + " tazích", JLabel.CENTER);
         messageLabel.setFont(h1);
         bottom.add(newGame);
@@ -37,6 +46,11 @@ public class WinnerWindow extends JDialog {
         container.add(messageLabel, BorderLayout.CENTER);
         add(container);
         pack();
-        setVisible(true);
+    }
+
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b);
+        messageLabel.setText(message + App.getGameManager().getTurnCount() + " tazích");
     }
 }

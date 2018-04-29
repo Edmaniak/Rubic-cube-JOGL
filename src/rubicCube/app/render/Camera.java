@@ -1,4 +1,4 @@
-package rubicCube.app;
+package rubicCube.app.render;
 
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Vec3Df;
@@ -11,7 +11,7 @@ public class Camera {
 
     private Vec3Df vectorActual;
     private Vec3Df vectorDesired;
-    private Vec3Df[] views = new Vec3Df[4];
+    private final Vec3Df[] views = new Vec3Df[4];
     private float distance = 40;
     private float moveSpeed;
     private int pointer = 0;
@@ -85,17 +85,15 @@ public class Camera {
     }
 
 
-    private int right() {
+    private void right() {
         if (--pointer == -1)
             pointer = 3;
-        return pointer;
 
     }
 
-    private int left() {
+    private void left() {
         if (++pointer == 4)
             pointer = 0;
-        return pointer;
     }
 
     public float getMoveSpeed() {

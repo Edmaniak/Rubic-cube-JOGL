@@ -1,6 +1,8 @@
-package rubicCube.model;
+package rubicCube.model.cube;
 
 import com.jogamp.opengl.GL2;
+import rubicCube.model.color.Col;
+import rubicCube.model.color.ColorTopology;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Vec3Df;
 
@@ -137,9 +139,7 @@ public class Cube {
      * @return true if it is the same cube
      */
     public boolean isTheSameCube(Cube cube) {
-        if (cube.getIndex() == index)
-            return true;
-        return false;
+        return cube.getIndex() == index;
     }
 
     /**

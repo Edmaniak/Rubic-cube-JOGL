@@ -1,4 +1,4 @@
-package rubicCube.model;
+package rubicCube.model.color;
 
 public class Col {
 

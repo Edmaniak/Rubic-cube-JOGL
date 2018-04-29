@@ -1,8 +1,9 @@
-package rubicCube.model;
+package rubicCube.model.cube;
 
 import rubicCube.animation.PlayMode;
 import rubicCube.animation.PropAnimation;
-import rubicCube.app.Turn;
+import rubicCube.app.turn.Turn;
+import rubicCube.model.color.Col;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Orientation;
 import rubicCube.model.geometry.Vec3Df;
@@ -10,6 +11,11 @@ import rubicCube.model.geometry.Vec3Df;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Represents structure, state and turn history linked to
+ * rubic cube. Either all the associated actions in terms
+ * of generating and rotating.
+ */
 public class RubicCube {
 
     private final Cube[] cubes = new Cube[27];
@@ -22,14 +28,16 @@ public class RubicCube {
 
     private float space;
     private float cubeSize;
-    private int cubeCount;
-    private static Random r = new Random();
+    private static final Random r = new Random();
 
     public RubicCube(float space, float cubeSize) {
         this.turns = new ArrayList<>();
         generateStructure(space, cubeSize);
     }
 
+    /**
+     * Non visible rubic cube
+     */
     public RubicCube() {
         this(0, 0);
     }
@@ -48,8 +56,7 @@ public class RubicCube {
         Cube[] tempCubes = generateTempCubes();
 
         Cube[] colCubes = getXPlate(x);
-        for (int c = 0; c < colCubes.length; c++)
-            colCubes[c].rotateX(direction);
+        for (Cube colCube : colCubes) colCube.rotateX(direction);
 
         for (int y = 0; y < 3; y++)
             for (int z = 0; z < 3; z++)
@@ -90,8 +97,7 @@ public class RubicCube {
         Cube[] tempCubes = generateTempCubes();
 
         Cube[] yCubes = getYPlate(y);
-        for (int c = 0; c < yCubes.length; c++)
-            yCubes[c].rotateY(direction);
+        for (Cube yCube : yCubes) yCube.rotateY(direction);
 
 
         for (int x = 0; x < 3; x++)
@@ -134,8 +140,7 @@ public class RubicCube {
         Cube[] tempCubes = generateTempCubes();
 
         Cube[] zCubes = getZPlate(z);
-        for (int c = 0; c < zCubes.length; c++)
-            zCubes[c].rotateZ(direction);
+        for (Cube zCube : zCubes) zCube.rotateZ(direction);
 
         for (int x = 0; x < 3; x++)
             for (int y = 0; y < 3; y++)
@@ -351,8 +356,7 @@ public class RubicCube {
      * @return
      */
     public PropAnimation solveTurn(Turn turn) {
-        PropAnimation animation = new PropAnimation(90, turn.getSegment(), turn.getReversePlayDirection(), getSolvingCallback(turn), PlayMode.SINGLE);
-        return animation;
+        return new PropAnimation(90, turn.getSegment(), turn.getReversePlayDirection(), getSolvingCallback(turn), PlayMode.SINGLE);
     }
 
     /**
@@ -390,10 +394,6 @@ public class RubicCube {
 
     public Cube[] getCubes() {
         return cubes;
-    }
-
-    public int getCubeCount() {
-        return cubeCount;
     }
 
     public void rotateCube(float dx, float dy) {

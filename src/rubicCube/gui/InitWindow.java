@@ -11,31 +11,30 @@ import java.awt.*;
  */
 public class InitWindow extends JDialog {
 
-    private JButton start;
-    private JButton close;
-    private JButton mix;
-    private JLabel title;
-    private JPanel container;
-    private JPanel bottom;
-    private JPanel center;
-    private JTextField size = new JTextField("5.0", 2);
-    private JTextField count = new JTextField("3", 2);
-    private JTextField space = new JTextField("0.2", 2);
-    private JTextField random = new JTextField("3", 2);
-    private static Font h1 = new Font("Arial", Font.BOLD, 22);
-    private static String message = "Vítejte v simulaci rubikovi kostky";
+    private final JButton start;
+    private final JButton close;
+    private final JButton mix;
+    private final JLabel title;
+    private final JPanel container;
+    private final JPanel bottom;
+    private final JPanel center;
+    private final JTextField size = new JTextField("5.0", 2);
+    private final JTextField count = new JTextField("3", 2);
+    private final JTextField space = new JTextField("0.2", 2);
+    private final JTextField random = new JTextField("3", 2);
+    private static final Font h1 = new Font("Arial", Font.BOLD, 22);
+    private static final String message = "Vítejte v simulaci rubikovi kostky";
 
     public InitWindow(JFrame parent) {
         super(parent, "Nastavení modelu", true);
+        setLocationRelativeTo(parent);
         container = new JPanel(new BorderLayout());
         container.setBorder(new EmptyBorder(30, 30, 30, 30));
         bottom = new JPanel(new GridLayout(1, 3));
-        center = new JPanel(new GridLayout(5, 2));
+        center = new JPanel(new GridLayout(4, 2));
 
         center.add(new JLabel("Velikost kostek: "));
         center.add(size);
-        center.add(new JLabel("Počet kostek v segmentu: "));
-        center.add(count);
         center.add(new JLabel("Mezera mezi kostkami: "));
         center.add(space);
         center.add(new JLabel("Nahodilost rozmixování"));
@@ -46,7 +45,6 @@ public class InitWindow extends JDialog {
             try {
 
                 float sizeV = Float.parseFloat(size.getText());
-                int countV = Integer.valueOf(count.getText());
                 float spaceV = Float.parseFloat(space.getText());
                 App.getRubicCube().generateStructure(spaceV, sizeV);
                 App.getHelpWindow().setVisible(true);

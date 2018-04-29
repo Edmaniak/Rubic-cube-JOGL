@@ -1,11 +1,12 @@
-package rubicCube.model;
+package rubicCube.model.color;
 
+import rubicCube.model.cube.Side;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Topology;
 
 public class ColorTopology {
 
-    public static final float DEFAULT_DARKNESS = 0.1f;
+    public static final float DEFAULT_DARK = 0.1f;
 
     private Side front;
     private Side back;
@@ -57,12 +58,12 @@ public class ColorTopology {
 
     public ColorTopology() {
         this(
-                new Col(DEFAULT_DARKNESS),
-                new Col(DEFAULT_DARKNESS),
-                new Col(DEFAULT_DARKNESS),
-                new Col(DEFAULT_DARKNESS),
-                new Col(DEFAULT_DARKNESS),
-                new Col(DEFAULT_DARKNESS)
+                new Col(DEFAULT_DARK),
+                new Col(DEFAULT_DARK),
+                new Col(DEFAULT_DARK),
+                new Col(DEFAULT_DARK),
+                new Col(DEFAULT_DARK),
+                new Col(DEFAULT_DARK)
         );
     }
 
@@ -77,6 +78,10 @@ public class ColorTopology {
         );
     }
 
+    /**
+     * Shiftes all the colors to the right by one
+     * @param array
+     */
     private void shiftPositiveRight(int[] array) {
         Side[] tempSides = generateTempSides();
         int temp = array[array.length - 1];
@@ -87,7 +92,10 @@ public class ColorTopology {
         sides[array[0]].setColor(tempSides[temp].getColor());
         array[0] = temp;
     }
-
+    /**
+     * Shiftes all the colors to the left by one
+     * @param array
+     */
     private void shiftNegativeLeft(int[] array) {
         Side[] tempSides = generateTempSides();
         int temp = array[0];
@@ -99,6 +107,10 @@ public class ColorTopology {
         array[array.length - 1] = temp;
     }
 
+    /**
+     * Intended for temporal side array generation for
+     * copying purposes
+     */
     private Side[] generateTempSides() {
         Side[] tempSides = new Side[6];
         for (int i = 0; i < sides.length; i++)
@@ -106,7 +118,11 @@ public class ColorTopology {
         return tempSides;
     }
 
-
+    /**
+     * Routine for partial cube when the segment within
+     * the Y rotation plane is rotated
+     * @param direction of the rotation
+     */
     public void rotateY(Direction direction) {
         switch (direction) {
             case LEFT:
@@ -118,6 +134,11 @@ public class ColorTopology {
         }
     }
 
+    /**
+     * Routine for partial cube when the segment within
+     * the X rotation plane is rotated
+     * @param direction of the rotation
+     */
     public void rotateX(Direction direction) {
         switch (direction) {
             case THERE:
@@ -128,7 +149,11 @@ public class ColorTopology {
                 break;
         }
     }
-
+    /**
+     * Routine for partial cube when the segment within
+     * the X rotation plane is rotated
+     * @param direction of the rotation
+     */
     public void rotateZ(Direction direction) {
         switch (direction) {
             case LEFT:

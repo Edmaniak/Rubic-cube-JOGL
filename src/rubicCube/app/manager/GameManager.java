@@ -1,9 +1,11 @@
-package rubicCube.app;
+package rubicCube.app.manager;
 
 import rubicCube.animation.PropAnimation;
 import rubicCube.animation.Animator;
+import rubicCube.app.App;
+import rubicCube.app.turn.Turn;
 import rubicCube.gui.MainWindow;
-import rubicCube.model.RubicCube;
+import rubicCube.model.cube.RubicCube;
 
 import java.util.ArrayList;
 
@@ -14,8 +16,8 @@ public class GameManager {
 
     private ArrayList<Turn> turns;
     private RubicCube rubicCube;
-    private MainWindow gui;
-    private Animator animator;
+    private final MainWindow gui;
+    private final Animator animator;
     private GameState gameState;
     private int turnCount;
 
@@ -31,9 +33,13 @@ public class GameManager {
      * Routine needed for next turn
      */
     public void nextTurn() {
-        if (!checkForSolved()) {
+        if (!rubicCube.isSolved()) {
             gui.increaseTurnCount();
             turnCount++;
+        } else {
+            turnCount++;
+            App.getWinnerWindow().setVisible(true);
+            gameState = GameState.SOLVED;
         }
     }
 
@@ -65,19 +71,6 @@ public class GameManager {
         rubicCube.generateStructure();
         gui.setTurnCount(0);
         turnCount = 0;
-    }
-
-    /**
-     * Checks whether the cube is solved
-     * @return true if it is solved
-     */
-    public boolean checkForSolved() {
-        if (rubicCube.isSolved() && gameState != GameState.AUTO_SOLVING) {
-            App.getWinnerWindow().setVisible(true);
-            gameState = GameState.SOLVED;
-            return true;
-        }
-        return false;
     }
 
     public GameState getGameState() {
