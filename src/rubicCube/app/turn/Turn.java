@@ -33,14 +33,10 @@ public class Turn {
      * @return
      */
     public Direction getReverseDirection() {
-        if (direction == Direction.LEFT)
-            return Direction.RIGHT;
-        if (direction == Direction.RIGHT)
-            return Direction.LEFT;
-        if (direction == Direction.THERE)
-            return Direction.BACK;
-        if (direction == Direction.BACK)
-            return Direction.THERE;
+        if (direction == Direction.LEFT) return Direction.RIGHT;
+        if (direction == Direction.RIGHT) return Direction.LEFT;
+        if (direction == Direction.THERE) return Direction.BACK;
+        if (direction == Direction.BACK) return Direction.THERE;
         return null;
     }
 
@@ -50,12 +46,9 @@ public class Turn {
      * @return
      */
     public PlayDirection getReversePlayDirection() {
-        if (direction == Direction.RIGHT && orientation == Orientation.Y)
-            return PlayDirection.BACKWARDS;
-        if(direction == Direction.LEFT && orientation == Orientation.Z)
-            return PlayDirection.BACKWARDS;
-        if(direction == Direction.BACK && orientation == Orientation.X)
-            return PlayDirection.BACKWARDS;
+        if (direction == Direction.RIGHT && orientation == Orientation.Y) return PlayDirection.BACKWARDS;
+        if(direction == Direction.LEFT && orientation == Orientation.Z) return PlayDirection.BACKWARDS;
+        if(direction == Direction.BACK && orientation == Orientation.X) return PlayDirection.BACKWARDS;
         return PlayDirection.FORWARDS;
     }
 

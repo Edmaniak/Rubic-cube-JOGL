@@ -1,5 +1,8 @@
 package rubicCube.model.geometry;
 
+/**
+ * Standard vector with three integers as components
+ */
 public class Vec3Di {
 
     private final int x;

@@ -4,6 +4,10 @@ import rubicCube.model.cube.Side;
 import rubicCube.model.geometry.Direction;
 import rubicCube.model.geometry.Topology;
 
+/**
+ * Color information representation within the
+ * partial cube space.
+ */
 public class ColorTopology {
 
     public static final float DEFAULT_DARK = 0.1f;
@@ -21,8 +25,6 @@ public class ColorTopology {
 
     private Side[] sides = new Side[6];
 
-
-    // FRONT RIGHT BACK LEFT TOP BOTTOM
     public ColorTopology(Col backColor, Col frontColor, Col leftColor, Col rightColor, Col bottomColor, Col topColor) {
 
         front = new Side(0, Topology.FRONT, frontColor);
@@ -79,7 +81,7 @@ public class ColorTopology {
     }
 
     /**
-     * Shiftes all the colors to the right by one
+     * Shifts all the colors to the right by one
      * @param array
      */
     private void shiftPositiveRight(int[] array) {
@@ -93,7 +95,7 @@ public class ColorTopology {
         array[0] = temp;
     }
     /**
-     * Shiftes all the colors to the left by one
+     * Shifts all the colors to the left by one
      * @param array
      */
     private void shiftNegativeLeft(int[] array) {

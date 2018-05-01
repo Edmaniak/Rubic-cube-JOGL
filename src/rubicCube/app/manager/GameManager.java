@@ -10,7 +10,8 @@ import rubicCube.model.cube.RubicCube;
 import java.util.ArrayList;
 
 /**
- * Handles the game state, turns and solving
+ * Handles the game state, turns and solving. Singleton object
+ * that directs the game flow.
  */
 public class GameManager {
 

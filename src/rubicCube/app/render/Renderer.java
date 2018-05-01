@@ -138,7 +138,7 @@ public class Renderer implements GLEventListener, MouseListener,
         camera.animate();
         glu.gluLookAt(camera.getVActX(), camera.getVActY(), camera.getVActZ(), 0, 0, 0, 0, 1, 0);
 
-        OglUtils.drawStr2D(glDrawable, 20, 20,"Závěrečný projekt FIM - PGRF2 [Adam Ouhrabka]");
+        OglUtils.drawStr2D(glDrawable, 20, 20, "Závěrečný projekt FIM - PGRF2 [Adam Ouhrabka]");
 
     }
 
@@ -403,6 +403,12 @@ public class Renderer implements GLEventListener, MouseListener,
                 break;
             case KeyEvent.VK_DOWN:
                 camera.move(Direction.DOWN);
+                break;
+            case KeyEvent.VK_PAGE_UP:
+                camera.zoomIn();
+                break;
+            case KeyEvent.VK_PAGE_DOWN:
+                camera.zoomOut();
                 break;
         }
     }

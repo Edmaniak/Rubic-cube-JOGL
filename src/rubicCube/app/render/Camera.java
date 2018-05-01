@@ -20,10 +20,7 @@ public class Camera {
         this.vectorDesired = vector;
         this.vectorActual = vector;
         this.moveSpeed = moveSpeed;
-        this.views[0] = new Vec3Df(-distance, distance, distance);
-        this.views[1] = new Vec3Df(-distance, distance, -distance);
-        this.views[2] = new Vec3Df(distance, distance, -distance);
-        this.views[3] = new Vec3Df(distance, distance, distance);
+        generateViews();
     }
 
     public Camera(float x, float y, float z, float moveSpeed) {
@@ -52,6 +49,12 @@ public class Camera {
             case DOWN:
                 vectorDesired = new Vec3Df(vectorActual.getX(), -distance, vectorActual.getZ());
                 break;
+            case THERE:
+                zoomIn();
+                break;
+            case BACK:
+                zoomOut();
+                break;
         }
     }
 
@@ -65,7 +68,6 @@ public class Camera {
         float z = anim(vectorDesired.getZ(), vectorActual.getZ());
         vectorActual = new Vec3Df(x, y, z);
     }
-
 
     private float anim(float desired, float actual) {
         return canContinue(desired, actual) ? shift(desired, actual) : actual;
@@ -84,16 +86,33 @@ public class Camera {
         return actual < desired;
     }
 
+    private void generateViews() {
+        this.views[0] = new Vec3Df(-distance, distance, distance);
+        this.views[1] = new Vec3Df(-distance, distance, -distance);
+        this.views[2] = new Vec3Df(distance, distance, -distance);
+        this.views[3] = new Vec3Df(distance, distance, distance);
+    }
+
 
     private void right() {
-        if (--pointer == -1)
-            pointer = 3;
+        if (--pointer == -1) pointer = 3;
 
     }
 
     private void left() {
-        if (++pointer == 4)
-            pointer = 0;
+        if (++pointer == 4) pointer = 0;
+    }
+
+    public void zoomIn() {
+        distance -= moveSpeed;
+        generateViews();
+        vectorDesired = new Vec3Df(views[pointer].getX(), distance,views[pointer].getZ());
+    }
+
+    public void zoomOut() {
+        distance += moveSpeed;
+        generateViews();
+        vectorDesired = new Vec3Df(views[pointer].getX(), distance,views[pointer].getZ());
     }
 
     public float getMoveSpeed() {
@@ -119,4 +138,7 @@ public class Camera {
     public void setMoveSpeed(float moveSpeed) {
         this.moveSpeed = moveSpeed;
     }
+
+
+
 }

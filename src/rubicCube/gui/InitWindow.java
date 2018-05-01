@@ -19,7 +19,6 @@ public class InitWindow extends JDialog {
     private final JPanel bottom;
     private final JPanel center;
     private final JTextField size = new JTextField("5.0", 2);
-    private final JTextField count = new JTextField("3", 2);
     private final JTextField space = new JTextField("0.2", 2);
     private final JTextField random = new JTextField("3", 2);
     private static final Font h1 = new Font("Arial", Font.BOLD, 22);
@@ -48,6 +47,7 @@ public class InitWindow extends JDialog {
                 float spaceV = Float.parseFloat(space.getText());
                 App.getRubicCube().generateStructure(spaceV, sizeV);
                 App.getHelpWindow().setVisible(true);
+                App.getGameManager().start();
                 setVisible(false);
 
             } catch (Exception ex) {

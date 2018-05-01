@@ -1,7 +1,9 @@
 package rubicCube.animation;
 
 /**
- * State of animatable object value.
+ * State of animatable object value. As a referable object
+ * it is very convinient since it can be linked to multiple
+ * objects as one dynamic value.
  */
 public class State {
 

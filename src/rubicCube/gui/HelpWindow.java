@@ -18,7 +18,8 @@ public class HelpWindow extends JDialog {
         setLocationRelativeTo(parent);
         panel = new JPanel(new BorderLayout());
         text = "<html>Rotování kamerou: <br>" +
-                "Kurzorové šipky / myš <br> <br>" +
+                "Kurzorové šipky / myš <br><br>" +
+                "Přiblížení <br> Page-up / Page-down <br> <br>" +
                 "Rotace kostky po ose Y <br>" +
                 "(3) [Q] VPRAVO - VLEVO [E] <br>" +
                 "(2) [A] VRPAVO - VLEVO [D] <br>" +

@@ -1,5 +1,7 @@
 package rubicCube.model.geometry;
-
+/**
+ * Standard vector with three floats as components
+ */
 public class Vec3Df {
 
     private final float x;
