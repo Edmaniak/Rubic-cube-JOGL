@@ -138,7 +138,6 @@ public class Renderer implements GLEventListener, MouseListener,
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         glu.gluPerspective(45, 1280 / (float) 728, 0.1f, 100.0f);
-        camera.zoom(dz / 10);
         camera.animate();
         glu.gluLookAt(camera.getVActX(), camera.getVActY(), camera.getVActZ(), 0, 0, 0, 0, 1, 0);
 
@@ -452,5 +451,9 @@ public class Renderer implements GLEventListener, MouseListener,
 
     public static void setRotationSpeed(float rotationSpeed) {
         ROTATION_SPEED = rotationSpeed;
+    }
+
+    public void resetCamera() {
+        this.camera = new Camera(-40, 40, 40, 2);
     }
 }

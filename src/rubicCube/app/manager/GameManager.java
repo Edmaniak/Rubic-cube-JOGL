@@ -77,21 +77,21 @@ public class GameManager {
      * records
      */
     public void reset() {
-        this.gameState = GameState.SOLVING;
-        rubicCube.generateStructure();
-        setTurnCount(0);
+        start();
+
     }
 
     public GameState getGameState() {
         return gameState;
     }
 
-    public int getTurnCount() {
-        return turnCount;
-    }
-
     public void setTurnCount(int turnCount) {
         gui.setTurnCount(turnCount);
         this.turnCount = turnCount;
     }
+
+    public int getTurnCount() {
+        return turnCount;
+    }
+
 }
