@@ -21,20 +21,20 @@ public class App {
     private static HelpWindow helpWindow;
 
     private static RubicCube rubicCube;
-    private static rubicCube.app.render.Renderer renderer;
+    private static Renderer renderer;
     private static Animator animator;
     private static GameManager gameManager;
 
     private App() {
         animator = new Animator(() -> gameManager.nextTurn());
         rubicCube = new RubicCube();
-        renderer = new rubicCube.app.render.Renderer(animator, rubicCube);
+        renderer = new Renderer(animator, rubicCube);
         mainWindow = new MainWindow(renderer);
         turnWindow = new TurnWindow(mainWindow, rubicCube);
         helpWindow = new HelpWindow(mainWindow);
-        initWindow = new InitWindow(mainWindow);
         gameManager = new GameManager(rubicCube, mainWindow, animator);
-        winnerWindow = new WinnerWindow(mainWindow,0);
+        initWindow = new InitWindow(mainWindow);
+        winnerWindow = new WinnerWindow(mainWindow, 0);
     }
 
     public static void main(String[] args) {
@@ -69,8 +69,9 @@ public class App {
         return turnWindow;
     }
 
-    public static WinnerWindow getWinnerWindow() {
-        return winnerWindow;
+    public static void showWinnerWindow(int turnCount) {
+        winnerWindow = new WinnerWindow(getMainWindow(),turnCount);
+        winnerWindow.setVisible(true);
     }
 
     public static HelpWindow getHelpWindow() {

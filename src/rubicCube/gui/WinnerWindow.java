@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class WinnerWindow extends JDialog {
 
-    private final int turnCount;
+    private int turnCount;
     private final JPanel container;
     private final JPanel bottom;
     private final JButton newGame;
@@ -38,7 +38,7 @@ public class WinnerWindow extends JDialog {
         close.addActionListener(e -> dispose());
 
 
-        messageLabel = new JLabel(message + App.getGameManager().getTurnCount() + " tazích", JLabel.CENTER);
+        messageLabel = new JLabel(message + turnCount + " tazích", JLabel.CENTER);
         messageLabel.setFont(h1);
         bottom.add(newGame);
         bottom.add(close);
@@ -48,9 +48,10 @@ public class WinnerWindow extends JDialog {
         pack();
     }
 
+
     @Override
     public void setVisible(boolean b) {
         super.setVisible(b);
-        messageLabel.setText(message + App.getGameManager().getTurnCount() + " tazích");
+        messageLabel.setText("");
     }
 }

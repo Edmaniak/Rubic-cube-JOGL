@@ -34,13 +34,21 @@ public class GameManager {
      * Routine needed for next turn
      */
     public void nextTurn() {
-        if (!rubicCube.isSolved()) {
-            gui.increaseTurnCount();
-            turnCount++;
-        } else {
-            turnCount++;
-            App.getWinnerWindow().setVisible(true);
+
+        if (gameState != GameState.AUTO_SOLVING) {
+            if (!rubicCube.isSolved()) {
+                gui.increaseTurnCount();
+                turnCount++;
+            } else {
+                turnCount++;
+                App.showWinnerWindow(turnCount);
+                gameState = GameState.SOLVED;
+            }
+        }
+
+        if (gameState == GameState.AUTO_SOLVING && rubicCube.isSolved()) {
             gameState = GameState.SOLVED;
+            App.getInitWindow().setVisible(true);
         }
     }
 
@@ -61,6 +69,7 @@ public class GameManager {
      */
     public void start() {
         this.gameState = GameState.SOLVING;
+        setTurnCount(0);
     }
 
     /**
@@ -70,8 +79,7 @@ public class GameManager {
     public void reset() {
         this.gameState = GameState.SOLVING;
         rubicCube.generateStructure();
-        gui.setTurnCount(0);
-        turnCount = 0;
+        setTurnCount(0);
     }
 
     public GameState getGameState() {
@@ -80,5 +88,10 @@ public class GameManager {
 
     public int getTurnCount() {
         return turnCount;
+    }
+
+    public void setTurnCount(int turnCount) {
+        gui.setTurnCount(turnCount);
+        this.turnCount = turnCount;
     }
 }

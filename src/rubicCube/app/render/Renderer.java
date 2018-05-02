@@ -18,17 +18,20 @@ import rubicCube.model.geometry.Orientation;
 import rubicCube.model.geometry.Vec3Di;
 import utils.OglUtils;
 
+import javax.swing.*;
 import java.awt.event.*;
 
 import static com.jogamp.opengl.GL.*;
 
-
+/**
+ * Main openGL canvas for displaying purposes
+ */
 public class Renderer implements GLEventListener, MouseListener,
         MouseMotionListener, KeyListener {
 
     private GLU glu;
     private GL2 gl;
-    private int dx, dy, ox, oy;
+    private int dx, dy, dz, ox, oy, oz;
     private long oldmils;
     private long oldFPSmils;
     private RubicCube rubicCube;
@@ -135,10 +138,11 @@ public class Renderer implements GLEventListener, MouseListener,
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         glu.gluPerspective(45, 1280 / (float) 728, 0.1f, 100.0f);
+        camera.zoom(dz / 10);
         camera.animate();
         glu.gluLookAt(camera.getVActX(), camera.getVActY(), camera.getVActZ(), 0, 0, 0, 0, 1, 0);
 
-        OglUtils.drawStr2D(glDrawable, 20, 20, "Závěrečný projekt FIM - PGRF2 [Adam Ouhrabka]");
+        OglUtils.drawStr2D(glDrawable, 20, 20, "Závěrečný projekt FIM - PGRF2 [Adam Ouhrabka] [2.5.2018]");
 
     }
 
@@ -178,24 +182,41 @@ public class Renderer implements GLEventListener, MouseListener,
 
     @Override
     public void mousePressed(MouseEvent e) {
-        ox = e.getX();
-        oy = e.getY();
-        delay = 1;
+        if (SwingUtilities.isLeftMouseButton(e) || SwingUtilities.isRightMouseButton(e)) {
+            ox = e.getX();
+            oy = e.getY();
+            delay = 1;
+        }
+        if (SwingUtilities.isMiddleMouseButton(e)) {
+            oz = e.getY();
+            delay = 1;
+        }
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON3) {
+        if (SwingUtilities.isMiddleMouseButton(e)) {
+            oz = 0;
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        delay = 1;
-        dx = e.getX() - ox;
-        dy = e.getY() - oy;
-        ox = e.getX();
-        oy = e.getY();
+
+        if (SwingUtilities.isLeftMouseButton(e) || SwingUtilities.isRightMouseButton(e)) {
+            delay = 1;
+            dx = e.getX() - ox;
+            dy = e.getY() - oy;
+            ox = e.getX();
+            oy = e.getY();
+        }
+
+        if (SwingUtilities.isMiddleMouseButton(e)) {
+            delay = 1;
+            dz = e.getY() - oz;
+            oz = e.getY();
+        }
     }
 
     @Override

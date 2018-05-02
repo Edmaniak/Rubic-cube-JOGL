@@ -106,13 +106,13 @@ public class Camera {
     public void zoomIn() {
         distance -= moveSpeed;
         generateViews();
-        vectorDesired = new Vec3Df(views[pointer].getX(), distance,views[pointer].getZ());
+        vectorDesired = new Vec3Df(views[pointer].getX(), distance, views[pointer].getZ());
     }
 
     public void zoomOut() {
         distance += moveSpeed;
         generateViews();
-        vectorDesired = new Vec3Df(views[pointer].getX(), distance,views[pointer].getZ());
+        vectorDesired = new Vec3Df(views[pointer].getX(), distance, views[pointer].getZ());
     }
 
     public float getMoveSpeed() {
@@ -140,5 +140,10 @@ public class Camera {
     }
 
 
-
+    public void zoom(int amount) {
+        if (amount != 0)
+            distance += amount > 0 ? moveSpeed : -moveSpeed;
+        generateViews();
+        vectorDesired = new Vec3Df(views[pointer].getX(), distance, views[pointer].getZ());
+    }
 }
