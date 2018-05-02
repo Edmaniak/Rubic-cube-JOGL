@@ -13,7 +13,7 @@ import java.awt.*;
 public class TurnWindow extends JDialog {
 
     private final JLabel moves;
-    private final JLabel heading = new JLabel("Odehrané tahy dle standartní notace");
+    private final JLabel heading = new JLabel("Tahy dle standartní notace");
     private final Font h1 = new Font("Arial", Font.BOLD, 20);
     private String movesString;
     private final JPanel panel;

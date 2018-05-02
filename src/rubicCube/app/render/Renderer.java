@@ -186,18 +186,12 @@ public class Renderer implements GLEventListener, MouseListener,
             oy = e.getY();
             delay = 1;
         }
-        if (SwingUtilities.isMiddleMouseButton(e)) {
-            oz = e.getY();
-            delay = 1;
-        }
 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (SwingUtilities.isMiddleMouseButton(e)) {
-            oz = 0;
-        }
+
     }
 
     @Override
@@ -211,11 +205,6 @@ public class Renderer implements GLEventListener, MouseListener,
             oy = e.getY();
         }
 
-        if (SwingUtilities.isMiddleMouseButton(e)) {
-            delay = 1;
-            dz = e.getY() - oz;
-            oz = e.getY();
-        }
     }
 
     @Override
