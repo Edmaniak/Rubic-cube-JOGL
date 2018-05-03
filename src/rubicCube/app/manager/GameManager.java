@@ -77,6 +77,7 @@ public class GameManager {
      * records
      */
     public void reset() {
+        rubicCube.generateStructure();
         start();
 
     }

@@ -28,7 +28,7 @@ public class HelpWindow extends JDialog {
                 "(3) [O] TAM - K SOBĚ [L] <br>" +
                 "(2) [I] TAM - K SOBĚ [K] <br>" +
                 "(1) [U] TAM - K SOBĚ [J] <br> <br>" +
-                "Rotace kostky po ose Y  <br>" +
+                "Rotace kostky po ose Z  <br>" +
                 "(3) [E] VPRAVO - VLEVO [R] <br>" +
                 "(2) [D] VPRAVO - VLEVO [F] <br>" +
                 "(1) [C] VPRAVO - VLEVO [V] <br> <br></html>";
